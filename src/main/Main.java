@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dysk.Disc;
+import memory.Memory;
 import processManager.ProcessManager;
 
 public class Main {
@@ -22,6 +23,7 @@ public class Main {
 		
 		ProcessManager processManager = new ProcessManager();
 		Disc disc = new Disc();
+		Memory memory = new Memory();
 		
 		while(true) {
 			try {
@@ -47,8 +49,8 @@ public class Main {
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");
 					
-				} else if(line.split(" ")[0].equals("OPEN")) {
-					System.out.println("OPEN");
+				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
+					processManager.newProcess(line.split(" ")[1]);
 					
 				} else if(line.split(" ")[0].equals("KILL")) {
 					System.out.println("KILL");
