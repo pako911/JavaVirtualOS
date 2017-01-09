@@ -14,7 +14,4 @@ public class Tab_Fat {
 	public int hour;						// godzina
 	public int minute;						// minuta
 	public int godzina;
-	
-	
-	
 }

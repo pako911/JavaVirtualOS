@@ -8,9 +8,6 @@ import java.util.StringTokenizer;
 
 public class Disc {
 
-	
-
-	
 	private static final int FFFF = -1;
 	public char[] dysk = new char [1024];			//dysk
 	public int [] fat = new int [32];				//tablica fat 32 bity
@@ -45,7 +42,7 @@ public class Disc {
 		}
 	}
 	
-	void create_file(String name, String b)
+	void create_file(String name, String ext)
 	{
 		//creation_time = System.currentTimeMillis(); 
 	
@@ -241,7 +238,7 @@ public class Disc {
 		{
 			int jap = file_jap(name,ext);
 			int nextjap;
-			int lastjap;
+			int lastjap = 0;
 			int l;
 			int k; 
 			int i;
@@ -266,7 +263,7 @@ public class Disc {
 			how = free_in_jap(lastjap);
 			
 			lenght = data.length();
-			count_jap = ceil((lenght - how)/32);
+			count_jap = Math.ceil((lenght - how)/32);
 			// wype�nianie starego japa
 			
 			if(atrybuty[cat].apend == true)
@@ -280,11 +277,12 @@ public class Disc {
 					l = 0;
 					//
 					//
+					char datachar[] = data.toCharArray();
 					for(i =(lastjap *32) + (32 - how); i<k;i++ )
 					{
 						if(l<lenght)
 						{
-							dysk[i] = data[l];
+							dysk[i] = datachar[l];
 							l++;
 						}
 					}
@@ -298,11 +296,13 @@ public class Disc {
 						i= japnext *32;
 						k = i +32;
 						//
+
+						char datachar2[] = data.toCharArray();
 						for(int z=japnext *32;z<k;z++)
 						{
 							if(l < lenght)
 							{
-								dysk[z] = data [l];
+								dysk[z] = datachar2[l];
 								l++;
 							}
 							
