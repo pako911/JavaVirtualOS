@@ -1,10 +1,7 @@
 package dysk;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Disc {
 
@@ -16,6 +13,10 @@ public class Disc {
 	
 	Disc()
 	{
+		for(int i = 0; i < atrybuty.length; i ++) {
+			atrybuty[i] = new Tab_Fat(); // magia ?? 
+		}
+		
 		fat [0] = FFFF;
 		atrybuty[0].status = false;					//zamienic pozniej na FFFF
 		dysk[0] = 'y';

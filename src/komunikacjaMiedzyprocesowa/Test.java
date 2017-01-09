@@ -1,4 +1,4 @@
-package dysk;
+package komunikacjaMiedzyprocesowa;
 
 public class Test {
 
