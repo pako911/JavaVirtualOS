@@ -19,7 +19,7 @@ public class Process {
 	private int counter; // licznik rozkazów
 	private byte[] program; // kod programu 
 	
-	private HashMap<Integer, Process> childs = new HashMap<Integer, Process>(); // procesy potomne
+	private HashMap<Integer, Process> children = new HashMap<Integer, Process>(); // procesy potomne
 	
 	public Process(String name, int PPID, int priority) {
 		this.name = name;
@@ -31,27 +31,21 @@ public class Process {
 	
 	public void createChild(String name, int priority) {
 		Process process = new Process(name, PID, priority);
-		childs.put(CPID, process);
+		children.put(CPID, process);
 	}
 	
 	public void print() {
 		System.out.println(PID+"\t"+PPID+"\t"+name+"\t"+state+"\t"+priority);
-		for (Entry<Integer, Process> entry : childs.entrySet()) {
+		for (Entry<Integer, Process> entry : children.entrySet()) {
 			entry.getValue().print();
 		}
 	}
 	
 	public void kill() {
 		state = "KILL";
-		for (Entry<Integer, Process> entry : childs.entrySet()) {
+		for (Entry<Integer, Process> entry : children.entrySet()) {
 			entry.getValue().kill();
 		}
-	}
-	
-	public void exec() {
-		state = "RUN";
-		//TODO : jak będzie gotowy praser to tutaj przekazan dane do wykonania.
-		//praser.exec(this);
 	}
 	
 	public int getPID() {
