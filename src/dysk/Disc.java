@@ -11,7 +11,7 @@ public class Disc {
 	public Tab_Fat[] atrybuty = new Tab_Fat[32];	//wpis do katlogu glownego
 	public int spacefree = 992;						//wlne miejsce
 	
-	Disc()
+	public Disc()
 	{
 		for(int i = 0; i < atrybuty.length; i ++) {
 			atrybuty[i] = new Tab_Fat(); // magia ?? 
@@ -532,10 +532,11 @@ public class Disc {
 			}
 			System.out.println();
 		}
-		void print_drive()
+		
+		public void print_drive()
 		{
 			for (int i = 0; i < 1024; i++) {
-				System.out.println( dysk[i]);
+				System.out.println(i + " " + dysk[i]);
 			}
 		}
 		
@@ -572,10 +573,10 @@ public class Disc {
 				if (a == 9) System.out.print ("09");
 			}
 		}
-		void directory_entry()
+		public void directory_entry()
 		{
 			System.out.println();
-			System.out.println("  Directory of root:");
+			System.out.println("Directory of root:");
 			System.out.println();
 			
 			

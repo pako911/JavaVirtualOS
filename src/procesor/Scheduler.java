@@ -6,13 +6,13 @@ public class Scheduler {
     
     Scheduler(){};
     
-    public ArrayList<Proces> ready_process_list=new ArrayList<Proces> ();
+    public ArrayList<Process> ready_process_list=new ArrayList<Process> ();
     int last_time;
     int theta_first=10;
     int[] theta;
     int shortest;
-    Proces Running;
-    Proces temp;
+    Process Running;
+    Process temp;
     double alpha;
     
     void InitScheduler(){
@@ -23,7 +23,7 @@ public class Scheduler {
         alpha=0.5;
     }
     
-    public void add_proces(Proces proces)
+    public void add_proces(Process proces)
     {
         ready_process_list.add(proces);
     }
@@ -34,7 +34,7 @@ public class Scheduler {
             last_time=Running.timer;
         }
         
-        if(Running!=null && Running.state_process == Proces.State.WAITING )
+        if(Running!=null && Running.state_process == Process.State.WAITING )
         {
            return;
         }
@@ -72,7 +72,7 @@ public class Scheduler {
             last_time=Running.timer;
         }
         
-        if(Running!=null && Running.state_process == Proces.State.WAITING )
+        if(Running!=null && Running.state_process == Process.State.WAITING )
         {
            return;
         }

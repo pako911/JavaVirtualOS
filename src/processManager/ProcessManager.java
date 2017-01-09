@@ -10,6 +10,7 @@ public class ProcessManager {
 	private Process mainProcess;
 	
 	public ProcessManager() {
+		System.out.println("Tworze nowy process główny");
 		mainProcess = new Process("main", 0); // główny proces 
 	}
 
