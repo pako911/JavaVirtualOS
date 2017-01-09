@@ -5,10 +5,11 @@
 
 package processManager;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import memory.Memory;
 
 public class Process {
 
@@ -18,25 +19,28 @@ public class Process {
 	private int PPID; // proces nadrzędny
 	private String state; // stan procesu NEW READY RUNNING WAITING TERMINATED
 	private short A, B, C, counter;
-	private int base;
+	private int base; // początke w paomieci
+	private int size; // długość zajmowanej pamięci
+	
+	private Memory memory;
 	
 	private HashMap<Integer, Process> children = new HashMap<Integer, Process>();
 	
-	public Process(String name, int PPID) {
+	public Process(String name, int PPID, Memory memory) {
+		this.memory = memory;
 		this.name = name;
 		this.PPID = PPID;
 		this.PID = CPID++;
 		this.state = "READY";
 	}
 	
-	public void createChild(String file) {
-		Process process = new Process(name, PID);
+	public void createChild(String sfile) {
+		Process process = new Process(name, PID, memory);
 		process.state = "NEW";
-		try {
-			FileInputStream fileInputStream = new FileInputStream(file);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		File file = new File(sfile);
+		System.out.println(file.length());
+		size = (int) file.length();
+		base = memory.memoryAllocation(size);
 		
 		process.state = "READY";
 		

@@ -21,9 +21,9 @@ public class Main {
 		
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
-		ProcessManager processManager = new ProcessManager();
 		Disc disc = new Disc();
 		Memory memory = new Memory();
+		ProcessManager processManager = new ProcessManager(memory);
 		
 		while(true) {
 			try {

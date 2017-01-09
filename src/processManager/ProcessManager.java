@@ -5,13 +5,17 @@
 
 package processManager;
 
+import memory.Memory;
+
 public class ProcessManager {
 
 	private Process mainProcess;
+	private Memory memory;
 	
-	public ProcessManager() {
+	public ProcessManager(Memory memory) {
+		this.memory = memory;
 		System.out.println("Tworze nowy process główny");
-		mainProcess = new Process("main", 0); // główny proces 
+		mainProcess = new Process("main", 0, memory); // główny proces 
 	}
 
 	public void newProcess(String file) { // tworzy nowy proces do poprawienia

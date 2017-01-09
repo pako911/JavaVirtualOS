@@ -23,7 +23,8 @@ public class Memory {
 	public void memoryReleasing(){
 		
 	}
-	public void memoryAllocation(int size){
+	public int memoryAllocation(int size){
+		return 1;
 		
 	}
 	public void readingFromMemory(){
