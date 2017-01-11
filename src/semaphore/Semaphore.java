@@ -25,7 +25,10 @@ public class Semaphore
             throw new InvalidSemaphoreValueException();
         }
     }
-    
+    public int countList()//przepraszam że bez pytania pozwoliłem sobie dopisać tą funkcję :(
+    {
+    	return listaOczekujacych.size();
+    }
     public void P()
     {
         System.out.println("Proces "+Process.aktualny.nazwa+" wykonuje operacje P");

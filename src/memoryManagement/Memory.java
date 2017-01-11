@@ -1,15 +1,15 @@
 package memoryManagement;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
+import processManager.PCB;
 import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
 	public char sign[]=new char[256];
+	private Semaphore FSBSEM; 
 	private ListFSB FSBPTR;
-	private ArrayList <Process> processList;//lista obszarów zajętych
+	public ArrayList <PCB> processList;//lista obszarów zajętych
 	//private Semaphore FSBSEM; //semafor bloków wolnej pamięci 
 	private Semaphore MEMORY; //semafor pamięci
 	
@@ -29,38 +29,53 @@ public class Memory {
 		}
 	}
 	
-	public void memoryReleasing(Process proces){//należy jako argumenty podać proces który się usuwa
+	public void memoryReleasing(PCB proces){//należy jako argumenty podać proces który się usuwa
 		FSBPTR.addFSB(proces.base, proces.limit);
 		processList.remove(proces);
-		for(int i=0; i<MEMORY.countList; i++)//!!!Potrzebna jest metoda w klasie semoafora
-		MEMORY.V();
+		for(int i=0; i<MEMORY.countList(); i++)
+			try {
+				MEMORY.V();
+			} catch (InvalidSemaphoreValueException e) {
+				e.printStackTrace();
+			}
 	}
-	public void memoryAllocation(int size, Process proces){
+	public boolean memoryAllocation(int size, PCB proces){
 		FSB tmp=FSBPTR.searchForSpace(size);
-		processList.add(proces);
 		if(tmp.address>=0&&tmp.address<256){
 			proces.base=tmp.address;
 			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
-		}else if(size<FSBPTR.fullSpace()){
-		defrag();
-		memoryAllocation(size, proces);
-		}else MEMORY.P();
+			processList.add(proces);
+			return true;
+		}else{
+					if(size<FSBPTR.fullSpace()){
+					defrag();
+					tmp=FSBPTR.searchForSpace(size);
+					proces.base=tmp.address;
+					FSBPTR.addFSB(tmp.address+size, tmp.size-size);
+					processList.add(proces);
+					return true;
+				}else{
+					MEMORY.P();
+					return false;
+					}
+		}
 	}
 	private void defrag(){
 		
 	}
 	private void processListSort(){
-		Process nier;//proces mający najmniejszy adres w pamięci
-		ArrayList <Process> tmp;
-		
-		for(Process temp:processList){
-			if(temp.base<nier.base){
-				nier=temp;
-				processList.remove(nier);
-				tmp.add(nier);
+		PCB nier=new PCB();//PCB procesu mającego najmniejszy adres w pamięci
+		ArrayList <PCB> tmp=new ArrayList<PCB>();
+		while(!processList.isEmpty()){
+			for(PCB temp:processList){
+				if(temp.base<nier.base){
+					nier=temp;
+					processList.remove(nier);
+					tmp.add(nier);
+				}
 			}
 		}
-		
+		processList=tmp;
 	}
 	public void showMemory(){
 		for(int i=0; i<256; i++){
