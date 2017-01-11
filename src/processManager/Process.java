@@ -55,7 +55,7 @@ public class Process {
 	
 	public void exit() {
 		pcb.state = Stany.ZAKONCZONY;
-		//zwolnij pamiec ram
+		memory.memoryReleasing(pcb);
 	}
 		
 	public int getPID() {
