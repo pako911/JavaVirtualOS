@@ -63,7 +63,7 @@ public class Disc {
 			atrybuty[buffor1].godzina = cal.get(Calendar.HOUR_OF_DAY);
 			atrybuty[buffor1].minuta = cal.get(Calendar.MINUTE);
 			atrybuty[buffor1].dzien = cal.get(Calendar.DAY_OF_MONTH) ;
-			atrybuty[buffor1].miesiac = cal.get(Calendar.MONTH);
+			atrybuty[buffor1].miesiac = cal.get(Calendar.MONTH)+1;
 			atrybuty[buffor1].rok = cal.get(Calendar.YEAR);
 			fat[buffor] = -1;													
 			

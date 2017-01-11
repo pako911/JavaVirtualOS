@@ -42,7 +42,6 @@ public class Main {
 					try {
 						IPC.wszystkieSkrzynki();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					

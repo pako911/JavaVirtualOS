@@ -1,4 +1,4 @@
-package so;
+package procesor;
 
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class Procesor {
     private ArrayList<Proces> lista_procesow_oczekujacych=new ArrayList<Proces> ();
     
     public Proces Running;
-    public boolean czy_wywlaszczajacy;//wybor metody przydzialu procesora sjf/srt(wywlaszczaj¹ca), ustawiane po dodaniu nowego procesu
+    public boolean czy_wywlaszczajacy;//wybor metody przydzialu procesora sjf/srt(wywlaszczajï¿½ca), ustawiane po dodaniu nowego procesu
     public double alpha;
     public double theta;
     public int t;

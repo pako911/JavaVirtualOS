@@ -1,4 +1,4 @@
-package so;
+package procesor;
 
 //import java.util.Random;
 
