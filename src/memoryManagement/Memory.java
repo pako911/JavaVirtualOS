@@ -1,33 +1,30 @@
 package memoryManagement;
 
-
+import java.util.ArrayList;
 
 public class Memory {
-	private char sign[]=new char[256];
+	public char sign[]=new char[256];
 	private ListFSB FSBPTR;
-	
+	private ArrayList <Process> processList;//lista obszarów zajętych
 	public Memory(){
 		for(int i=0; i<256; i++)
 			sign[i]='#';
 		FSBPTR = new ListFSB();
 	}
 	
-	public void memoryReleasing(){
-		FSBPTR.addFSB(proces.base, proces.size);
+	public void memoryReleasing(int base, int size){//należy jako argumenty podać base i size procesu który się usuwa
+		FSBPTR.addFSB(base,size);
 		
 	}
-	public int memoryAllocation(int size){
+	public int memoryAllocation(int size, Process proces){
 		int address=FSBPTR.searchForSpace(size);
+		processList.add(proces);
 		return address;
 	}
-	public char readingFromMemory(Process proces,int address){
-		if(address+proces.base<proces.size)
-		return sign[address+proces.base];
-		else 
-	}
-	public void writingToMemory(Process proces, int address, char s){
-		if(address+proces.base<proces.size)
-		sign[address+proces.base]=s;
-		else
+	public void showMemory(){
+		for(int i=0; i<256; i++){
+			if(i%4==0)System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t\n");
+			else System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t");
+		}
 	}
 }

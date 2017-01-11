@@ -7,37 +7,70 @@ public class ListFSB {
 	public FSB head;//pierwszy element listy
 	public FSB tail;//ostatni element listy
 	
+	//konstruktor
 	public ListFSB(){
 		head=null;
 		tail=head;
 	}
-	//ta funkcja nie będzie potrzebna
-	private FSB findLast(){
-		FSB bufor=head;
-		while(bufor.next!=null)
-			bufor=bufor.next;		
-		return bufor;
-	}
 	//dodaje blok wolnej pamięci
 	public void addFSB(int address, int size){
-		if(head==null)
+		FSB bufor=head;
+		if(head==null){
 			head=new FSB(address,size);
-		else{
-			FSB bufor=head;
-				while(bufor.next!=null)
-					bufor=bufor.next;
-				bufor=new FSB(address, size);
-				tail=bufor;
+		tail=head;
+		}else if(head!=null){
+			boolean f=true;
+			while(bufor.address!=(address+size+1)&&bufor.next!=null)
+				bufor=bufor.next;
+			if(bufor.address==(address+size+1)){
+				bufor.address=address;
+				bufor.size=bufor.size+size;
+				f=false;
+			}
+			bufor=head;
+			while((bufor.size+bufor.address+1)!=address&&bufor.next!=null)
+				bufor=bufor.next;
+			if((bufor.size+bufor.address+1)==address){
+				bufor.size=bufor.size+size;
+				bufor.address=address;
+				f=false;
+			}
+			if(f)
+			tail.next=new FSB(address, size);
+			tail=tail.next;
 		}
 	}
 	//usuwa blok wolnej pamięci
 	public void removeFSB(int size){
 		FSB bufor=head;
-		while(bufor.next.size!=size&&bufor.next!=null)
-			bufor=bufor.next;
-		if(bufor.next.size==size)
-			bufor.next=bufor.next.next;
+		
+		if(head.size==size&&head.next!=null)//pierwszy elelment gdy jest kolejny
+			head=head.next;
+		else if(head.size==size&&head.next==null){//tylko jeden element
+			head=null;
+			tail=null;
+		}
+		else if(tail!=null&&tail.size==size&&head!=null){//ostatni element gdy były poprzednie
+			bufor=head;
+			while(bufor.next.size!=size&&bufor.next!=null)
+				bufor=bufor.next;
+			if(bufor.next==tail){
+				bufor.next=null;
+				tail=bufor;
+			}			
+			//while(bufor.next.next!=null)
+			//	bufor=bufor.next;
+			//	bufor.next=null;
+			//	tail=bufor;
+		}
+		else if(tail!=null&&tail.size!=size&&head.size!=size){//element w środku
+			while(bufor.next.size!=size&&bufor.next!=null)
+				bufor=bufor.next;
+			if(bufor.next.size==size)
+				bufor.next=bufor.next.next;
+		}else System.out.println("brak takiego elementu");
 	}
+	//szuka miejsca
 	public int searchForSpace(int size){
 		int address;
 		FSB bufor=head;
@@ -49,14 +82,20 @@ public class ListFSB {
 	//sortowanie listy
 	public void sortList(){
 		FSB biggest=head;
-		ListFSB tmp=new ListFSB();
-		while(biggest.next!=null){
-			if(biggest.size<biggest.next.size&&biggest.next!=null)
-				biggest=biggest.next;
+		ListFSB tmp=new ListFSB();//tymczasowa lista
+		
+		while(head!=null){
+			while(biggest.next!=null){
+				if(biggest.size<biggest.next.size&&biggest.next!=null)
+					biggest=biggest.next;
+			}
+			tmp.addFSB(biggest.address, biggest.size);
+			removeFSB(biggest.size);
+			biggest=head;
 		}
-		tmp.addFSB(biggest.address, biggest.size);
-		removeFSB(biggest.size);
+		head=tmp.head;
 	}
+	//wypisz wolne bloki pamięci
 	public void wypisz(){
 		FSB bufor=head;
 		System.out.println(bufor.address + " " +bufor.size);
@@ -64,5 +103,16 @@ public class ListFSB {
 			bufor=bufor.next;
 			System.out.println(bufor.address + " " +bufor.size);
 		}
+	}
+	public static void main(String[] args){
+		ListFSB nowa=new ListFSB();
+		nowa.addFSB(23, 2);
+		nowa.addFSB(12, 4);
+		nowa.addFSB(7, 4);
+		nowa.wypisz();
+		nowa.sortList();
+		//nowa.removeFSB(7);
+		Memory ho=new Memory();
+		//ho.showMemory();
 	}
 }
