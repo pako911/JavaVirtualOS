@@ -2,6 +2,8 @@ package memory;
 
 import java.util.HashMap;
 
+import processManager.PCB;
+
 class Proces{
 	int base;
 	int limit;
@@ -23,7 +25,7 @@ public class Memory {
 	public void memoryReleasing(){
 		
 	}
-	public int memoryAllocation(int size){
+	public int memoryAllocation(PCB pcb){
 		return 1;
 		
 	}

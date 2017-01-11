@@ -21,6 +21,7 @@ public class Process {
 	private short A, B, C, counter;
 	public int base; // początke w paomieci
 	public int limit; // długość zajmowanej pamięci
+	public PCB pcb;
 	
 	private Memory memory;
 	
@@ -40,7 +41,7 @@ public class Process {
 		File file = new File(sfile);
 		System.out.println(file.length());
 		limit = base + (int) file.length();
-		base = memory.memoryAllocation((int) file.length());
+		base = memory.memoryAllocation(pcb);
 		
 		process.state = "READY";
 		
