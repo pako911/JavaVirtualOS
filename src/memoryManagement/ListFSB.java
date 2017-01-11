@@ -9,7 +9,7 @@ public class ListFSB {
 	
 	//konstruktor
 	public ListFSB(){
-		head=null;
+		head=new FSB(0,256);
 		tail=head;
 	}
 	//dodaje blok wolnej pamięci
@@ -81,7 +81,6 @@ public class ListFSB {
 		}
 		else return new FSB(-1, -1);
 	}
-	public int fullSpace(){
 		FSB bufor=head;
 		int space=0;
 		while(bufor.next!=null){

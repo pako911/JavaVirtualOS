@@ -28,7 +28,6 @@ public class Memory {
 			e.printStackTrace();
 		}
 	}
-	
 	public void memoryReleasing(PCB proces){//należy jako argumenty podać proces który się usuwa
 		FSBPTR.addFSB(proces.base, proces.limit);
 		processList.remove(proces);
@@ -43,6 +42,7 @@ public class Memory {
 		FSB tmp=FSBPTR.searchForSpace(size);
 		if(tmp.address>=0&&tmp.address<256){
 			proces.base=tmp.address;
+			proces.limit=size;
 			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
 			processList.add(proces);
 			return true;
