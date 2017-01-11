@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ListaProcesow {
-	private static final List<Proces> Procesy = new LinkedList<>(); 
+	public static final List<Proces> Procesy = new LinkedList<>(); 
 	
 	public static void dodajProces(int ID){
 		boolean istnieje=false;
@@ -21,6 +21,14 @@ public class ListaProcesow {
 			Proces proces = new Proces(ID);
 			Procesy.add(proces);
 		}
+	}
+	
+	public static boolean czyIstniejeProces(int id){
+		for(Proces x : Procesy){
+			if(x.getID()==id)
+				return true;
+		}
+		return false;
 	}
 	
 	public static void wyswietlWszystkieProcesy(){
