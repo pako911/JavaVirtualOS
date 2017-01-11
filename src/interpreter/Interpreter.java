@@ -1,4 +1,5 @@
-package so_interpreter;
+package interpreter;
+
 import java.util.*;
 import java.util.Pattern;
 import java.util.Matcher;
