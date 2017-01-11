@@ -20,7 +20,7 @@ public class IPC {
 		}
 		
 		if(wyslany == false){//jesli nie ma na liscie podanego numeru skrzynki to 
-			if(!procesManager.getProcesList()==IDodbiorcy) //sprawdz czy dany numer procesu istnieje
+			if(!ListaProcesow.czyIstniejeProces(IDodbiorcy)) //sprawdz czy dany numer procesu istnieje
 				System.out.println("Wyslanie wiadomosci nie powiodlo sie: proces nie istnieje");
 			else
 			{
