@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 public class IPC {
 	private static final List<Skrzynka> SkrzynkaPocztowa = new LinkedList<>(); 					//lista skrzynek
+	
+	//wysyla wiadomosc, jesli pierwszy raz do danego procesu to tworzy skrzynke dla odbiorcy, jesli
+	//nie ma tego procesu to zwraca wiadomosc i kontynuuje wykonywanie procesu
 	public static void wyslij(Wiadomosc wiadomosc, int IDodbiorcy) throws InterruptedException{  //metoda do wyslania wiadomosci
 		boolean wyslany = false;							//do sprawdzenia czy skrzynka istnieje (pierwsze wyslanie)
 		for(Skrzynka x : SkrzynkaPocztowa){					//sposrod wszystkich skrzynek...
@@ -16,16 +19,21 @@ public class IPC {
 			}
 		}
 		
-		if(wyslany == false){  														//jesli nie ma na liscie podanego numeru skrzynki to 
-			Skrzynka skrzynka = new Skrzynka(IDodbiorcy);  							//utworz
-			System.out.println("Skrzynka procesu "+IDodbiorcy+" zostala utworzona"); //poinformuj o utworzeniu
-			skrzynka.dodajWiadomosc(wiadomosc);  									//i dokoncz j.w.
-			SkrzynkaPocztowa.add(skrzynka);
-			System.out.println("Komunikat do procesu "+IDodbiorcy+" zostal wyslany: "+wiadomosc.pobierzWiadomosc());
-			TimeUnit.MILLISECONDS.sleep(50);
+		if(wyslany == false){//jesli nie ma na liscie podanego numeru skrzynki to 
+			if(!procesManager.getProcesList()==IDodbiorcy) //sprawdz czy dany numer procesu istnieje
+				System.out.println("Wyslanie wiadomosci nie powiodlo sie: proces nie istnieje");
+			else
+			{
+				Skrzynka skrzynka = new Skrzynka(IDodbiorcy);  							//utworz
+				System.out.println("Skrzynka procesu "+IDodbiorcy+" zostala utworzona"); //poinformuj o utworzeniu
+				skrzynka.dodajWiadomosc(wiadomosc);  									//i dokoncz j.w.
+				SkrzynkaPocztowa.add(skrzynka);
+				System.out.println("Komunikat do procesu "+IDodbiorcy+" zostal wyslany: "+wiadomosc.pobierzWiadomosc());
+			}
 		}
 	}
-	//			  Wiadomosc String
+	//jesli true to wiadomosc zostaje odebrana i kontynuuje, jesli nie, proces powinien sie zawiesic, wykorzystanie
+	//w klasie Czytnik metodzie Przetworz
 	public static boolean odbierz(int IDodbiorcy) throws InterruptedException{
 				//sprawdza czy jest skrzynka, jesli tak to...
 			for(Skrzynka x : SkrzynkaPocztowa){  		//sprawdza skrzynki...
@@ -41,7 +49,7 @@ public class IPC {
 		System.out.println("Wiadomosc nie zostala odebrana, skrzynka nie istnieje"); 
 		return false;
 	}
-	
+	//usuwa skrzynke, przyklad w Czytnik metodzie Przetworz przy odebraniu komendy XD
 	public static boolean usunSkrzynke(int wlascicielSkrzynki) throws InterruptedException{
 		for(Skrzynka x : SkrzynkaPocztowa){ 												//sprawdza numer procesu ze skrzynka
 			if(x.pobierzWlascicielaSkrzynki() == wlascicielSkrzynki){
@@ -53,6 +61,7 @@ public class IPC {
 			}
 		}return false;
 	}
+	
 	public static void informacje(int ID) throws InterruptedException{ 		//informuje o tym czy jest skrzynka (z zawartoscia) czy nie istnieje
 		if(czyIstnieje(ID)){
 			for(Skrzynka x : SkrzynkaPocztowa){
