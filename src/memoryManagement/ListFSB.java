@@ -71,13 +71,24 @@ public class ListFSB {
 		}else System.out.println("brak takiego elementu");
 	}
 	//szuka miejsca
-	public int searchForSpace(int size){
-		int address;
+	public FSB searchForSpace(int size){
 		FSB bufor=head;
-		while(bufor.size<size)
+		while(bufor.size<size&&bufor.next!=null)
 			bufor=bufor.next;
-		address=bufor.address;
-		return address;
+		if(bufor.size>=size){
+			FSB a=new FSB(bufor.address, bufor.size);
+			return a;
+		}
+		else return new FSB(-1, -1);
+	}
+	public int fullSpace(){
+		FSB bufor=head;
+		int space=0;
+		while(bufor.next!=null){
+			space=space+bufor.size;
+			bufor=bufor.next;
+		}
+		return space;
 	}
 	//sortowanie listy
 	public void sortList(){
