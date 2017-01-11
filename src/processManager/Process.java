@@ -41,13 +41,13 @@ public class Process {
 		} else {
 			process.pcb.state = Stany.GOTOWY;
 		}
-		children.put(CPID, process);
+		getChildren().put(CPID, process);
 		return process;
 	}
 	
 	public void print() {
 		System.out.println(pcb.PID+"\t"+pcb.PPID+"\t"+pcb.name+"\t"+pcb.state+"\t");
-		for (Entry<Integer, Process> entry : children.entrySet()) {
+		for (Entry<Integer, Process> entry : getChildren().entrySet()) {
 			entry.getValue().print();
 		}
 	}
@@ -69,11 +69,11 @@ public class Process {
 	}
 
 	public HashMap<Integer, Process> getMap() {
-		return children;
+		return getChildren();
 	}
 
 	public PCB getProcesPCB(int sPID) {
-		for(Entry<Integer, Process> entry : children.entrySet()) {
+		for(Entry<Integer, Process> entry : getChildren().entrySet()) {
 			if(entry.getValue().pcb.PID == sPID) {
 				return entry.getValue().pcb;
 			}
@@ -82,12 +82,20 @@ public class Process {
 	}
 
 	public Process getProces(int sPID) {
-		for(Entry<Integer, Process> entry : children.entrySet()) {
+		for(Entry<Integer, Process> entry : getChildren().entrySet()) {
 			if(entry.getValue().pcb.PID == sPID) {
 				return entry.getValue();
 			}
 		}
 		return null;
+	}
+
+	public HashMap<Integer, Process> getChildren() {
+		return children;
+	}
+
+	public void setChildren(HashMap<Integer, Process> children) {
+		this.children = children;
 	}
 }
  

@@ -17,7 +17,7 @@ public class Test {
 		processManager.kill(1);
 		processManager.kill(2);
 		processManager.ps();
-		processManager.setState(1, Stany.AKTYWNY);
+		processManager.setState(3, Stany.AKTYWNY);
 		processManager.ps();
 	}
 

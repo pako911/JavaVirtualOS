@@ -6,6 +6,7 @@
 package processManager;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import memory.Memory;
 import processManager.PCB.Stany;
@@ -63,6 +64,7 @@ public class ProcessManager {
 	public void kill(int PID) {
 		getProces(PID).exit();
 		queue.remove(PID);
+		mainProcess.getChildren().remove(PID);
 	}
 	
 	public HashMap<Integer, Process> getListProces() {
