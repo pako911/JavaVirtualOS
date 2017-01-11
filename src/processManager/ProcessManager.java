@@ -30,4 +30,16 @@ public class ProcessManager {
 		System.out.println("PID\tPPID\tNAME\tSTATE\tPRIORITY");
 		mainProcess.print();
 	}
+	
+	public void setLimit(int PID, int limit) {
+		
+	}
+	
+	public void getListProces() {
+		// 1 2 3 4
+	}
+	
+	public void getProcesPCB(int PID) {
+		
+	}
 }

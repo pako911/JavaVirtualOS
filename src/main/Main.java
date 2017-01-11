@@ -44,7 +44,7 @@ public class Main {
 					System.out.println("PMEMORY");
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
-					disc.directory_entry();
+					disc.();
 					
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");

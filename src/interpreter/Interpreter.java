@@ -1,13 +1,13 @@
 package interpreter;
 
-import java.util.*;
-import java.util.Pattern;
-import java.util.Matcher;
+import java.util.Iterator;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 public class Interpreter {
     private int reg_A=0, reg_B=0, reg_C=0, PC=0;
     private Boolean done = false, working = false, fail = false; 
-    private Vector<String> commandList;  
+    private Vector<String> commandList;
     
     public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail){
         this.reg_A = reg_A;
@@ -72,14 +72,14 @@ public class Interpreter {
             
             if(rozkaz[1] == "ADD"){
 		if (rozkaz[2] == "A"){
-                    reg_A += stoi(rozkaz[3]);
+                    reg_A += Integer.parseInt(rozkaz[3]);
 		}
                 else{
                    if (rozkaz[2] == "B"){
-			reg_B += stoi(rozkaz[3]);
+			reg_B += Integer.parseInt(rozkaz[3]);
                     }
                     else{
-			reg_C += stoi(rozkaz[3]);
+			reg_C += Integer.parseInt(rozkaz[3]);
 			}
 
                     this.working = false;
@@ -89,14 +89,14 @@ public class Interpreter {
             else{
 		if(rozkaz[1] == "SUB"){
                     if (rozkaz[2] == "A"){
-			reg_A -= stoi(rozkaz[3]);
+			reg_A -= Integer.parseInt(rozkaz[3]);
                     }
                     else{
                         if (rozkaz[2] == "B"){
-                            reg_B -= stoi(rozkaz[3]);
+                            reg_B -= Integer.parseInt(rozkaz[3]);
                         }
 			else{
-                            reg_C -= stoi(rozkaz[3]);
+                            reg_C -= Integer.parseInt(rozkaz[3]);
 			}
                     }
 
@@ -141,14 +141,14 @@ public class Interpreter {
                         else{
                             if(rozkaz[1] == "SUB"){
                                 if (rozkaz[2] == "A"){
-                                    reg_A -= stoi(rozkaz[3]);
+                                    reg_A -= Integer.parseInt(rozkaz[3]);
 				}
 				else{
                                     if (rozkaz[2] == "B"){
-					regB -= stoi(rozkaz[3]);
+					regB -= Integer.parseInt(rozkaz[3]);
                                     }
                                     else{	
-                                        reg_C -= stoi(rozkaz[3]);
+                                        reg_C -= Integer.parseInt(rozkaz[3]);
                                     }
 				}
 
@@ -158,14 +158,14 @@ public class Interpreter {
                             else{
 				if (rozkaz[1] == "MUL"){
                                     if (rozkaz[2] == "A"){
-					reg_A *= stoi(rozkaz[3]);
+					reg_A *= Integer.parseInt(rozkaz[3]);
                                     }
 				else{
                                     if (rozkaz[2] == "B"){
-					regB *= stoi(rozkaz[3]);
+					regB *= Integer.parseInt(rozkaz[3]);
                                     }
                                     else{
-					regC *= stoi(rozkaz[3]);
+					regC *= Integer.parseInt(rozkaz[3]);
                                     }
 				}
 
@@ -175,14 +175,14 @@ public class Interpreter {
 				else{
                                     if (rozkaz[1] == "LOD"){
 					if (rozkaz[2] == "A"){
-                                            reg_A = stoi(rozkaz[3]);
+                                            reg_A = Integer.parseInt(rozkaz[3]);
 					}
 					else{
                                             if (rozkaz[2] == "B"){
-                                                reg_B = stoi(rozkaz[3]);
+                                                reg_B = Integer.parseInt(rozkaz[3]);
                                             }
 					else{
-                                            regC = stoi(rozkaz[3]);
+                                            regC = Integer.parseInt(rozkaz[3]);
                                             }
 					}
 
@@ -193,14 +193,14 @@ public class Interpreter {
 					if (rozkaz[1] == "DIV"){
                                             if (rozkaz[3] != "0"){
 						if (rozkaz[2] == "A"){
-                                                    reg_A /= stoi(rozkaz[3]);
+                                                    reg_A /= Integer.parseInt(rozkaz[3]);
                                                 }
                                                 else{
                                                     if (rozkaz[2] == "B"){
-                                                        reg_B /= stoi(rozkaz[3]);
+                                                        reg_B /= Integer.parseInt(rozkaz[3]);
                                                     }
                                                     else{
-                                                         reg_C /= stoi(rozkaz[3]);
+                                                         reg_C /= Integer.parseInt(rozkaz[3]);
                                                     }
                                                 }
                                                 
@@ -224,7 +224,7 @@ public class Interpreter {
                                                             reg_A = reg_C;
 							}
 							else{
-                                                            reg_A = stoi(rozkaz[3]);
+                                                            reg_A = Integer.parseInt(rozkaz[3]);
 							}
                                                     }
 						}
@@ -238,7 +238,7 @@ public class Interpreter {
                                                                 reg_B = reg_C;
                                                             }
                                                             else{
-								reg_B = stoi(rozkaz[3]);
+								reg_B = Integer.parseInt(rozkaz[3]);
                                                             }
 							}
                                                     }
@@ -251,7 +251,7 @@ public class Interpreter {
 								reg_C = reg_B;
                                                             }
                                                             else{
-								reg_C = stoi(rozkaz[3]);
+								reg_C = Integer.parseInt(rozkaz[3]);
                                                             }
 							}
                                                     }
@@ -276,7 +276,7 @@ public class Interpreter {
             }
             else{
 		if(rozkaz[1] == "KIL"){
-                    PM.kill(stoi(rozkaz[2]));
+                    PM.kill(Integer.parseInt(rozkaz[2]));
 		}
 		else{
                     if (rozkaz[1] == "FEK"){
@@ -307,7 +307,7 @@ public class Interpreter {
                     }
                     else{
                         if (rozkaz[1] == "WTP"){
-                            PM.waitpid(stoi(rozkaz[2]));
+                            PM.waitpid(Integer.parseInt(rozkaz[2]));
                         }
                         else{
                             if (rozkaz[1] == "PPR"){
@@ -317,7 +317,7 @@ public class Interpreter {
                             }
                             else{
                                 if (rozkaz[1] == "STN"){
-                                    pri.setNiceUp(stoi(rozkaz[2]));
+                                    pri.setNiceUp(Integer.parseInt(rozkaz[2]));
                                 }
                                 else{
                                     if (rozkaz[1] == "PTP"){
@@ -350,7 +350,7 @@ public class Interpreter {
 		}
 		else{
                     if(rozkaz[1] == "JMP"){
-			PC = stoi(rozkaz[2]);
+			PC = Integer.parseInt(rozkaz[2]);
 
                         this.working = false;
                         return true;
@@ -358,7 +358,7 @@ public class Interpreter {
                     else{
 			if (rozkaz[1] == "JPT"){
                             if (this->flag_F = true){
-				PC = stoi(rozkaz[2]);
+				PC = Integer.parseInt(rozkaz[2]);
                             }
                             else{
                                 //do nothing
@@ -370,7 +370,7 @@ public class Interpreter {
 			else{
                             if (rozkaz[1] == "JPF"){
 				if (this->flaga_F = false){
-                                    PC = stoi(rozkaz[2]);
+                                    PC = Integer.parseInt(rozkaz[2]);
 				}
 				else{
                                     //do nothing
@@ -404,14 +404,14 @@ public class Interpreter {
 			if (it->state == 2){
                             if (it->potok != nullptr){
 				String buf;
-				if (it->potok->read(it->deskryptor[0], buf, stoi(rozkaz[3])) == -1){
+				if (it->potok->read(it->deskryptor[0], buf, Integer.parseInt(rozkaz[3])) == -1){
                                     PM.waitpid(it->PID);
                                     break;
 				}
-				if (rozkaz[2] == "A")regA = stoi(buf);
-				else if (rozkaz[2] == "B")regB = stoi(buf);
-				else if (rozkaz[2] == "C")regC = stoi(buf);
-				else std::cout << buf << std::endl;
+				if (rozkaz[2] == "A")regA = Integer.parseInt(buf);
+				else if (rozkaz[2] == "B")regB = Integer.parseInt(buf);
+				else if (rozkaz[2] == "C")regC = Integer.parseInt(buf);
+				System.out.println(buf);
                             }
 			}
                     }
