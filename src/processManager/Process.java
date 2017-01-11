@@ -24,24 +24,25 @@ public class Process {
 	public Process(String name, int PPID, Memory memory) {
 		pcb = new PCB();
 		this.memory = memory;
-		this.pcb.name = name;
-		this.pcb.PPID = PPID;
-		this.pcb.PID = CPID++;
-		this.pcb.state = Stany.NOWY;
+		pcb.name = name;
+		pcb.PPID = PPID;
+		pcb.PID = CPID++;
+		pcb.state = Stany.NOWY;
+		System.out.println("NOWY o ID "+pcb.PID);
 	}
 	
 	public Process createChild(String sfile) {
 		Process process = new Process(pcb.name, pcb.PID, memory);
 
 		File file = new File(sfile);
-		pcb.limit = pcb.base + (int) file.length();
-		pcb.base = memory.memoryAllocation((int) file.length(), pcb);
-		if(pcb.base == -1) { 
+		process.pcb.limit = process.pcb.base + (int) file.length();
+		process.pcb.base = memory.memoryAllocation((int) file.length(), process.pcb);
+		if(process.pcb.base == -1) { 
 			process.pcb.state = Stany.OCZEKUJACY;
 		} else {
 			process.pcb.state = Stany.GOTOWY;
 		}
-		getChildren().put(CPID, process);
+		getChildren().put(process.pcb.PID, process);
 		return process;
 	}
 	
@@ -54,6 +55,7 @@ public class Process {
 	
 	public void exit() {
 		pcb.state = Stany.ZAKONCZONY;
+		//zwolnij pamiec ram
 	}
 		
 	public int getPID() {

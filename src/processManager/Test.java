@@ -12,13 +12,21 @@ public class Test {
 		processManager.newProcess("A.TXT");
 		processManager.newProcess("A.TXT");
 		processManager.newProcess("A.TXT");
-		processManager.getListProces();
+		processManager.newProcess("A.TXT");
+		processManager.newProcess("A.TXT");
+		processManager.newProcess("A.TXT");
 		processManager.ps();
-		processManager.kill(1);
-		processManager.kill(2);
+		processManager.kill(3);
 		processManager.ps();
-		processManager.setState(3, Stany.AKTYWNY);
+		processManager.kill(4);
+		processManager.ps();
+		processManager.kill(5);
+		processManager.ps();
+		processManager.kill(6);
+		processManager.ps();
+		processManager.setState(7, Stany.AKTYWNY);
+		processManager.ps();
+		processManager.newProcess("A.TXT");
 		processManager.ps();
 	}
-
 }

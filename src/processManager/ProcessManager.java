@@ -65,6 +65,7 @@ public class ProcessManager {
 		getProces(PID).exit();
 		queue.remove(PID);
 		mainProcess.getChildren().remove(PID);
+		System.out.println("USUWAM "+PID);
 	}
 	
 	public HashMap<Integer, Process> getListProces() {
