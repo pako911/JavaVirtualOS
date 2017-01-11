@@ -66,10 +66,12 @@ public class Czytnik {
 		if(s.startsWith("XD")){  				//zakonczenie procesu <do testow>
 			pw.println("->KOMENDA XD ");
 			pw.println("*proces "+PID+" konczy dzialanie* ");
-		
+			
 				try {
 					if(IPC.usunSkrzynke(PID)){
 						pw.println("Skrzynka procesu "+PID+" zostala usunieta"); //informuje"
+						if(ListaProcesow.czyIstniejeProces(PID))				//metoda usuwajaca skrzynke <powinna zawrzec sie w miejscu gdzy proces sie konczy!!!!!
+							ListaProcesow.usunProces(PID); //usuniecie procesu, proteza
 						return false;
 					}
 					else{
@@ -81,8 +83,7 @@ public class Czytnik {
 					e.printStackTrace();
 				}
 			
-							//metoda usuwajaca skrzynke <powinna zawrzec sie w miejscu gdzy proces sie konczy!!!!!
-			ListaProcesow.usunProces(PID); //usuniecie procesu, proteza
+				
 		}
 		return true;
 	}
