@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dysk.Disc;
+import interpreter.Interpreter;
 import komunikacjaMiedzyprocesowa.IPC;
 import memory.Memory;
+import procesor.Procesor;
 import processManager.ProcessManager;
 
 public class Main {
@@ -25,6 +27,8 @@ public class Main {
 		Disc disc = new Disc();
 		Memory memory = new Memory();
 		ProcessManager processManager = new ProcessManager(memory);
+		Procesor procesor = new Procesor();
+		//Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail);
 		
 		while(true) {
 			try {
