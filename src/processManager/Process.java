@@ -10,17 +10,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import memory.Memory;
+import processManager.PCB.Stany;
 
 public class Process {
 
 	private static int CPID = 0;
-	private int PID; // identyfikator procesy
-	private String name; // nazwa
-	private int PPID; // proces nadrzędny
-	private String state; // stan procesu NEW READY RUNNING WAITING TERMINATED
-	private short A, B, C, counter;
-	public int base; // początke w paomieci
-	public int limit; // długość zajmowanej pamięci
 	public PCB pcb;
 	
 	private Memory memory;
@@ -28,55 +22,72 @@ public class Process {
 	private HashMap<Integer, Process> children = new HashMap<Integer, Process>();
 	
 	public Process(String name, int PPID, Memory memory) {
+		pcb = new PCB();
 		this.memory = memory;
-		this.name = name;
-		this.PPID = PPID;
-		this.PID = CPID++;
-		this.state = "READY";
+		this.pcb.name = name;
+		this.pcb.PPID = PPID;
+		this.pcb.PID = CPID++;
+		this.pcb.state = Stany.NOWY;
 	}
 	
 	public Process createChild(String sfile) {
-		Process process = new Process(name, PID, memory);
-		process.state = "NEW";
+		Process process = new Process(pcb.name, pcb.PID, memory);
+
 		File file = new File(sfile);
-		System.out.println(file.length());
-		limit = base + (int) file.length();
-		base = memory.memoryAllocation((int) file.length(), pcb);
-		
-		process.state = "READY";
-		
+		pcb.limit = pcb.base + (int) file.length();
+		pcb.base = memory.memoryAllocation((int) file.length(), pcb);
+		if(pcb.base == -1) { 
+			process.pcb.state = Stany.OCZEKUJACY;
+		} else {
+			process.pcb.state = Stany.GOTOWY;
+		}
 		children.put(CPID, process);
 		return process;
 	}
 	
 	public void print() {
-		System.out.println(PID+"\t"+PPID+"\t"+name+"\t"+state+"\t");
+		System.out.println(pcb.PID+"\t"+pcb.PPID+"\t"+pcb.name+"\t"+pcb.state+"\t");
 		for (Entry<Integer, Process> entry : children.entrySet()) {
 			entry.getValue().print();
 		}
 	}
 	
 	public void exit() {
-		state = "TERMINATED";
-		for (Entry<Integer, Process> entry : children.entrySet()) {
-			entry.getValue().exit();
-		}
+		pcb.state = Stany.ZAKONCZONY;
 	}
-	
-	public void waitpid() {
 		
-	}
-	
 	public int getPID() {
-		return PID;
+		return pcb.PID;
 	}
 	
 	public int getPPID() {
-		return PPID;
+		return pcb.PPID;
 	}
 		
-	public String getState() {
-		return state;
+	public Stany getState() {
+		return pcb.state;
+	}
+
+	public HashMap<Integer, Process> getMap() {
+		return children;
+	}
+
+	public PCB getProcesPCB(int sPID) {
+		for(Entry<Integer, Process> entry : children.entrySet()) {
+			if(entry.getValue().pcb.PID == sPID) {
+				return entry.getValue().pcb;
+			}
+		}
+		return null;
+	}
+
+	public Process getProces(int sPID) {
+		for(Entry<Integer, Process> entry : children.entrySet()) {
+			if(entry.getValue().pcb.PID == sPID) {
+				return entry.getValue();
+			}
+		}
+		return null;
 	}
 }
  

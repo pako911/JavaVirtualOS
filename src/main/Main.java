@@ -27,7 +27,7 @@ public class Main {
 		Disc disc = new Disc();
 		Memory memory = new Memory();
 		ProcessManager processManager = new ProcessManager(memory);
-		Procesor procesor = new Procesor();
+		Procesor procesor = new Procesor(processManager);
 		//Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail);
 		
 		while(true) {
@@ -59,7 +59,8 @@ public class Main {
 					System.out.println("PSEMAPHORE");
 					
 				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
-					processManager.newProcess(line.split(" ")[1]);
+					String file = line.split(" ")[1];
+					procesor.dodaj_proces(file);
 					
 				} else if(line.split(" ")[0].equals("KILL")) {
 					System.out.println("KILL");

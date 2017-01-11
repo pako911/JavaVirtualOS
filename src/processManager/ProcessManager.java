@@ -8,6 +8,7 @@ package processManager;
 import java.util.HashMap;
 
 import memory.Memory;
+import processManager.PCB.Stany;
 
 public class ProcessManager {
 
@@ -24,29 +25,55 @@ public class ProcessManager {
 		mainProcess = new Process("main", 0, memory); // główny proces 
 	}
 
-	public void newProcess(String file) { // tworzy nowy proces do poprawienia
+	public int newProcess(String file) { // tworzy nowy proces do poprawienia
 		Process process = mainProcess.createChild(file);
 		queue.put(process.pcb.PID, process);
+		return process.pcb.PID;
 	}
-	
-	public void shutDown() { // zabija wszystkie procesy do testów do poprawienia
-		mainProcess.exit();
-	}
-	
+
 	public void ps() { // wyświetla wszystkie procesy w systemie
-		System.out.println("PID\tPPID\tNAME\tSTATE\tPRIORITY");
+		System.out.println("PID\tPPID\tNAME\tSTATE");
 		mainProcess.print();
 	}
 	
 	public void setLimit(int PID, int limit) {
-		
+		mainProcess.getProces(PID).pcb.limit = limit;
 	}
 	
-	public void getListProces() {
-		// 1 2 3 4
+	public void setState(int PID, Stany aktywny) {
+		if(aktywny.equals(Stany.AKTYWNY)) {
+			getProces(PID).pcb.state = Stany.AKTYWNY;
+			ready.remove(PID);
+		} else if(aktywny.equals(Stany.OCZEKUJACY)) {			
+			getProces(PID).pcb.state = Stany.OCZEKUJACY;
+			waiting.put(PID, getProces(PID));
+		} else if(aktywny.equals(Stany.GOTOWY)) {
+			if(getProces(PID).pcb.state.equals(Stany.OCZEKUJACY)) {
+				waiting.remove(PID);
+			}
+			getProces(PID).pcb.state = Stany.GOTOWY;
+		} else if(aktywny.equals(Stany.NOWY)) {
+			getProces(PID).pcb.state = Stany.NOWY;
+		} else if(aktywny.equals(Stany.ZAKONCZONY)) {
+			getProces(PID).pcb.state = Stany.ZAKONCZONY;
+			queue.remove(PID);
+		}
 	}
 	
-	public void getProcesPCB(int PID) {
-		
+	public void kill(int PID) {
+		getProces(PID).exit();
+		queue.remove(PID);
+	}
+	
+	public HashMap<Integer, Process> getListProces() {
+		return queue;
+	}
+	
+	public PCB getProcesPCB(int PID) {
+		return mainProcess.getProcesPCB(PID);
+	}
+	
+	public Process getProces(int PID) {
+		return mainProcess.getProces(PID);
 	}
 }

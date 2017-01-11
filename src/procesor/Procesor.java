@@ -3,6 +3,8 @@ package procesor;
 import java.util.ArrayList;
 import java.util.Random;
 
+import processManager.ProcessManager;
+
 public class Procesor {
 
     private ArrayList<Proces> lista_procesow_gotowych=new ArrayList<Proces> ();
@@ -13,9 +15,11 @@ public class Procesor {
     public double alpha;
     public double theta;
     public int t;
+	private ProcessManager processManager;
     
-	public Procesor()
+	public Procesor(ProcessManager processManager)
 	{
+		this.processManager = processManager;
 		alpha=0.5;
 		czy_wywlaszczajacy=false;
 		Running=null;
@@ -23,33 +27,31 @@ public class Procesor {
 		t=0;
 	}
     
-    public void dodaj_proces(Proces proces)
+    public void dodaj_proces(String file)
     {
         if(czy_wywlaszczajacy)
         {
-        	if(Running!=null && Running.ilosc_instrukcji_do_konca_fazy>proces.thau)
+        	if(Running!=null && Running.ilosc_instrukcji_do_konca_fazy>file.thau)
         	{
-        		lista_procesow_gotowych.add(Running);
+				int PID = processManager.newProcess(file);
         		System.out.println("Dodano nowy proces o PID: "+Running.get_PID());
         		Running.stan=Proces.Stan.GOTOWY;
         		Running.thau=(int)alpha*theta+(1-alpha)*t;
                 t=(int)Running.thau;
-        		Running=proces;
+        		Running=file;
         		Running.stan=Proces.Stan.AKTYWNY;
         		
         	        		
         	}
         	else
         	{
-        		proces.stan=Proces.Stan.GOTOWY;
-        		lista_procesow_gotowych.add(proces);
+				processManager.newProcess(file);
         	}
         		
         }
         else
         {
-        	proces.stan=Proces.Stan.GOTOWY;
-    		lista_procesow_gotowych.add(proces);
+			processManager.newProcess(file);
         }
     	      
     }
