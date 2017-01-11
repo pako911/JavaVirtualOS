@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dysk.Disc;
+import komunikacjaMiedzyprocesowa.IPC;
 import memory.Memory;
 import processManager.ProcessManager;
 
@@ -38,7 +39,12 @@ public class Main {
 					processManager.ps();
 					
 				} else if(line.split(" ")[0].equals("PBOXYS")) {
-					System.out.println("PBOXYS");
+					try {
+						IPC.wszystkieSkrzynki();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				} else if(line.split(" ")[0].equals("PMEMORY")) {
 					System.out.println("PMEMORY");
