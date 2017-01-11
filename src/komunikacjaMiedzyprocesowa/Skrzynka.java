@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Skrzynka {
 	private final Queue<Wiadomosc> messages = new ArrayDeque<>(); //kolejka wiadomosci w skrzynce procesu
-	private int wlascicielSkrzynki;								//numer procesu
+	public int wlascicielSkrzynki;								//numer procesu
 	public Skrzynka(int wlascicielSkrzynki){ 					//konstruktor
 		this.wlascicielSkrzynki = wlascicielSkrzynki;
 	}
@@ -34,10 +34,17 @@ public class Skrzynka {
 		System.out.println("Skrzynka PID "+pobierzWlascicielaSkrzynki()+": "+messages.size()+" wiad. ");
 		if(!messages.isEmpty()){
 			System.out.println("-----------------");
+			System.out.println("nadawca:  tresc");
 			for(Wiadomosc x : messages)
 	            x.wyswietlInfo();
 		System.out.println("-----------------");
 		System.out.println("");
+		}
+	}
+	
+	public void usunWiadomosci(){
+		for(Wiadomosc x : messages){
+			messages.remove(x);
 		}
 	}
 }
