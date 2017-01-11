@@ -37,7 +37,7 @@ public class Czytnik {
 			pw.println("->KOMENDA XR "); 			//rowniez informacyjnie, jak dalsze zaczynajace sie na "->"
 			 //pobranie numeru procesu, z ktorego bedzie czytac ( probowal)
 			try {
-				if(!IPC.odbierz(PID))
+				if(!IPC.odbierz(PID)) //sprawdza czy wiadomosc zostala wyslana, true jest tak
 					return false;
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
