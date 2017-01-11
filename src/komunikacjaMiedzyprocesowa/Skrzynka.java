@@ -34,8 +34,8 @@ public class Skrzynka {
 	public void wyswietlStanSkrzynki(){
 		System.out.println("Skrzynka PID "+pobierzWlascicielaSkrzynki()+": "+messages.size()+" wiad. ");
 		if(!messages.isEmpty()){
-			System.out.println("-----------------");
 			System.out.println("PID: \ttresc");
+			System.out.println("-----------------");
 			for(Wiadomosc x : messages)
 	            x.wyswietlInfo();
 		System.out.println("-----------------");
