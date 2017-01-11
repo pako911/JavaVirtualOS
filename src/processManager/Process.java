@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import memory.Memory;
+import memoryManagement.Memory;
 import processManager.PCB.Stany;
 
 public class Process {
@@ -35,12 +35,11 @@ public class Process {
 		Process process = new Process(pcb.name, pcb.PID, memory);
 
 		File file = new File(sfile);
-		process.pcb.limit = process.pcb.base + (int) file.length();
-		process.pcb.base = memory.memoryAllocation((int) file.length(), process.pcb);
-		if(process.pcb.base == -1) { 
-			process.pcb.state = Stany.OCZEKUJACY;
-		} else {
+		boolean memoryGood = memory.memoryAllocation((int) file.length(), process.pcb);
+		if(memoryGood) { 
 			process.pcb.state = Stany.GOTOWY;
+		} else {
+			process.pcb.state = Stany.OCZEKUJACY;
 		}
 		getChildren().put(process.pcb.PID, process);
 		return process;

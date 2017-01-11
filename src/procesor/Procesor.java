@@ -3,14 +3,16 @@ package procesor;
 import java.util.ArrayList;
 import java.util.Random;
 
+import processManager.PCB;
 import processManager.ProcessManager;
+import processManager.PCB.Stany;
 
 public class Procesor {
 
-    private ArrayList<Proces> lista_procesow_gotowych=new ArrayList<Proces> ();
-    private ArrayList<Proces> lista_procesow_oczekujacych=new ArrayList<Proces> ();
+    private ArrayList<PCB> lista_procesow_gotowych=new ArrayList<PCB> ();
+    private ArrayList<PCB> lista_procesow_oczekujacych=new ArrayList<PCB> ();
     
-    public Proces Running;
+    public PCB Running;
     public boolean czy_wywlaszczajacy;//wybor metody przydzialu procesora sjf/srt(wywlaszczaj�ca), ustawiane po dodaniu nowego procesu
     public double alpha;
     public double theta;
@@ -29,31 +31,21 @@ public class Procesor {
     
     public void dodaj_proces(String file)
     {
+    	int PID = processManager.newProcess(file);
+    	
         if(czy_wywlaszczajacy)
         {
-        	if(Running!=null && Running.ilosc_instrukcji_do_konca_fazy>file.thau)
+        	if(Running!=null && Running.ilosc_instrukcji_do_konca_fazy>processManager.getProces(PID).pcb.thau)
         	{
-				int PID = processManager.newProcess(file);
-        		System.out.println("Dodano nowy proces o PID: "+Running.get_PID());
-        		Running.stan=Proces.Stan.GOTOWY;
+				
+        		System.out.println("Dodano nowy proces o PID: "+Running.PID);
+        		Running.state=Stany.GOTOWY;
         		Running.thau=(int)alpha*theta+(1-alpha)*t;
                 t=(int)Running.thau;
-        		Running=file;
-        		Running.stan=Proces.Stan.AKTYWNY;
-        		
-        	        		
+        		Running=processManager.getProces(PID).pcb;
+        		Running.state=Stany.AKTYWNY;	// do poprawy
         	}
-        	else
-        	{
-				processManager.newProcess(file);
-        	}
-        		
         }
-        else
-        {
-			processManager.newProcess(file);
-        }
-    	      
     }
 
     public void przelacz_proces()
@@ -63,8 +55,8 @@ public class Procesor {
         System.out.println();
         if(Running!=null)
         {
-        	System.out.println("Proces o PID : "+Running.get_PID()+ " przechodzi w stan oczekiwania.");
-            Running.stan=Proces.Stan.OCZEKUJACY;
+        	System.out.println("Proces o PID : "+Running.PID+ " przechodzi w stan oczekiwania.");
+            Running.state = Stany.OCZEKUJACY;
             lista_procesow_oczekujacych.add(Running);
             
             Running.thau=(int)alpha*theta+(1-alpha)*t;
@@ -72,11 +64,11 @@ public class Procesor {
         }
         if(lista_procesow_gotowych.size()>0)
         {
-	        Proces nastepny=lista_procesow_gotowych.get(0);
+        	PCB nastepny=lista_procesow_gotowych.get(0);
 	        int index_nastepnego=0;
 	   	    for(int i=1;i<lista_procesow_gotowych.size();i++)
 	        {
-	   	    	Proces p=lista_procesow_gotowych.get(i);
+	   	    	PCB p=lista_procesow_gotowych.get(i);
 	        	if(i==1)
 	        	{
 	        		p.thau=Running.thau;
@@ -95,8 +87,8 @@ public class Procesor {
 	            
 	             
 	        }
-	        System.out.println("Proces o PID : "+nastepny.get_PID()+" przechodzi w stan aktywnosci");
-            nastepny.stan=Proces.Stan.AKTYWNY;
+	        System.out.println("Proces o PID : "+nastepny.PID+" przechodzi w stan aktywnosci");
+            nastepny.state=Stany.AKTYWNY;
             lista_procesow_gotowych.remove(index_nastepnego);
             Running=nastepny;
             
@@ -120,7 +112,7 @@ public class Procesor {
         	if(probability<=15)
         	{
         		przelacz_proces();
-        		System.out.println("Proces o PID: "+Running.get_PID()+ " zostal wykonany, time : "+theta);
+        		System.out.println("Proces o PID: "+Running.PID+ " zostal wykonany, time : "+theta);
         	}
         	
         	while(probability>15)
@@ -131,7 +123,7 @@ public class Procesor {
 	        	{
 	        		przelacz_proces();
 	        		System.out.println(probability);
-	        		System.out.println("Proces o PID: "+Running.get_PID()+ " zostal wykonany, time: "+theta);
+	        		System.out.println("Proces o PID: "+Running.PID+ " zostal wykonany, time: "+theta);
 	        	}
 	        	else
 	        	{
@@ -143,9 +135,9 @@ public class Procesor {
     public void wyswietl_liste_procesow_gotowych()
     {
     	System.out.println("Lista procesow gotowych");
-    	for (Proces proces : lista_procesow_gotowych) {
+    	for (PCB proces : lista_procesow_gotowych) {
     		System.out.println("-------------------------");
-    		System.out.println("PID "+proces.get_PID());
+    		System.out.println("PID "+proces.PID);
     		System.out.println("Theta "+theta);
     		System.out.println("-------------------------");
     		}
@@ -154,9 +146,9 @@ public class Procesor {
     public void wyswietl_liste_procesow_oczekujacych()
     {
     	System.out.println("Lista procesow oczekujacych");
-    	for (Proces proces : lista_procesow_gotowych) {
+    	for (PCB proces : lista_procesow_gotowych) {
     		System.out.println("-------------------------");
-    		System.out.println("PID "+proces.get_PID());
+    		System.out.println("PID "+proces.PID);
     		System.out.println("Theta "+theta);
     		System.out.println("-------------------------");
     		}

@@ -1,6 +1,6 @@
 package processManager;
 
-import memory.Memory;
+import memoryManagement.Memory;
 import processManager.PCB.Stany;
 
 public class Test {

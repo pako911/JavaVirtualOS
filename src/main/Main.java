@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import dysk.Disc;
 import interpreter.Interpreter;
 import komunikacjaMiedzyprocesowa.IPC;
-import memory.Memory;
+import memoryManagement.Memory;
 import procesor.Procesor;
 import processManager.ProcessManager;
 
@@ -34,8 +34,7 @@ public class Main {
 			try {
 				String line = keyboard.readLine();	
 				if(line.split(" ")[0].equals("STEP")) {
-					System.out.println("STEP");
-					
+					procesor.wykonaj();
 				} else if(line.split(" ")[0].equals("HELP")) {
 					System.out.println("HELP");
 					

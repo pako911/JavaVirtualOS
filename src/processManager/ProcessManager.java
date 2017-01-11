@@ -6,9 +6,8 @@
 package processManager;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
-import memory.Memory;
+import memoryManagement.Memory;
 import processManager.PCB.Stany;
 
 public class ProcessManager {

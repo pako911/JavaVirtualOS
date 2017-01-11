@@ -17,6 +17,8 @@ public class PCB {
 	public int limit; // długość zajmowanej pamięci
 	public short A, B, C, counter;
 	public int PPID; // proces nadrzędny
+    public double thau;
+    public double ilosc_instrukcji_do_konca_fazy;
 	//stopped bit
 	//blocked bit
 	//stop_waiting_bit
