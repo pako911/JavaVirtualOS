@@ -19,8 +19,8 @@ public class Process {
 	private int PPID; // proces nadrzędny
 	private String state; // stan procesu NEW READY RUNNING WAITING TERMINATED
 	private short A, B, C, counter;
-	private int base; // początke w paomieci
-	private int size; // długość zajmowanej pamięci
+	public int base; // początke w paomieci
+	public int limit; // długość zajmowanej pamięci
 	
 	private Memory memory;
 	
@@ -39,8 +39,8 @@ public class Process {
 		process.state = "NEW";
 		File file = new File(sfile);
 		System.out.println(file.length());
-		size = (int) file.length();
-		base = memory.memoryAllocation(size);
+		limit = base + (int) file.length();
+		base = memory.memoryAllocation((int) file.length());
 		
 		process.state = "READY";
 		
