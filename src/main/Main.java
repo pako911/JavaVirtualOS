@@ -60,6 +60,10 @@ public class Main {
 				} else if(line.split(" ")[0].equals("KILL")) {
 					System.out.println("KILL");
 					
+				}  else if(line.split(" ")[0].equals("EXIT")) {
+					System.out.println("ZAMYKAM SYSTEM :)"); 
+					System.exit(0);
+					
 				} 
 			} catch (IOException e) {
 				e.printStackTrace();

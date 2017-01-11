@@ -35,17 +35,18 @@ public class Process {
 		this.state = "READY";
 	}
 	
-	public void createChild(String sfile) {
+	public Process createChild(String sfile) {
 		Process process = new Process(name, PID, memory);
 		process.state = "NEW";
 		File file = new File(sfile);
 		System.out.println(file.length());
 		limit = base + (int) file.length();
-		base = memory.memoryAllocation(pcb);
+		base = memory.memoryAllocation((int) file.length(), pcb);
 		
 		process.state = "READY";
 		
 		children.put(CPID, process);
+		return process;
 	}
 	
 	public void print() {

@@ -5,12 +5,18 @@
 
 package processManager;
 
+import java.util.HashMap;
+
 import memory.Memory;
 
 public class ProcessManager {
 
 	private Process mainProcess;
 	private Memory memory;
+	
+	private HashMap<Integer, Process> queue = new HashMap<Integer, Process>(); //wszyytkie
+	private HashMap<Integer, Process> ready = new HashMap<Integer, Process>(); //gotowe
+	private HashMap<Integer, Process> waiting = new HashMap<Integer, Process>(); //oczekujące
 	
 	public ProcessManager(Memory memory) {
 		this.memory = memory;
@@ -19,7 +25,8 @@ public class ProcessManager {
 	}
 
 	public void newProcess(String file) { // tworzy nowy proces do poprawienia
-		mainProcess.createChild(file);
+		Process process = mainProcess.createChild(file);
+		queue.put(process.pcb.PID, process);
 	}
 	
 	public void shutDown() { // zabija wszystkie procesy do testów do poprawienia

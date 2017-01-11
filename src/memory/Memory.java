@@ -25,7 +25,7 @@ public class Memory {
 	public void memoryReleasing(){
 		
 	}
-	public int memoryAllocation(PCB pcb){
+	public int memoryAllocation(int i, PCB pcb){
 		return 1;
 		
 	}

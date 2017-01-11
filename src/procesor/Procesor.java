@@ -1,6 +1,5 @@
 package procesor;
 
-
 import java.util.ArrayList;
 import java.util.Random;
 
