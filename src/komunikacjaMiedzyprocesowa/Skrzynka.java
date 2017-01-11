@@ -30,11 +30,12 @@ public class Skrzynka {
 			return true;				//return wiadomosc//niewazne
 		}
 	}
+	
 	public void wyswietlStanSkrzynki(){
 		System.out.println("Skrzynka PID "+pobierzWlascicielaSkrzynki()+": "+messages.size()+" wiad. ");
 		if(!messages.isEmpty()){
 			System.out.println("-----------------");
-			System.out.println("PID: \t tresc");
+			System.out.println("PID: \ttresc");
 			for(Wiadomosc x : messages)
 	            x.wyswietlInfo();
 		System.out.println("-----------------");
@@ -42,6 +43,7 @@ public class Skrzynka {
 		}
 	}
 	
+	//w Czytnik dodane bylo przy usuwaniu procesu i zarazem skrzynki!
 	public void usunWiadomosci(){
 		for(Wiadomosc x : messages){
 			messages.remove(x);
