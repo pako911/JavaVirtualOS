@@ -76,9 +76,8 @@ public class Main {
 					j++;
 					//ListaProcesow.wyswietlWszystkieProcesy(); testowne odpowiedzi
 					//ListaProcesow.wyswietlPCBProcesu(id);
-					//ListaProcesow.dodajProces(id);
+					ListaProcesow.dodajProces(id);
 					//ListaProcesow.wyswietlPCBProcesu(id);
-					//ListaProcesow.wyswietlWszystkieProcesy();
 					nazwaPliku = str.substring(3); 							//podzielenie wiersza z komenda aby wydobyc nazwe pliku wejsciowego
 					sciezka = "c:\\JavaSO\\"+nazwaPliku+".txt"; 	//utworzenie sciezki do pliku aby go otworzyc
 					cz[j] = new Czytnik(id,sciezka);
@@ -108,7 +107,9 @@ public class Main {
 					}  							//metoda wyswietla dana skrzynke z zawartoscia,
 				}								//jesli skrzynka/proces nie istnieje, wyswietli komunikat:
 												//"Skrzynka procesu *ID* nie istnieje, wyswietlenie zawartosci 
-												//nie powiodlo sie"		 						
+												//nie powiodlo sie"	
+				if(str.startsWith("SAP"))
+				ListaProcesow.wyswietlWszystkieProcesy();
 			//DO WYJSCIA Z SYSTEMU
 			if(str.startsWith("EXIT"))
 				wyjscie = true;
