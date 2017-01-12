@@ -81,6 +81,7 @@ public class ListFSB {
 		}
 		else return new FSB(-1, -1);
 	}
+	public int fullSpace(){//sprawdza czy po defragmentacji będzie miejsce na proces
 		FSB bufor=head;
 		int space=0;
 		while(bufor.next!=null){
