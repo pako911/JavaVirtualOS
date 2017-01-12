@@ -86,8 +86,9 @@ public class Memory {
 	}
 	public void showMemory(){
 		for(int i=0; i<256; i++){
-			if(i%4==0)System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t\n");
-			else System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t");
+			//if(i%4==0)System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t\n");
+			//else System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t");
+			System.out.println("\t"+i+"| \t"+sign[i]);
 		}
 	}
 }
