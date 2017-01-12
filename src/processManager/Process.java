@@ -32,7 +32,7 @@ public class Process {
 		pcb.PPID = PPID;
 		pcb.PID = CPID++;
 		pcb.state = Stany.NOWY;
-		System.out.println("NOWY o ID "+pcb.PID);
+		System.out.println("STWORZONO NOWY PROCES O ID "+pcb.PID);
 	}
 	
 	public Process createChild(String sfile) {
@@ -40,12 +40,17 @@ public class Process {
 			FileInputStream fileInputStream = new FileInputStream(sfile);
 			Process process = new Process(pcb.name, pcb.PID, memory);
 			File file = new File(sfile);
-			boolean memoryGood = memory.memoryAllocation((int) file.length(), process.pcb);
-
+			String kod = "";
+			for(int i = 0; i <file.length(); i++) {
+				char znak = (char)fileInputStream.read();
+					kod = kod + znak;
+			}
+			kod = kod.replaceAll("\r", "").replaceAll("\n", " ");
+			boolean memoryGood = memory.memoryAllocation((int) kod.length(), process.pcb);
 			if(memoryGood) { 			
 				System.out.println("BASE "+process.pcb.base+" LIMIT "+ process.pcb.limit+ " ID "+process.pcb.PID);
 				for(int i = 0; i<process.pcb.limit; i++) {
-					memory.sign[i+process.pcb.base] = (char)fileInputStream.read();
+					memory.sign[i+process.pcb.base] = kod.charAt(i);
 				}
 				process.pcb.state = Stany.GOTOWY;
 			} else {

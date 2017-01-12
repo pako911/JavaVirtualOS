@@ -21,7 +21,6 @@ public class ProcessManager {
 	
 	public ProcessManager(Memory memory) {
 		this.memory = memory;
-		System.out.println("Tworze nowy process główny");
 		mainProcess = new Process("main", 0, memory); // główny proces 
 	}
 
