@@ -2,7 +2,8 @@ package interpreter;
 
 import dysk.Disc;
 import memoryManagement.Memory;
-
+import processManager.ProcessManager;
+	
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
