@@ -51,32 +51,32 @@ public class Interpreter {
 
 		// Rozkazy arytmetyczne
 		if (rozkaz[0] == "ADD") {
-			if (rozkaz[0].substring(4, 1) == "A") {
-				reg_A += Integer.parseInt(rozkaz[0].substring(6, 1));
-			} else if (rozkaz[0] == "B") {
-				reg_B += Integer.parseInt(rozkaz[0]);
+			if (rozkaz[1] == "A") {
+				reg_A += Integer.parseInt(rozkaz[2]);
+			} else if (rozkaz[1] == "B") {
+				reg_B += Integer.parseInt(rozkaz[2]);
 			} else {
-				reg_C += Integer.parseInt(rozkaz[0]);
+				reg_C += Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;
 			return true;
 
 		} else if (rozkaz[0] == "SUB") {
-			if (rozkaz[0] == "A") {
-				reg_A -= Integer.parseInt(rozkaz[0]);
-			} else if (rozkaz[0] == "B") {
-				reg_B -= Integer.parseInt(rozkaz[0]);
+			if (rozkaz[1] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[2]);
+			} else if (rozkaz[1] == "B") {
+				reg_B -= Integer.parseInt(rozkaz[2]);
 			} else {
-				reg_C -= Integer.parseInt(rozkaz[0]);
+				reg_C -= Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0].substring(0, 3) == "INC") {
-			if (rozkaz[0].substring(4, 5) == "A") {
+		} else if (rozkaz[0] == "INC") {
+			if (rozkaz[1] == "A") {
 				reg_A += 1;
-			} else if (rozkaz[0] == "B") {
+			} else if (rozkaz[1] == "B") {
 				reg_B += 1;
 			} else {
 				reg_C += 1;
@@ -86,9 +86,9 @@ public class Interpreter {
 			return true;
 
 		} else if (rozkaz[0] == "DEC") {
-			if (rozkaz[0] == "A") {
+			if (rozkaz[1] == "A") {
 				reg_A -= 1;
-			} else if (rozkaz[0] == "B") {
+			} else if (rozkaz[1] == "B") {
 				reg_B -= 1;
 			} else {
 				reg_C -= 1;
@@ -97,46 +97,46 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "SUB") {
-			if (rozkaz[0] == "A") {
-				reg_A -= Integer.parseInt(rozkaz[0]);
-			} else if (rozkaz[0] == "B") {
-				reg_B -= Integer.parseInt(rozkaz[0]);
+			if (rozkaz[1] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[2]);
+			} else if (rozkaz[1] == "B") {
+				reg_B -= Integer.parseInt(rozkaz[2]);
 			} else {
-				reg_C -= Integer.parseInt(rozkaz[0]);
+				reg_C -= Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "MUL") {
-			if (rozkaz[0] == "A") {
-				reg_A *= Integer.parseInt(rozkaz[3]);
+			if (rozkaz[1] == "A") {
+				reg_A *= Integer.parseInt(rozkaz[2]);
 			} else if (rozkaz[2] == "B") {
-				reg_B *= Integer.parseInt(rozkaz[3]);
+				reg_B *= Integer.parseInt(rozkaz[2]);
 			} else {
-				reg_C *= Integer.parseInt(rozkaz[3]);
+				reg_C *= Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[1] == "LOD") {
-			if (rozkaz[2] == "A") {
-				reg_A = Integer.parseInt(rozkaz[3]);
-			} else if (rozkaz[2] == "B") {
-				reg_B = Integer.parseInt(rozkaz[3]);
+		} else if (rozkaz[0] == "LOD") {
+			if (rozkaz[1] == "A") {
+				reg_A = Integer.parseInt(rozkaz[2]);
+			} else if (rozkaz[1] == "B") {
+				reg_B = Integer.parseInt(rozkaz[2]);
 			} else {
-				reg_C = Integer.parseInt(rozkaz[3]);
+				reg_C = Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[1] == "DIV") {
-			if (rozkaz[3] != "0") {
-				if (rozkaz[2] == "A") {
-					reg_A /= Integer.parseInt(rozkaz[3]);
-				} else if (rozkaz[2] == "B") {
-					reg_B /= Integer.parseInt(rozkaz[3]);
+		} else if (rozkaz[0] == "DIV") {
+			if (rozkaz[2] != "0") {
+				if (rozkaz[1] == "A") {
+					reg_A /= Integer.parseInt(rozkaz[2]);
+				} else if (rozkaz[1] == "B") {
+					reg_B /= Integer.parseInt(rozkaz[2]);
 				} else {
-					reg_C /= Integer.parseInt(rozkaz[3]);
+					reg_C /= Integer.parseInt(rozkaz[2]);
 				}
 
 				this.working = false;
@@ -149,18 +149,18 @@ public class Interpreter {
 		} else if (rozkaz[0].equals("MOV")) {
 			System.out.println("MOV");
 			if (rozkaz[1] == "A") {
-				if (rozkaz[2] == "B") {
+				if (rozkaz[1] == "B") {
 					reg_A = reg_B;
-				} else if (rozkaz[2] == "C") {
+				} else if (rozkaz[1] == "C") {
 					reg_A = reg_C;
 				} else {
 					reg_A = Integer.parseInt(rozkaz[2]);
 				}
 
 			} else if (rozkaz[1] == "B") {
-				if (rozkaz[2] == "A") {
+				if (rozkaz[1] == "A") {
 					reg_B = reg_A;
-				} else if (rozkaz[2] == "C") {
+				} else if (rozkaz[1] == "C") {
 					reg_B = reg_C;
 				} else {
 					reg_B = Integer.parseInt(rozkaz[2]);
@@ -218,7 +218,7 @@ public class Interpreter {
 
 		// Logiczne
 		if (rozkaz[1] == "EQL") {
-			if (rozkaz[2] == rozkaz[3]) {
+			if (rozkaz[1] == rozkaz[2]) {
 				flag_F = true;
 			} else
 				flag_F = false;
