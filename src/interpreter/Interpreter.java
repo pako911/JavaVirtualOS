@@ -268,7 +268,7 @@ public class Interpreter {
 		this.fail = false;
 
 		if (rozkaz[0] == "FCR") {
-			tworzeniaPliku(rozkaz[1], rozkaz[2]);
+			disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
 
 			this.working = false;
 			return true;
