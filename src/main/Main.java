@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dysk.Disc;
+import interpreter.Interpreter;
 import komunikacjaMiedzyprocesowa.IPC;
 import memoryManagement.Memory;
 import procesor.Procesor;
@@ -12,6 +13,14 @@ import processManager.ProcessManager;
 
 public class Main {
 
+	private static Boolean working;
+	private static Boolean fail;
+	private static Boolean done;
+	private static int reg_A;
+	private static int reg_C;
+	private static int reg_B;
+	private static int PC;
+	
 	public static void load(String co) {
 		char[] loadingc = co.toCharArray();
 		for(int i = 0; i<co.length();i++) {
@@ -80,7 +89,8 @@ public class Main {
 		ProcessManager processManager = new ProcessManager(memory);
 		load("ŁADOWANIE MODUŁU PROCESORA");
 		Procesor procesor = new Procesor(processManager);
-		//Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail);
+
+		Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail, memory, disc);
 		
 		while(true) {
 			System.out.print("javaOS:$ ");
@@ -102,7 +112,7 @@ public class Main {
 					
 				} else if(line.split(" ")[0].equals("PPROCES")) {
 					processManager.ps();
-					
+					procesor.wyswietl_liste_procesow_gotowych();
 				} else if(line.split(" ")[0].equals("PBOXYS")) {
 					try {
 						IPC.wszystkieSkrzynki();

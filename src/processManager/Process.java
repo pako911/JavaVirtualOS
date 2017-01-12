@@ -122,16 +122,16 @@ public class Process {
 		this.children = children;
 	}
 	
-	public String[] getRozkaz(int counter) {
-		System.out.println("counter "+counter);
-		String rozkaz[] = new String[3];
-		String rozkazs = "";
-		int i = 0;
-		while(memory.sign[i] != ';') {
-			rozkazs = rozkazs + memory.sign[i];
-			i++;
+	public String[] getNextRozkaz() {
+		String kod = "";
+		for(int i = 0; i<pcb.limit; i++) {
+			kod = kod + memory.sign[i+pcb.base];
 		}
-		rozkaz = rozkazs.split(" ");
+		kod = kod.split(";")[pcb.counter];
+		pcb.counter++;
+		String rozkaz[] = new String[3];
+		
+		rozkaz = kod.split(" ");
 		System.out.println(rozkaz[0]+" "+rozkaz[1]+" "+rozkaz[2]);
 		return rozkaz;
 	}
