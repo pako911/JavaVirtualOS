@@ -50,8 +50,7 @@ public class Interpreter {
 		this.fail = false;
 
 		// Rozkazy arytmetyczne
-		Scanner s = new Scanner(rozkaz[0]);
-		if (s.next() == "ADD") {
+		if (rozkaz[0] == "ADD") {
 			if (rozkaz[0].substring(4, 1) == "A") {
 				reg_A += Integer.parseInt(rozkaz[0].substring(6, 1));
 			} else if (rozkaz[0] == "B") {
@@ -147,30 +146,31 @@ public class Interpreter {
 				this.working = false;
 				return false;
 			}
-		} else if (rozkaz[1] == "MOV") {
-			if (rozkaz[2] == "A") {
-				if (rozkaz[3] == "B") {
+		} else if (rozkaz[0].equals("MOV")) {
+			System.out.println("MOV");
+			if (rozkaz[1] == "A") {
+				if (rozkaz[2] == "B") {
 					reg_A = reg_B;
-				} else if (rozkaz[3] == "C") {
+				} else if (rozkaz[2] == "C") {
 					reg_A = reg_C;
 				} else {
-					reg_A = Integer.parseInt(rozkaz[3]);
+					reg_A = Integer.parseInt(rozkaz[2]);
 				}
 
-			} else if (rozkaz[2] == "B") {
-				if (rozkaz[3] == "A") {
+			} else if (rozkaz[1] == "B") {
+				if (rozkaz[2] == "A") {
 					reg_B = reg_A;
-				} else if (rozkaz[3] == "C") {
+				} else if (rozkaz[2] == "C") {
 					reg_B = reg_C;
 				} else {
-					reg_B = Integer.parseInt(rozkaz[3]);
+					reg_B = Integer.parseInt(rozkaz[2]);
 				}
-			} else if (rozkaz[3] == "A") {
+			} else if (rozkaz[1] == "A") {
 				reg_C = reg_A;
-			} else if (rozkaz[3] == "B") {
+			} else if (rozkaz[1] == "B") {
 				reg_C = reg_B;
 			} else {
-				reg_C = Integer.parseInt(rozkaz[3]);
+				reg_C = Integer.parseInt(rozkaz[2]);
 			}
 
 			this.working = false;

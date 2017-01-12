@@ -13,17 +13,11 @@ import processManager.ProcessManager;
 public class Main {
 
 	public static void load(String co) {
-		try {
 		char[] loadingc = co.toCharArray();
 		for(int i = 0; i<co.length();i++) {
 			System.out.print(loadingc[i]);
-			Thread.sleep(0,1);
 		}	
 		System.out.println();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public static void main(String[] args) {

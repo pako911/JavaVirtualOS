@@ -13,6 +13,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.sun.org.apache.regexp.internal.recompile;
+
 import memoryManagement.Memory;
 import processManager.PCB.Stany;
 
@@ -45,7 +47,7 @@ public class Process {
 				char znak = (char)fileInputStream.read();
 				kod = kod + znak;
 			}
-			kod = kod.replaceAll("\r", "").replaceAll("\n", " ");
+			kod = kod.replaceAll("\r", "").replaceAll("\n", ";");
 			boolean memoryGood = memory.memoryAllocation((int) kod.length(), process.pcb);
 			if(memoryGood) { 			
 				System.out.println("BASE "+process.pcb.base+" LIMIT "+ process.pcb.limit+ " ID "+process.pcb.PID);
@@ -118,6 +120,20 @@ public class Process {
 
 	public void setChildren(HashMap<Integer, Process> children) {
 		this.children = children;
+	}
+	
+	public String[] getRozkaz(int counter) {
+		System.out.println("counter "+counter);
+		String rozkaz[] = new String[3];
+		String rozkazs = "";
+		int i = 0;
+		while(memory.sign[i] != ';') {
+			rozkazs = rozkazs + memory.sign[i];
+			i++;
+		}
+		rozkaz = rozkazs.split(" ");
+		System.out.println(rozkaz[0]+" "+rozkaz[1]+" "+rozkaz[2]);
+		return rozkaz;
 	}
 }
  
