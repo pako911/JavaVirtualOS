@@ -59,9 +59,9 @@ public class Interpreter {
 
 		// Rozkazy arytmetyczne
 		if (rozkaz[0] == "ADD") {
-			if (rozkaz[1] == "A") {
+			if (rozkaz[1].equals("A")) {
 				reg_A += Integer.parseInt(rozkaz[1]);
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("b")) {
 				reg_B += Integer.parseInt(rozkaz[1]);
 			} else {
 				reg_C += Integer.parseInt(rozkaz[1]);
@@ -70,10 +70,10 @@ public class Interpreter {
 			this.working = false;
 			return true;
 
-		} else if (rozkaz[0] == "SUB") {
-			if (rozkaz[1] == "A") {
+		} else if (rozkaz[0].equals("SUB")) {
+			if (rozkaz[1].equals("A")) {
 				reg_A -= Integer.parseInt(rozkaz[1]);
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B -= Integer.parseInt(rozkaz[1]);
 			} else {
 				reg_C -= Integer.parseInt(rozkaz[1]);
@@ -81,10 +81,10 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "INC") {
-			if (rozkaz[1] == "A") {
+		} else if (rozkaz[0].equals("INC")) {
+			if (rozkaz[1].equals("A")) {
 				reg_A += 1;
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B += 1;
 			} else {
 				reg_C += 1;
@@ -93,10 +93,10 @@ public class Interpreter {
 			this.working = false;
 			return true;
 
-		} else if (rozkaz[0] == "DEC") {
-			if (rozkaz[1] == "A") {
+		} else if (rozkaz[0].equals("DEC")) {
+			if (rozkaz[1].equals("A")) {
 				reg_A -= 1;
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B -= 1;
 			} else {
 				reg_C -= 1;
@@ -104,10 +104,10 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "SUB") {
+		} else if (rozkaz[0].equals("SUB")) {
 			if (rozkaz[1] == "A") {
 				reg_A -= Integer.parseInt(rozkaz[1]);
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B -= Integer.parseInt(rozkaz[1]);
 			} else {
 				reg_C -= Integer.parseInt(rozkaz[1]);
@@ -115,10 +115,10 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "MUL") {
-			if (rozkaz[1] == "A") {
+		} else if (rozkaz[0].equals("MUL")) {
+			if (rozkaz[1].equals("A")) {
 				reg_A *= Integer.parseInt(rozkaz[2]);
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B *= Integer.parseInt(rozkaz[2]);
 			} else {
 				reg_C *= Integer.parseInt(rozkaz[2]);
@@ -126,10 +126,10 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "LOD") {
-			if (rozkaz[1] == "A") {
+		} else if (rozkaz[0].equals("LOD")) {
+			if (rozkaz[1].equals("A")) {
 				reg_A = Integer.parseInt(rozkaz[2]);
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_B = Integer.parseInt(rozkaz[2]);
 			} else {
 				reg_C = Integer.parseInt(rozkaz[2]);
@@ -137,11 +137,11 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[1] == "DIV") {
+		} else if (rozkaz[1].equals("DIV")) {
 			if (rozkaz[3] != "0") {
-				if (rozkaz[2] == "A") {
+				if (rozkaz[2].equals("A")) {
 					reg_A /= Integer.parseInt(rozkaz[3]);
-				} else if (rozkaz[2] == "B") {
+				} else if (rozkaz[2].equals("B")) {
 					reg_B /= Integer.parseInt(rozkaz[3]);
 				} else {
 					reg_C /= Integer.parseInt(rozkaz[3]);
@@ -156,26 +156,26 @@ public class Interpreter {
 			}
 		} else if (rozkaz[0].equals("MOV")) {
 			System.out.println("MOV"); //To jest potrzebne?
-			if (rozkaz[1] == "A") {
-				if (rozkaz[2] == "B") {
+			if (rozkaz[1].equals("A")) {
+				if (rozkaz[2].equals("B")) {
 					reg_A = reg_B;
-				} else if (rozkaz[2] == "C") {
+				} else if (rozkaz[2].equals("C")) {
 					reg_A = reg_C;
 				} else {
 					reg_A = Integer.parseInt(rozkaz[2]);
 				}
 
-			} else if (rozkaz[1] == "B") {
-				if (rozkaz[2] == "A") {
+			} else if (rozkaz[1].equals("B")) {
+				if (rozkaz[2].equals("A")) {
 					reg_B = reg_A;
-				} else if (rozkaz[2] == "C") {
+				} else if (rozkaz[2].equals("C")) {
 					reg_B = reg_C;
 				} else {
 					reg_B = Integer.parseInt(rozkaz[2]);
 				}
-			} else if (rozkaz[1] == "A") {
+			} else if (rozkaz[1].equals("A")) {
 				reg_C = reg_A;
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[1].equals("B")) {
 				reg_C = reg_B;
 			} else {
 				reg_C = Integer.parseInt(rozkaz[2]);
@@ -187,11 +187,11 @@ public class Interpreter {
 			System.out.print("\n");
 		}
 
-		if (rozkaz[0] == "PAP") {
+		if (rozkaz[0].equals("PAP")) {
 			// PM.ls();
-		} else if (rozkaz[0] == "KIL") {
+		} else if (rozkaz[0].equals("KIL")) {
 			manager.kill(Integer.parseInt(rozkaz[1]))
-		} else if (rozkaz[0] == "FEK") {
+		} else if (rozkaz[0].equals("FEK")) {
 			/*
 			 * if (rozkaz[2] != ""){ String bufor; String data; // std::fstream
 			 * plik(rozkaz[2]);
@@ -218,14 +218,14 @@ public class Interpreter {
 			 */
 		}
 
-		if (rozkaz[0] == "DVM") {
+		if (rozkaz[0].equals("DVM")) {
 			// pamiec.wyswietl_pamiec_wirtualna();
-		} else if (rozkaz[0] == "DRM") {
+		} else if (rozkaz[0].equals("DRM")) {
 			memory.showMemory();
 		}
 
 		// Logiczne
-		if (rozkaz[0] == "EQL") {
+		if (rozkaz[0].equals("EQL")) {
 			if (rozkaz[1] == rozkaz[2]) {
 				flag_F = true;
 			} else
@@ -233,12 +233,12 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JMP") {
+		} else if (rozkaz[0].equals("JMP")) {
 			PC = Integer.parseInt(rozkaz[1]);
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JPT") {
+		} else if (rozkaz[0].equals("JPT")) {
 			if (this.flag_F = true) {
 				PC = Integer.parseInt(rozkaz[1]);
 			} else {
@@ -247,7 +247,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JPF") {
+		} else if (rozkaz[0].equals("JPF")) {
 			if (this.flag_F = false) {
 				PC = Integer.parseInt(rozkaz[1]);
 			} else {
@@ -269,7 +269,7 @@ public class Interpreter {
 		this.working = false;
 		this.fail = false;
 
-		if (rozkaz[0] == "FCR") {
+		if (rozkaz[0].equals("FCR")) {
 			disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
 
 			this.working = false;
