@@ -58,13 +58,16 @@ public class Memory {
 		}
 	}
 	private void defrag(){
+		int suma=0;
 		processListSort();
 		PCB bufor =new PCB(); 
 		bufor.base=0;
 		for(PCB t : processList){
 			t.base=bufor.base;
-			
+			suma=suma+t.limit;
+			bufor.base=bufor.base+bufor.limit;
 		}
+		FSBPTR.head=new FSB(bufor.base,suma );
 	}
 	private void processListSort(){
 		PCB nier=new PCB();//PCB procesu mającego najmniejszy adres w pamięci
