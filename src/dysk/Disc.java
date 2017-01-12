@@ -71,7 +71,7 @@ public class Disc {
 			
 			System.out.println("Plik zostal pomyslnie utworzony");
 			
-			iloscWolnegoMiejsca();
+		//	iloscWolnegoMiejsca();
 			
 		}
 		else if (wolnyKatalog() == -1)// sprawdz czy w fat
@@ -126,33 +126,33 @@ public class Disc {
 		int k;
 		dlugosc = data.length();
 		count_jap = Math.ceil((dlugosc / 64));
-
 		// Czy katalog wolny?  
 		if (ktory_katalog(nazwa, ext) != -1){
 		if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
 				atrybuty[ktory_katalog(nazwa, ext)].zapisany = true;
+	
 			if (file_jap(nazwa, ext) != -1) {
-				if (spacefree > dlugosc) {
+				if ((spacefree) > dlugosc) {
 					jap1 = file_jap(nazwa, ext);
 					k = 0;
 					//DLA PIERWSZEGO 
 					char datachar[] = data.toCharArray();
-					for (int q = 0; q < jap1 * 64 + 64; q++) {
+					for (int q = 0; q < jap1 *64 ; q++) {
 						if (k <= dlugosc - 1) {
 							dysk[q] = datachar[k];
 							k++;
 						}
 					}
 					//DLA WIECEJ 
+					
 					char datachar1[] = data.toCharArray();
 					if (count_jap > 1) {
-
 						for (int j = 2; j <= count_jap; j++) {
 							nastepnyJap = szukanieWolnegoJap();
 							fat[nastepnyJap] = -1;
 							fat[jap1] = nastepnyJap;
 							jap1 = nastepnyJap;
-							for (int i1 = 0; i1 < nastepnyJap * 64+ 64; i1++) {
+							for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
 								if (k <= dlugosc - 1)
 								{
 									dysk[i1] = datachar1[k];
@@ -281,16 +281,16 @@ public class Disc {
 		}
 		spacefree =  free * 64; 
 	}
-
+	
 	public void drukujDysk(String nazwa, String ext)
 {
 	int jap = file_jap(nazwa,ext);
 	int nextJap;
-	int l=1;
+	int l=-1;
 	int[] tab = new int [64];
 	tab[0] = jap;
 	
-	if(jap != -1)
+	if(jap != -1 && atrybuty[ktory_katalog(nazwa, ext)].nazwa == nazwa && atrybuty[ktory_katalog(nazwa, ext)].ext == ext)
 	{
 		while(jap !=-1)
 		{
@@ -304,12 +304,13 @@ public class Disc {
 		for ( int i =0 ;i<l;i++)
 		{
 			int j = 64 *tab[i];
+			
 			int k =j+64;
-			for(j= 64 *tab[i]; j<k;j++)
+			for(int z= j; z<k;z++)
 			{
-				System.out.print(dysk[j]);
+				System.out.print(dysk[z]);
 			}
-			System.out.println();
+			
 		}
 	}
 	else
@@ -317,6 +318,33 @@ public class Disc {
 		System.out.println("Nie znaleziono podanego pliku");
 	}
 }
+	/*
+	void wyswietlDanyPlik(String nazwa, String ext)
+	{
+		int i =0;
+		if (atrybuty[ktory_katalog(nazwa, ext)].nazwa == nazwa && atrybuty[ktory_katalog(nazwa, ext)].ext == ext)
+		{
+			{
+				System.out.println(atrybuty[ktory_katalog(nazwa, ext)].nazwa +"   "+ atrybuty[ktory_katalog(nazwa, ext)].ext);
+				while(file_jap(nazwa, ext) !=-1)
+				{
+					
+					System.out.print(dysk[fat[i]]);
+					i++;
+				}
+			}
+		}
+		else
+			System.out.println("Nie znalazlo takiego pliku");
+	}
+	*/
+	void www()
+	{
+		for ( int i =0 ; i< 2048; i++)
+		{
+			System.out.print(dysk[i]);
+		}
+	}
 
 
 	public void zmianaNazwy(String nazwa, String ext, String newname, String newext)
@@ -333,7 +361,7 @@ public class Disc {
 						atrybuty[i].ext = newext;
 					}
 				}
-				System.out.println("Zmiana nazwy przebieg�a pomy�lnie");
+				System.out.println("Zmiana nazwy przebiegla pomylnie");
 			}
 			else
 			{

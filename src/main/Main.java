@@ -74,18 +74,25 @@ public class Main {
 					disc.wys();
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
-					disc.WyswietlaPliki();
-					
+					disc.wyswietlaPliki();
+				} else if(line.split(" ")[0].equals("UDISK")) {
+					disc.tworzeniaPliku( name, ext);
+				} else if(line.split(" ")[0].equals("DDISK")) {
+					disc.usuwaniePliku(nazwa, ext);
+				} else if(line.split(" ")[0].equals("ZNDISK")) {
+					disc.zmianaNazwy(nazwa, ext, newname, newext);
+				} else if(line.split(" ")[0].equals("DODISC")) {
+					disc.dopiszDoPliku(nazwa, ext, data);
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");
-					
 				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
 					String file = line.split(" ")[1];
 					procesor.dodaj_proces(file);
 					
 				} else if(line.split(" ")[0].equals("KILL")) {
-					System.out.println("KILL");
-					
+					System.out.println("KILL");	} 
+				else if(line.split(" ")[0].equals("")) {
+						System.out.println("HELP");
 				} else if(line.split(" ")[0].equals("EXIT")) {
 					System.out.println("ZAMYKAM SYSTEM :)"); 
 					System.exit(0);
