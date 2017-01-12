@@ -1,10 +1,12 @@
 package interpreter;
 
+import dysk.Disc;
+import memoryManagement.Memory;
 
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
-        private Disc disk;
+        private final Disc disk;
         private Memory memory;
 
 	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk) 
@@ -58,29 +60,29 @@ public class Interpreter {
 			if (rozkaz[1] == "A") {
 				reg_A += Integer.parseInt(rozkaz[2]);
 			} else if (rozkaz[1] == "B") {
-				reg_B += Integer.parseInt(rozkaz[2]);
+				reg_B += Integer.parseInt(rozkaz[0]);
 			} else {
-				reg_C += Integer.parseInt(rozkaz[2]);
+				reg_C += Integer.parseInt(rozkaz[0]);
 			}
 
 			this.working = false;
 			return true;
 
 		} else if (rozkaz[0] == "SUB") {
-			if (rozkaz[1] == "A") {
-				reg_A -= Integer.parseInt(rozkaz[2]);
+			if (rozkaz[0] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[0]);
 			} else if (rozkaz[0] == "B") {
-				reg_B -= Integer.parseInt(rozkaz[2]);
+				reg_B -= Integer.parseInt(rozkaz[0]);
 			} else {
-				reg_C -= Integer.parseInt(rozkaz[2]);
+				reg_C -= Integer.parseInt(rozkaz[0]);
 			}
 
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "INC") {
-			if (rozkaz[1] == "A") {
+			if (rozkaz[0] == "A") {
 				reg_A += 1;
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[0] == "B") {
 				reg_B += 1;
 			} else {
 				reg_C += 1;
@@ -90,9 +92,9 @@ public class Interpreter {
 			return true;
 
 		} else if (rozkaz[0] == "DEC") {
-			if (rozkaz[1] == "A") {
+			if (rozkaz[0] == "A") {
 				reg_A -= 1;
-			} else if (rozkaz[1] == "B") {
+			} else if (rozkaz[0] == "B") {
 				reg_B -= 1;
 			} else {
 				reg_C -= 1;
@@ -101,46 +103,46 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "SUB") {
-			if (rozkaz[1] == "A") {
-				reg_A -= Integer.parseInt(rozkaz[2]);
+			if (rozkaz[0] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[0]);
 			} else if (rozkaz[0] == "B") {
-				reg_B -= Integer.parseInt(rozkaz[2]);
+				reg_B -= Integer.parseInt(rozkaz[0]);
 			} else {
-				reg_C -= Integer.parseInt(rozkaz[2]);
+				reg_C -= Integer.parseInt(rozkaz[0]);
 			}
 
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "MUL") {
-			if (rozkaz[1] == "A") {
-				reg_A *= Integer.parseInt(rozkaz[2]);
-			} else if (rozkaz[1] == "B") {
-				reg_B *= Integer.parseInt(rozkaz[2]);
+			if (rozkaz[0] == "A") {
+				reg_A *= Integer.parseInt(rozkaz[3]);
+			} else if (rozkaz[2] == "B") {
+				reg_B *= Integer.parseInt(rozkaz[3]);
 			} else {
-				reg_C *= Integer.parseInt(rozkaz[2]);
+				reg_C *= Integer.parseInt(rozkaz[3]);
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "LOD") {
-			if (rozkaz[1] == "A") {
-				reg_A = Integer.parseInt(rozkaz[2]);
-			} else if (rozkaz[1] == "B") {
-				reg_B = Integer.parseInt(rozkaz[2]);
+		} else if (rozkaz[1] == "LOD") {
+			if (rozkaz[2] == "A") {
+				reg_A = Integer.parseInt(rozkaz[3]);
+			} else if (rozkaz[2] == "B") {
+				reg_B = Integer.parseInt(rozkaz[3]);
 			} else {
-				reg_C = Integer.parseInt(rozkaz[2]);
+				reg_C = Integer.parseInt(rozkaz[3]);
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "DIV") {
-			if (rozkaz[2] != "0") {
-				if (rozkaz[1] == "A") {
-					reg_A /= Integer.parseInt(rozkaz[2]);
-				} else if (rozkaz[1] == "B") {
-					reg_B /= Integer.parseInt(rozkaz[2]);
+		} else if (rozkaz[1] == "DIV") {
+			if (rozkaz[3] != "0") {
+				if (rozkaz[2] == "A") {
+					reg_A /= Integer.parseInt(rozkaz[3]);
+				} else if (rozkaz[2] == "B") {
+					reg_B /= Integer.parseInt(rozkaz[3]);
 				} else {
-					reg_C /= Integer.parseInt(rozkaz[2]);
+					reg_C /= Integer.parseInt(rozkaz[3]);
 				}
 
 				this.working = false;
@@ -153,18 +155,18 @@ public class Interpreter {
 		} else if (rozkaz[0].equals("MOV")) {
 			System.out.println("MOV"); //To jest potrzebne?
 			if (rozkaz[1] == "A") {
-				if (rozkaz[1] == "B") {
+				if (rozkaz[2] == "B") {
 					reg_A = reg_B;
-				} else if (rozkaz[1] == "C") {
+				} else if (rozkaz[2] == "C") {
 					reg_A = reg_C;
 				} else {
 					reg_A = Integer.parseInt(rozkaz[2]);
 				}
 
 			} else if (rozkaz[1] == "B") {
-				if (rozkaz[1] == "A") {
+				if (rozkaz[2] == "A") {
 					reg_B = reg_A;
-				} else if (rozkaz[1] == "C") {
+				} else if (rozkaz[2] == "C") {
 					reg_B = reg_C;
 				} else {
 					reg_B = Integer.parseInt(rozkaz[2]);
@@ -183,11 +185,11 @@ public class Interpreter {
 			System.out.print("\n");
 		}
 
-		if (rozkaz[0] == "PAP") {
+		if (rozkaz[1] == "PAP") {
 			// PM.ls();
-		} else if (rozkaz[0] == "KIL") {
+		} else if (rozkaz[1] == "KIL") {
 			// PM.kill(Integer.parseInt(rozkaz[2]));
-		} else if (rozkaz[0] == "FEK") {
+		} else if (rozkaz[1] == "FEK") {
 			/*
 			 * if (rozkaz[2] != ""){ String bufor; String data; // std::fstream
 			 * plik(rozkaz[2]);
@@ -214,38 +216,38 @@ public class Interpreter {
 			 */
 		}
 
-		if (rozkaz[0] == "DVM") {
+		if (rozkaz[1] == "DVM") {
 			// pamiec.wyswietl_pamiec_wirtualna();
-		} else if (rozkaz[0] == "DRM") {
+		} else if (rozkaz[1] == "DRM") {
 			memory.showMemory();
 		}
 
 		// Logiczne
-		if (rozkaz[0] == "EQL") {
-			if (rozkaz[1] == rozkaz[2]) {
+		if (rozkaz[1] == "EQL") {
+			if (rozkaz[2] == rozkaz[3]) {
 				flag_F = true;
 			} else
 				flag_F = false;
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JMP") {
-			PC = Integer.parseInt(rozkaz[1]);
+		} else if (rozkaz[1] == "JMP") {
+			PC = Integer.parseInt(rozkaz[2]);
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JPT") {
+		} else if (rozkaz[1] == "JPT") {
 			if (this.flag_F = true) {
-				PC = Integer.parseInt(rozkaz[1]);
+				PC = Integer.parseInt(rozkaz[2]);
 			} else {
 				// do nothing
 			}
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "JPF") {
+		} else if (rozkaz[1] == "JPF") {
 			if (this.flag_F = false) {
-				PC = Integer.parseInt(rozkaz[1]);
+				PC = Integer.parseInt(rozkaz[2]);
 			} else {
 				// do nothing
 			}
@@ -275,7 +277,7 @@ public class Interpreter {
 			 * rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac rozkaz[3] ->
 			 * co chcesz zapisac
 			 */
-			// fm.writeFile(fm.findFile(rozkaz[2]), rozkaz[3]);
+			disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
 
 			this.working = false;
 			return true;
@@ -290,7 +292,7 @@ public class Interpreter {
 			// System.out.print(buff);
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FTR") {
+		} else if (rozkaz[1] == "FTR") {
 			/*
 			 * rozkaz[2] -> nazwa pliku do przyciecia rozkaz[3] -> Ile znakow w
 			 * pliku zachowac
@@ -299,7 +301,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FDL") {
+		} else if (rozkaz[1] == "FDL") {
 			/*
 			 * rozkaz[2] -> nazwa pliku do usuniecia
 			 */
@@ -307,7 +309,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FOP") {
+		} else if (rozkaz[1] == "FOP") {
 			/*
 			 * rozkaz[2] -> nazwa pliku do otwarcia rozkaz[3] -> tryb otwarcia
 			 */
@@ -316,7 +318,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FCL") {
+		} else if (rozkaz[1] == "FCL") {
 			/*
 			 * rozkaz[2] -> nazwa pliku do zamkniecia
 			 */
@@ -324,7 +326,7 @@ public class Interpreter {
 
 			this.working = false;
 			return false;
-		} else if (rozkaz[0] == "FLS") {
+		} else if (rozkaz[1] == "FLS") {
 			/*
 			 * rozkaz[2] -> nazwa pliku, w ktorym przesunac offset rozkaz[3] ->
 			 * przesuniecie (ujemne w lewo, dodatnie w prawo): ";
@@ -336,7 +338,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FRN") {
+		} else if (rozkaz[1] == "FRN") {
 			/*
 			 * rozkaz[2] -> Nazwa pliku, ktory chcesz zmienic rozkaz[3] -> Na
 			 * jaka
@@ -346,7 +348,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FFN") {
+		} else if (rozkaz[1] == "FFN") {
 			/*
 			 * rozkaz[2] -> nazwa szukanego pliku
 			 */
@@ -354,7 +356,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FLT") {
+		} else if (rozkaz[1] == "FLT") {
 			// fm.listFiles();
 
 			this.working = false;
