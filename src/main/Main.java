@@ -13,29 +13,68 @@ import processManager.ProcessManager;
 public class Main {
 
 	public static void load(String co) {
-		System.out.print(co);
-		/*String loading = " [=========================]"; 
-		char[] loadingc = loading.toCharArray();
-		for(int i = 0; i<loading.length();i++) {
+		try {
+		char[] loadingc = co.toCharArray();
+		for(int i = 0; i<co.length();i++) {
 			System.out.print(loadingc[i]);
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	*/
+			Thread.sleep(0,1);
+		}	
 		System.out.println();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String[] args) {
-		
-		System.out.println(" @@@@   @@   @     @   @@      @@@   @@@   ");
-		System.out.println("    @  @  @   @   @   @  @    @     @@ @@  ");
-		System.out.println("    @  @@@@    @ @    @@@@     @@   @   @  ");
-		System.out.println("  @ @  @  @    @ @    @  @       @  @@ @@  ");
-		System.out.println("  @@@  @  @     @     @  @    @@@    @@@   ");
-		System.out.println();
+						load("	     /@@#  #@# ,@@@@@@@*                                                                            \n"
+							+ "	    @    #@    @         %&                                                                         \n"
+							+ "	   @ #@@ @  @#  @          *%                                                                       \n"
+							+ "	   ( @@@ & @@@  &            @                                                                      \n"
+							+ "	   @ @@% & @@@  @             @                                                                     \n"
+							+ "	   #     @     %               @                                                                    \n"
+							+ "	   (.@@@( /@#@@                .#                                                                   \n"
+							+ "	  /.                            @                                                                   \n"
+							+ "	  %                    @        ./                                                                  \n"
+							+ "	 @                     (.&       @                                                                  \n"
+							+ "	 %                      #@       @                                                                  \n"
+							+ "	 ,                      @.       @                                                                  \n"
+							+ "	                       .%        @                                                                  \n"
+							+ "	 ,                     #,        &                                                                  \n"
+							+ "	 &                     @        .,                                                                  \n"
+							+ "	 *.                   &.        &                 /@@@%%%%@@                                        \n"
+							+ "	  @.                 %*         %             &@.           @(                                      \n"
+							+ "	   *&               @          /           .@               @ .@                                    \n"
+							+ "	     %%           @(           &          @                 @   .@                                  \n"
+							+ "	        %@%..,&@@             #          (                 .(     @                                 \n"
+							+ "	             %                %         #                  ,/    @ &.                               \n"
+							+ "	             @               @          @@(                //   %   @                               \n"
+							+ "	             @.              %         @   @.              #,  @     @       ,@.    %@              \n"
+							+ "	            (  /@&.    .#@  @         *,    (/             %  ,      %.     @     @.  .&            \n"
+							+ "	            @               #         @      ,#            @  &       %   .(     #      @           \n"
+							+ "	            @              &          @       ((          &  ,       @@   @/,%@ @&       &          \n"
+							+ "	            @              @         .* ,@     &       &@&&  ,      @ @  #     @ /, ,,.  *          \n"
+							+ "	            &             ..         &     @    @,#@&      %       %  @  @     ,(,(     & (         \n"
+							+ "	            %             /          @       ( .*          @       #  %  %    *@*       %           \n"
+							+ "	            @@@       %/  .(        &        ..@           //     @   (. .%      %        %         \n"
+							+ "	            @              @       & /%        @            @     (    @  @     .@,      *          \n"
+							+ "	            /,              %%   #@    /(     .(            (    (     @%  @   &/  //    @@@@@&%   @\n"
+							+ "	             @              .            @    /              @         % %@#@@%      %  .%@    &   ,\n"
+							+ "	             &             @              &   @              #.        .     #,         @ *    #   @\n"
+							+ "	              &           @               ,  (                @       @       @        @        & @ \n"
+							+ "	              /,        *&                 (,/                 @     /        ,      .&   /    .@   \n"
+							+ "	               &.     #@           (       ,(                   @                   @. &@%@@@@@@@%(.\n"
+							+ "	                (@@@/             ..      @,                     /@              ,@@@,     %%*      \n"
+							+ "	                  @               @     #@@@&                      .@@#*.    ,&@@@@@@@              \n"
+							+ "	                   /@            ./   @@&(.                               (, #(.                    \n"
+							+ "	                      @@%       .@,@@@@@%                                                           \n"
+							+ "	                            (*,*,,,,                                                                \n"
+							+ "                                                                                                     \n"
+							+ "                                     @@@@   @@   @     @   @@      @@@   @@@                         \n"
+							+ "                                        @  @  @   @   @   @  @    @     @@ @@                        \n"
+							+ "                                        @  @@@@    @ @    @@@@     @@   @   @                        \n"
+							+ "                                      @ @  @  @    @ @    @  @       @  @@ @@                        \n"
+							+ "                                      @@@  @  @     @     @  @    @@@    @@@                         \n");
 
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 
@@ -50,12 +89,22 @@ public class Main {
 		//Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail);
 		
 		while(true) {
+			System.out.print("javaOS:$ ");
 			try {
 				String line = keyboard.readLine();	
 				if(line.split(" ")[0].equals("STEP")) {
 					procesor.wykonaj();
 				} else if(line.split(" ")[0].equals("HELP")) {
-					System.out.println("HELP");
+					System.out.println("HELP - Wyświetla ten tekst");
+					System.out.println("PPROCES - Wyświetla procesy w systemie");
+					System.out.println("PBOXYS - Wyświetla szkrzynki w systemie");
+					System.out.println("PMEMORY - Wyświetla stan pamięci");
+					System.out.println("PFAT - Wyświetla stan tablicy Fat");
+					System.out.println("PDISK - Wyświetla stan dysku");
+					System.out.println("PSEMAPHORE - Wyświetla stean semafor");
+					System.out.println("OPEN <PLIK> - Otwiera plik z kodem programu");
+					System.out.println("EXIT - Kończy prace systemu");
+					System.out.println("ABOUT - Autorzy");
 					
 				} else if(line.split(" ")[0].equals("PPROCES")) {
 					processManager.ps();
@@ -74,7 +123,7 @@ public class Main {
 					disc.wys();
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
-					disc.WyswietlaPliki();
+					disc.wyswietlaPliki();
 					
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");
@@ -83,25 +132,37 @@ public class Main {
 					String file = line.split(" ")[1];
 					procesor.dodaj_proces(file);
 					
-				} else if(line.split(" ")[0].equals("KILL")) {
-					System.out.println("KILL");
-					
 				} else if(line.split(" ")[0].equals("EXIT")) {
 					System.out.println("ZAMYKAM SYSTEM :)"); 
 					System.exit(0);
 					
 				} else if(line.split(" ")[0].equals("ABOUT")) {
-					String kto = "SYSTEM TWORZYLI\nMarek Wojciechowski\nPrzemysław Łapicz\nMarek Rybicki\nPaweł Korczak\nMateusz Norel\nLucyna Hernet\nMateusz Terlecki\nPiotr Popiołek\nKuba Rybakowski\n"; 
+					String kto = "SYSTEM TWORZYLI\n"
+							   + "Marek Wojciechowski\n"
+							   + "Przemysław Łapicz\n"
+							   + "Marek Rybicki\n"
+							   + "Paweł Korczak\n"
+							   + "Mateusz Norel\n"
+							   + "Lucyna Hernet\n"
+							   + "Mateusz Terlecki\n"
+							   + "Piotr Popiołek\n"
+							   + "Kuba Rybakowski\n"
+							   + "   \n"
+							   + "   \n"
+							   + "   \n"
+							   + "Miłego dnia :)\n";
 					char[] ktoc = kto.toCharArray();
 					for(int i = 0; i<kto.length();i++) {
 						System.out.print(ktoc[i]);
 						try {
-							Thread.sleep(50);
+							Thread.sleep(5);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}					
+				} else {
+					System.out.println("NIE MA TAKIEJ KOMENDY");
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
