@@ -43,7 +43,7 @@ public class Process {
 			String kod = "";
 			for(int i = 0; i <file.length(); i++) {
 				char znak = (char)fileInputStream.read();
-					kod = kod + znak;
+				kod = kod + znak;
 			}
 			kod = kod.replaceAll("\r", "").replaceAll("\n", " ");
 			boolean memoryGood = memory.memoryAllocation((int) kod.length(), process.pcb);
