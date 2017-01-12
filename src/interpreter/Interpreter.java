@@ -1,13 +1,10 @@
-package interpreter;
-
-import java.util.Iterator;
-import java.util.Vector;
-import java.util.regex.Pattern;
+package so_interpreter;
+import java.util.*;
 
 public class Interpreter {
     private int reg_A=0, reg_B=0, reg_C=0, PC=0;
-    private Boolean done = false, working = false, fail = false; 
-    private Vector<String> commandList;
+    private Boolean done = false, working = false, fail = false, flag_F = false; 
+   
     
     public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail){
         this.reg_A = reg_A;
@@ -18,15 +15,16 @@ public class Interpreter {
         this.done = done;
         this.fail = fail;
     }
-   /* public void set_regA(int reg_A){
-        this.reg_A = 0;
+    
+    public void set_regA(int a){
+        this.reg_A = a;
     }
-    public void set_regB(int reg_B){
-        this.reg_B = 0;
+    public void set_regB(int b){
+        this.reg_B = b;
     }
-    public void set_regC(int reg_C){
-        this.reg_C = 0;
-    }*/
+    public void set_regC(int c){
+        this.reg_C = c;
+    }
     public int get_regA(){
         return reg_A;
     }
@@ -36,50 +34,32 @@ public class Interpreter {
     public int get_regC(){
         return reg_C;
     }
-     public int get_PC(){
+    public int get_PC(){
         return PC;
     }
-      public void set_list(Vector<String> commandList){
-        
-        this.commandList.add("MOV");
-        this.commandList.add("DEC");
-    }
-    Boolean exe(String command){
+    
+    public Boolean exe(String rozkaz){
         this.done = false;
         this.working = false;
         this.fail = false;
-        
-        /*transform(rozkaz_org.begin(), rozkaz_org.end(), rozkaz_org.begin(), ::toupper);
-
-	regex abc("([A-Z][A-Z][A-Z]) ?([A-Z0-9]*) ?([A-Z0-9]*) ?([A-Z0-9]*)");
-	smatch rozkaz;
-	regex_search(rozkaz_org, rozkaz, abc);
-
-	std::cout << rozkaz[1] << " " << rozkaz[2] << " " << rozkaz[3] << " " << rozkaz[4] << endl;
-        */
-//	auto i = find(_lista_rozkazow.begin(), _lista_rozkazow.end(), rozkaz[1]);
-       
-        String pattern = "([A-Z][A-Z][A-Z]) ?([A-Z0-9]*) ?([A-Z0-9]*) ?([A-Z0-9]*)";
-        Pattern r = Pattern.compile(pattern);
-//        Matcher m = r.matcher(line);
         
         Iterator it = commandList.iterator();
         if(it.hasNext()){
             this.working = true;
             PC++;
-            
+         
             //Rozkazy arytmetyczne
-            
-            if(rozkaz[1] == "ADD"){
-		if (rozkaz[2] == "A"){
-                    reg_A += Integer.parseInt(rozkaz[3]);
+            Scanner s = new Scanner(rozkaz)
+            if(s.next() == "ADD"){
+		if (rozkaz.substring(4, 1) == "A"){
+                    reg_A += Integer.parseInt(rozkaz.substring(6, 1));
 		}
                 else{
-                   if (rozkaz[2] == "B"){
-			reg_B += Integer.parseInt(rozkaz[3]);
+                   if (rozkaz == "B"){
+			reg_B += Integer.parseInt(rozkaz);
                     }
                     else{
-			reg_C += Integer.parseInt(rozkaz[3]);
+			reg_C += Integer.parseInt(rozkaz);
 			}
 
                     this.working = false;
@@ -87,16 +67,16 @@ public class Interpreter {
 		}
             }
             else{
-		if(rozkaz[1] == "SUB"){
-                    if (rozkaz[2] == "A"){
-			reg_A -= Integer.parseInt(rozkaz[3]);
+		if(rozkaz == "SUB"){
+                    if (rozkaz == "A"){
+			reg_A -= Integer.parseInt(rozkaz);
                     }
                     else{
-                        if (rozkaz[2] == "B"){
-                            reg_B -= Integer.parseInt(rozkaz[3]);
+                        if (rozkaz == "B"){
+                            reg_B -= Integer.parseInt(rozkaz);
                         }
 			else{
-                            reg_C -= Integer.parseInt(rozkaz[3]);
+                            reg_C -= Integer.parseInt(rozkaz);
 			}
                     }
 
@@ -104,13 +84,13 @@ public class Interpreter {
                     return true;
 		}
 		else{
-                    if (rozkaz[1] == "INC")
+                    if (rozkaz.substring(0, 3) == "INC")
                     {
-			if (rozkaz[2] == "A"){
+			if (rozkaz.substring(4, 5) == "A"){
                             reg_A += 1;
 			}
 			else{
-                            if (rozkaz[2] == "B"){
+                            if (rozkaz == "B"){
 				reg_B += 1;
                             }
                             else{
@@ -122,12 +102,12 @@ public class Interpreter {
 			}
                     }
                     else{
-                        if (rozkaz[1] == "DEC"){
-                            if (rozkaz[2] == "A"){
+                        if (rozkaz == "DEC"){
+                            if (rozkaz == "A"){
 				reg_A -= 1;
                             }
 			else{
-                            if (rozkaz[2] == "B"){
+                            if (rozkaz == "B"){
 				reg_B -= 1;
                             }
                             else{
@@ -139,16 +119,16 @@ public class Interpreter {
 			return true;
                         }
                         else{
-                            if(rozkaz[1] == "SUB"){
-                                if (rozkaz[2] == "A"){
-                                    reg_A -= Integer.parseInt(rozkaz[3]);
+                            if(rozkaz == "SUB"){
+                                if (rozkaz == "A"){
+                                    reg_A -= Integer.parseInt(rozkaz);
 				}
 				else{
-                                    if (rozkaz[2] == "B"){
-					regB -= Integer.parseInt(rozkaz[3]);
+                                    if (rozkaz == "B"){
+					reg_B -= Integer.parseInt(rozkaz);
                                     }
                                     else{	
-                                        reg_C -= Integer.parseInt(rozkaz[3]);
+                                        reg_C -= Integer.parseInt(rozkaz);
                                     }
 				}
 
@@ -156,16 +136,16 @@ public class Interpreter {
 				return true;
                             }
                             else{
-				if (rozkaz[1] == "MUL"){
-                                    if (rozkaz[2] == "A"){
+				if (rozkaz == "MUL"){
+                                    if (rozkaz == "A"){
 					reg_A *= Integer.parseInt(rozkaz[3]);
                                     }
 				else{
                                     if (rozkaz[2] == "B"){
-					regB *= Integer.parseInt(rozkaz[3]);
+					reg_B *= Integer.parseInt(rozkaz[3]);
                                     }
                                     else{
-					regC *= Integer.parseInt(rozkaz[3]);
+					reg_C *= Integer.parseInt(rozkaz[3]);
                                     }
 				}
 
@@ -182,7 +162,7 @@ public class Interpreter {
                                                 reg_B = Integer.parseInt(rozkaz[3]);
                                             }
 					else{
-                                            regC = Integer.parseInt(rozkaz[3]);
+                                            reg_C = Integer.parseInt(rozkaz[3]);
                                             }
 					}
 
@@ -294,7 +274,7 @@ public class Interpreter {
                             for (int i = 0; i < (ROZMIAR - pom); i++){
                                     data += char(0);
                             }
-                            BaseM = pamiec.znajdz_miejsce(data)*ROZMIAR;//nie przemyslalem tego xD
+                            BaseM = pamiec.znajdz_miejsce(data)*ROZMIAR;
                             Limit = pamiec.wgraj_program(rozkaz[2]);
                         }//sciezka
                         if (BaseM != -1){
@@ -357,7 +337,7 @@ public class Interpreter {
                     }
                     else{
 			if (rozkaz[1] == "JPT"){
-                            if (this->flag_F = true){
+                            if (this.flag_F = true){
 				PC = Integer.parseInt(rozkaz[2]);
                             }
                             else{
@@ -369,7 +349,7 @@ public class Interpreter {
 			}
 			else{
                             if (rozkaz[1] == "JPF"){
-				if (this->flaga_F = false){
+				if (this.flag_F = false){
                                     PC = Integer.parseInt(rozkaz[2]);
 				}
 				else{
@@ -385,105 +365,167 @@ public class Interpreter {
 			}
                     }
 		}
-            //Potoki
-            if (rozkaz[1] == "PIP"){//tworzenie potoku
-                for (auto it : PM.Processlist) {
-                    if (it->state == 2){
-			PIPE* nowy = new PIPE(it->deskryptor, DYSK);//tworzenie nowego potoku
-			it->potok = nowy;
-			//zapisanie deskryptorow do odpowiednich rejestrow:
-			if (rozkaz[2] == "A")set_regA(it->deskryptor[0]);
-			if (rozkaz[2] == "B")set_regB(it->deskryptor[0]);
-			if (rozkaz[2] == "C")set_regC(it->deskryptor[0]);
-                    }
-		}
+
             }
             else{
-		if (rozkaz[1] == "RPP"){//czytanie z potoku
-                    for (auto it : PM.Processlist) {
-			if (it->state == 2){
-                            if (it->potok != nullptr){
-				String buf;
-				if (it->potok->read(it->deskryptor[0], buf, Integer.parseInt(rozkaz[3])) == -1){
-                                    PM.waitpid(it->PID);
-                                    break;
-				}
-				if (rozkaz[2] == "A")regA = Integer.parseInt(buf);
-				else if (rozkaz[2] == "B")regB = Integer.parseInt(buf);
-				else if (rozkaz[2] == "C")regC = Integer.parseInt(buf);
-				System.out.println(buf);
-                            }
-			}
-                    }
+              System.out.print("Nie ma takiego rozkazu.\n\n\n");
+            }
+        }
+
+    public Boolean execute(String command, FileManagement& fm){
+	this.done = false;
+	this.working = false;
+	this.fail = false;
+
+        Iterator it = commandList.iterator();
+	if (it.hasNext()){
+            this.working = true;
+            PC++;
+        
+            if (rozkaz == "FCR"){
+		fm.createFile(rozkaz);
+
+		this.working = false;
+		return true;
+            }
+            else
+		if (rozkaz == "FWR"){
+                    /*
+                    rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac
+                    rozkaz[3] -> co chcesz zapisac
+                    */
+                    fm.writeFile(fm.findFile(rozkaz[2]), rozkaz[3]);
+
+                    this.working = false;
+                    return true;
 		}
 		else{
-                    if (rozkaz[1] == "WPP"){//pisanie do potoku
-			for (auto it : PM.Processlist) {
-                            if (it->state == 2) {
-				if (it->potok != nullptr) {
-                                    if (it->potok->write(it->deskryptor[1], rozkaz[2]) == -1)
-					PM.waitpid(it->PID);
-				}
-                            }
-			}
+                    if (rozkaz == "FRD"){
+			/*
+			rozkaz[2] -> nazwe pliku, z ktorego mam czytac
+			rozkaz[3] ->  ilosc znakow do odczytania
+			*/
+                        String buff;
+			fm.readFile(fm.findFile(rozkaz[2]), buff, Integer.parseInt(rozkaz[3]));
+			System.out.print(buff);
+			this.working = false;
+			return true;
                     }
                     else{
-			if (rozkaz[1] == "PCR"){//zamyka deskryptor czytania
-                            for (auto it : PM.Processlist) {
-				if (it->state == 2) {
-                                    if (it->potok != nullptr) {
-					it->potok->close(it->deskryptor[0]);
-                                    }	
-				}
-                            }
+			if (rozkaz[1] == "FTR"){
+                            /*
+                            rozkaz[2] -> nazwa pliku do przyciecia
+                            rozkaz[3] -> Ile znakow w pliku zachowac
+                            */
+                            fm.truncateFile(rozkaz[2], Integer.parseInt(rozkaz[3]));
+
+                            this.working = false;
+                            return true;
 			}
 			else{
-                            if (rozkaz[1] == "PCW"){//zamyka deskryptor pisania
-				for (auto it : PM.Processlist) {
-                                    if (it->state == 2) {
-					if (it->potok != nullptr) {
-										it->potok->close(it->deskryptor[1]);
-					}
-                                    }
-				}
+                            if (rozkaz[1] == "FDL"){
+				/*
+                                rozkaz[2] -> nazwa pliku do usuniecia
+				*/
+				fm.deleteFile(rozkaz[2]);
+
+				this.working = false;
+				return true;
                             }
                             else{
-                                 if (rozkaz[1] == "PDI"){//wyswietla potok
-                                    for (auto it : PM.Processlist) {
-                                        if (it->state == 2) {
-                                            if (it->potok != nullptr) {
-                                                qit->potok->display();
-                                            }
-                                        }
-                                    }
-                                }
+				if (rozkaz[1] == "FOP"){
+                                    /*
+                                    rozkaz[2] -> nazwa pliku do otwarcia
+                                    rozkaz[3] -> tryb otwarcia
+                                    */
+                                    fm.openFile(fm.findFile(rozkaz[2]), Integer.parseInt(rozkaz[3]));
+
+                                    this.working = false;
+                                    return true;
+				}
+                            else{
+				if (rozkaz[1] == "FCL"){
+                                    /*
+                                    rozkaz[2] -> nazwa pliku do zamkniecia
+                                    */
+                                    fm.closeFile(fm.findFile(rozkaz[2]));
+
+                                    this.working = false;
+                                    return false;
+				}
                                 else{
-                                    if (rozkaz[1] == "PDU"){//wyswietla liczbe podlaczonych procesow.
-                                        for (auto it : PM.Processlist) {
-                                            if (it->state == 2) {
-                                                if (it->potok != nullptr) {
-                                                    it->potok->show_NO_users();
+                                    if (rozkaz[1] == "FLS"){
+					/*
+					rozkaz[2] -> nazwa pliku, w ktorym przesunac offset
+					rozkaz[3] -> przesuniecie (ujemne w lewo, dodatnie w prawo): ";
+					*/
+
+					fm.lseekFile(fm.findFile(rozkaz[2]), Integer.parseInt(rozkaz[3]), Integer.parseInt(rozkaz[4]));
+
+					this.working = false;
+					return true;
+                                    }
+                                    else{
+					if (rozkaz[1] == "FRN"){
+                                            /*
+                                            rozkaz[2] -> Nazwa pliku, ktory chcesz zmienic
+                                            rozkaz[3] -> Na jaka
+                                            */
+
+                                            fm.renameFile(rozkaz[2], rozkaz[3]);
+
+                                            this.working = false;
+                                            return true;
+					}
+					else{
+                                            if (rozkaz[1] == "FFN"){
+						/*
+						rozkaz[2] -> nazwa szukanego pliku
+						*/
+						fm.findFile(rozkaz[2]);
+
+						this.working = false;
+						return true;
+                                            }
+                                            else{
+						if (rozkaz[1] == "FLT"){
+                                                    fm.listFiles();
+
+                                                    this.working = false;
+                                                    return true;
+						}
+                                                else{
+                                                    System.out.print("\n");
                                                 }
                                             }
-                                        }
+					}
                                     }
                                 }
                             }
                         }
                     }
-		}
+                }
             }
 	}
-	else{
-            System.out.print("Nie ma takiego rozkazu.\n\n\n");
-	}
-    }
     
+        else{
+            System.out.print("nie ma takiego rozkazu.\n\n");
+            return false;
+        }
+            System.out.print("\n");
+}
     public void showCommandList(){
         Iterator it = commandList.iterator();
         while(it.hasNext()){
             System.out.print(it);
         }
+    }
+    public void showRegisters(){
+        System.out.print("Rejestry:");
+        System.out.print("\nA: " + get_regA());
+        System.out.print("\nB: " + get_regB());
+        System.out.print("\nC: " + get_regC());
+        System.out.print("\nPC: " + get_PC());
     }
 }
 
