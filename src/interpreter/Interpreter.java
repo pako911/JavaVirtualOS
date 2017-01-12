@@ -9,6 +9,7 @@ public class Interpreter {
 	private Boolean done = false, working = false, fail = false, flag_F = false;
         private final Disc disk;
         private Memory memory;
+	private ProcessManager manager;
 
 	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk) 
         {
@@ -189,7 +190,7 @@ public class Interpreter {
 		if (rozkaz[0] == "PAP") {
 			// PM.ls();
 		} else if (rozkaz[0] == "KIL") {
-			// PM.kill(Integer.parseInt(rozkaz[2]));
+			manager.kill(Integer.parseInt(rozkaz[1]))
 		} else if (rozkaz[0] == "FEK") {
 			/*
 			 * if (rozkaz[2] != ""){ String bufor; String data; // std::fstream
