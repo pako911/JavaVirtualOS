@@ -41,6 +41,7 @@ public class Memory {
 			proces.base=tmp.address;
 			proces.limit=size;
 			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
+			FSBPTR.removeFSB(tmp.size);
 			processList.add(proces);
 			return true;
 		}else{

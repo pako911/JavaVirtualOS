@@ -2,6 +2,7 @@ package memoryManagement;
 
 import memoryManagement.FSB;
 import memoryManagement.ListFSB;
+import processManager.PCB;
 
 public class ListFSB {
 	public FSB head;//pierwszy element listy
@@ -58,10 +59,6 @@ public class ListFSB {
 				bufor.next=null;
 				tail=bufor;
 			}			
-			//while(bufor.next.next!=null)
-			//	bufor=bufor.next;
-			//	bufor.next=null;
-			//	tail=bufor;
 		}
 		else if(tail!=null&&tail.size!=size&&head.size!=size){//element w środku
 			while(bufor.next.size!=size&&bufor.next!=null)
@@ -121,9 +118,13 @@ public class ListFSB {
 		nowa.addFSB(12, 4);
 		nowa.addFSB(7, 4);
 		nowa.wypisz();
-		nowa.sortList();
+		//nowa.sortList();
 		//nowa.removeFSB(7);
-		Memory ho=new Memory();
+		//Memory ho=new Memory();
 		//ho.showMemory();
+		//ho.memoryAllocation(12, new PCB() );
+		//ho.showMemory();
+		
+		
 	}
 }
