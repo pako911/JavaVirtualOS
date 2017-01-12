@@ -51,8 +51,8 @@ public class Interpreter {
 
 		// Rozkazy arytmetyczne
 		if (rozkaz[0] == "ADD") {
-			if (rozkaz[0].substring(4, 1) == "A") {
-				reg_A += Integer.parseInt(rozkaz[0].substring(6, 1));
+			if (rozkaz[0] == "A") {
+				reg_A += Integer.parseInt(rozkaz[0]);
 			} else if (rozkaz[0] == "B") {
 				reg_B += Integer.parseInt(rozkaz[0]);
 			} else {
@@ -73,8 +73,8 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0].substring(0, 3) == "INC") {
-			if (rozkaz[0].substring(4, 5) == "A") {
+		} else if (rozkaz[0] == "INC") {
+			if (rozkaz[0] == "A") {
 				reg_A += 1;
 			} else if (rozkaz[0] == "B") {
 				reg_B += 1;
@@ -147,7 +147,7 @@ public class Interpreter {
 				return false;
 			}
 		} else if (rozkaz[0].equals("MOV")) {
-			System.out.println("MOV");
+			System.out.println("MOV"); //To jest potrzebne?
 			if (rozkaz[1] == "A") {
 				if (rozkaz[2] == "B") {
 					reg_A = reg_B;
