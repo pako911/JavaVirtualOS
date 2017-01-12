@@ -19,14 +19,11 @@ public class Memory {
 		FSBPTR = new ListFSB();
 		try {
 			FSBSEM=new Semaphore(1);
-		} catch (InvalidSemaphoreValueException e) {
-			e.printStackTrace();
-		}
-		try {
 			MEMORY=new Semaphore(0);
 		} catch (InvalidSemaphoreValueException e) {
 			e.printStackTrace();
 		}
+		processList=new ArrayList <PCB>();
 	}
 	public void memoryReleasing(PCB proces){//należy jako argumenty podać proces który się usuwa
 		FSBPTR.addFSB(proces.base, proces.limit);
