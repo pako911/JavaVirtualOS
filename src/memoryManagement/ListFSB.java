@@ -91,6 +91,7 @@ public class ListFSB {
 			space=space+bufor.size;
 			bufor=bufor.next;
 		}
+		space=space+bufor.size;
 		System.out.println("calosc "+space);
 		return space;
 	}
@@ -126,14 +127,14 @@ public class ListFSB {
 		nowa.addFSB(23, 2);
 		nowa.addFSB(12, 4);
 		nowa.addFSB(7, 4);
-		nowa.wypisz();*/
-		
+		nowa.wypisz();
+		System.out.println(nowa.fullSpace());*/
 		Memory ho=new Memory();
 		PCB i=new PCB();
-		ho.memoryAllocation(20, i);
-		ho.memoryAllocation(40, new PCB() );
+		ho.memoryAllocation(80, i);
+		ho.memoryAllocation(50, new PCB() );
 		ho.memoryReleasing(i);
-		ho.memoryAllocation(22, new PCB());
+		ho.memoryAllocation(90, new PCB());
 		ho.FSBPTR.wypisz();
 	}
 }
