@@ -215,7 +215,7 @@ public class Interpreter {
 		if (rozkaz[1] == "DVM") {
 			// pamiec.wyswietl_pamiec_wirtualna();
 		} else if (rozkaz[1] == "DRM") {
-			// pamiec.wyswietlPamiecRAM();
+			memory.showmemory();
 		}
 
 		// Logiczne
