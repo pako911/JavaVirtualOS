@@ -26,10 +26,10 @@ public class Interpreter {
 		this.reg_A = a;
 	}
 
-	public void set_regB(int b) {
+	public void set_regB(int b) 
+        {
 		this.reg_B = b;
 	}
-
 	public void set_regC(int c) {
 		this.reg_C = c;
 	}
