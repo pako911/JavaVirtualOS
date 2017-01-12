@@ -25,6 +25,7 @@ public class PCB {
 	//stop_waiting_bit
 	//semaphore_common
 	//semaphore_reciver
+	public Boolean flag_F;
 	
 	public PCB() {
 

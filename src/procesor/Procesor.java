@@ -49,6 +49,7 @@ public class Procesor {
 			interpreter.set_regA(0);
 			interpreter.set_regB(0);
 			interpreter.set_regC(0);
+			interpreter.set_flag_F(false);
 			Running = processManager.getMain().pcb;
 		}
 		
@@ -118,14 +119,17 @@ public class Procesor {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
 			interpreter.exe(rozkaz);
+			interpreter.execute(rozkaz);
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
+			Running.flag_F = interpreter.get_flag_F();
 			System.out.println("WYKONYWANY "+Running.PID);
 			System.out.println("COUNTER "+Running.counter);
 			System.out.println("A "+Running.A);
 			System.out.println("B "+Running.B);
 			System.out.println("C "+Running.C);
+			System.out.println("flag_F "+Running.flag_F);
 		}
 
 		/*

@@ -58,13 +58,25 @@ public class Interpreter {
 		this.fail = false;
 
 		// Rozkazy arytmetyczne
-		if (rozkaz[0] == "ADD") {
+		if (rozkaz[0].equals("ADD")) {
 			if (rozkaz[1].equals("A")) {
-				reg_A += Integer.parseInt(rozkaz[1]);
-			} else if (rozkaz[1].equals("b")) {
-				reg_B += Integer.parseInt(rozkaz[1]);
+				if (rozkaz[2].equals("B")) {
+					reg_A += get_regB();
+				} else if (rozkaz[2].equals("C")) {
+					reg_A += get_regC();
+				}
+			} else if (rozkaz[1].equals("B")) {
+				if (rozkaz[2].equals("A")) {
+					reg_B += get_regA();
+				} else if (rozkaz[2].equals("C")) {
+					reg_B += get_regC();
+				}
 			} else {
-				reg_C += Integer.parseInt(rozkaz[1]);
+				if (rozkaz[2].equals("A")) {
+					reg_C += get_regA();
+				} else if (rozkaz[2].equals("B")) {
+					reg_C += get_regB();
+				}
 			}
 
 			this.working = false;
@@ -72,11 +84,23 @@ public class Interpreter {
 
 		} else if (rozkaz[0].equals("SUB")) {
 			if (rozkaz[1].equals("A")) {
-				reg_A -= Integer.parseInt(rozkaz[1]);
+				if (rozkaz[2].equals("B")) {
+					reg_A -= get_regB();
+				} else if (rozkaz[2].equals("C")) {
+					reg_A -= get_regC();
+				}
 			} else if (rozkaz[1].equals("B")) {
-				reg_B -= Integer.parseInt(rozkaz[1]);
+				if (rozkaz[2].equals("A")) {
+					reg_B -= get_regA();
+				} else if (rozkaz[2].equals("C")) {
+					reg_B -= get_regC();
+				}
 			} else {
-				reg_C -= Integer.parseInt(rozkaz[1]);
+				if (rozkaz[2].equals("A")) {
+					reg_C -= get_regA();
+				} else if (rozkaz[2].equals("B")) {
+					reg_C -= get_regB();
+				}
 			}
 
 			this.working = false;
@@ -117,11 +141,23 @@ public class Interpreter {
 			return true;
 		} else if (rozkaz[0].equals("MUL")) {
 			if (rozkaz[1].equals("A")) {
-				reg_A *= Integer.parseInt(rozkaz[2]);
+				if (rozkaz[2].equals("B")) {
+					reg_A *= get_regB();
+				} else if (rozkaz[2].equals("C")) {
+					reg_A *= get_regC();
+				}
 			} else if (rozkaz[1].equals("B")) {
-				reg_B *= Integer.parseInt(rozkaz[2]);
+				if (rozkaz[2].equals("A")) {
+					reg_B *= get_regA();
+				} else if (rozkaz[2].equals("C")) {
+					reg_B *= get_regC();
+				}
 			} else {
-				reg_C *= Integer.parseInt(rozkaz[2]);
+				if (rozkaz[2].equals("A")) {
+					reg_C *= get_regA();
+				} else if (rozkaz[2].equals("B")) {
+					reg_C *= get_regB();
+				}
 			}
 
 			this.working = false;
@@ -137,14 +173,14 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[1].equals("DIV")) {
-			if (rozkaz[3] != "0") {
-				if (rozkaz[2].equals("A")) {
-					reg_A /= Integer.parseInt(rozkaz[3]);
-				} else if (rozkaz[2].equals("B")) {
-					reg_B /= Integer.parseInt(rozkaz[3]);
+		} else if (rozkaz[0].equals("DIV")) {
+			if (!rozkaz[2].equals("0")) {
+				if (rozkaz[1].equals("A")) {
+					reg_A /= Integer.parseInt(rozkaz[2]);
+				} else if (rozkaz[1].equals("B")) {
+					reg_B /= Integer.parseInt(rozkaz[2]);
 				} else {
-					reg_C /= Integer.parseInt(rozkaz[3]);
+					reg_C /= Integer.parseInt(rozkaz[2]);
 				}
 
 				this.working = false;
@@ -190,7 +226,7 @@ public class Interpreter {
 		if (rozkaz[0].equals("PAP")) {
 			// PM.ls();
 		} else if (rozkaz[0].equals("KIL")) {
-			manager.kill(Integer.parseInt(rozkaz[1]))
+			manager.kill(Integer.parseInt(rozkaz[1]));
 		} else if (rozkaz[0].equals("FEK")) {
 			/*
 			 * if (rozkaz[2] != ""){ String bufor; String data; // std::fstream
@@ -226,7 +262,7 @@ public class Interpreter {
 
 		// Logiczne
 		if (rozkaz[0].equals("EQL")) {
-			if (rozkaz[1] == rozkaz[2]) {
+			if (rozkaz[1].equals("A") && rozkaz[2].equals("B") && reg_A == reg_B || rozkaz[1].equals("A") && rozkaz[2].equals("C") && reg_A == reg_C || rozkaz[1].equals("C") && rozkaz[2].equals("B") && reg_C == reg_B) {
 				flag_F = true;
 			} else
 				flag_F = false;
@@ -279,6 +315,7 @@ public class Interpreter {
 			 * rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac rozkaz[3] ->
 			 * co chcesz zapisac
 			 */
+			System.out.println(rozkaz[1]+" "+rozkaz[2]+" "+rozkaz[3]);
 			disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
 
 			this.working = false;
@@ -303,11 +340,8 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FDL") {
-			/*
-			 * rozkaz[2] -> nazwa pliku do usuniecia
-			 */
-			// fm.deleteFile(rozkaz[2]);
+		} else if (rozkaz[0].equals("FDL")) {
+			disk.usuwaniePliku(rozkaz[1], rozkaz[2]);
 
 			this.working = false;
 			return true;
@@ -376,5 +410,13 @@ public class Interpreter {
 		System.out.print("\nB: " + get_regB());
 		System.out.print("\nC: " + get_regC());
 		System.out.print("\nPC: " + get_PC());
+	}
+
+	public Boolean get_flag_F() {
+		return flag_F;
+	}
+
+	public void set_flag_F(Boolean i) {
+		flag_F = i;
 	}
 }
