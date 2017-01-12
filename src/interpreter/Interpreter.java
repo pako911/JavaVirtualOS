@@ -105,7 +105,7 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("SUB")) {
-			if (rozkaz[1] == "A") {
+			if (rozkaz[1].equals("A")) {
 				reg_A -= Integer.parseInt(rozkaz[1]);
 			} else if (rozkaz[1].equals("B")) {
 				reg_B -= Integer.parseInt(rozkaz[1]);
