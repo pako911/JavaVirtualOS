@@ -36,7 +36,6 @@ public class Memory {
 			}
 	}
 	public boolean memoryAllocation(int size, PCB proces){
-		System.out.println("Dupa "+proces.PID);
 		FSB tmp=FSBPTR.searchForSpace(size);
 		if(tmp.address>=0&&tmp.address<256){
 			proces.base=tmp.address;
