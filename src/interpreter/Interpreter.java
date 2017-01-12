@@ -274,7 +274,7 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FWR") {
+		} else if (rozkaz[0].equals("FWR")) {
 			/*
 			 * rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac rozkaz[3] ->
 			 * co chcesz zapisac
