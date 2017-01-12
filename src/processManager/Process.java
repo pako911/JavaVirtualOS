@@ -6,6 +6,10 @@
 package processManager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -32,17 +36,29 @@ public class Process {
 	}
 	
 	public Process createChild(String sfile) {
-		Process process = new Process(pcb.name, pcb.PID, memory);
+		try {
+			FileInputStream fileInputStream = new FileInputStream(sfile);
+			Process process = new Process(pcb.name, pcb.PID, memory);
+			File file = new File(sfile);
+			boolean memoryGood = memory.memoryAllocation((int) file.length(), process.pcb);
 
-		File file = new File(sfile);
-		boolean memoryGood = memory.memoryAllocation((int) file.length(), process.pcb);
-		if(memoryGood) { 
-			process.pcb.state = Stany.GOTOWY;
-		} else {
-			process.pcb.state = Stany.OCZEKUJACY;
+			if(memoryGood) { 			
+				System.out.println("BASE "+process.pcb.base+" LIMIT "+ process.pcb.limit+ " ID "+process.pcb.PID);
+				for(int i = 0; i<process.pcb.limit; i++) {
+					memory.sign[i+process.pcb.base] = (char)fileInputStream.read();
+				}
+				process.pcb.state = Stany.GOTOWY;
+			} else {
+				process.pcb.state = Stany.OCZEKUJACY;
+			}
+			getChildren().put(process.pcb.PID, process);
+			return process;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		getChildren().put(process.pcb.PID, process);
-		return process;
+		return null;
 	}
 	
 	public void print() {

@@ -1,0 +1,6 @@
+MOV A 3
+INC A
+MOV B 9
+DEC B
+ADD A B
+DIV A

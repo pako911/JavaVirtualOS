@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import dysk.Disc;
-import interpreter.Interpreter;
 import komunikacjaMiedzyprocesowa.IPC;
 import memoryManagement.Memory;
 import procesor.Procesor;
@@ -24,7 +23,7 @@ public class Main {
 		
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
-		Disc disc = new Disc();
+		//Disc disc = new Disc();
 		Memory memory = new Memory();
 		ProcessManager processManager = new ProcessManager(memory);
 		Procesor procesor = new Procesor(processManager);
@@ -49,10 +48,10 @@ public class Main {
 					}
 					
 				} else if(line.split(" ")[0].equals("PMEMORY")) {
-					System.out.println("PMEMORY");
+					memory.showMemory();
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
-					disc.directory_entry();
+					//disc.directory_entry();
 					
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");
