@@ -55,6 +55,7 @@ public class Interpreter {
 				reg_A += Integer.parseInt(rozkaz[2]);
 			} else if (rozkaz[1] == "B") {
 				reg_B += Integer.parseInt(rozkaz[2]);
+
 			} else {
 				reg_C += Integer.parseInt(rozkaz[2]);
 			}
@@ -75,6 +76,7 @@ public class Interpreter {
 			return true;
 		} else if (rozkaz[0] == "INC") {
 			if (rozkaz[1] == "A") {
+
 				reg_A += 1;
 			} else if (rozkaz[1] == "B") {
 				reg_B += 1;
@@ -147,7 +149,7 @@ public class Interpreter {
 				return false;
 			}
 		} else if (rozkaz[0].equals("MOV")) {
-			System.out.println("MOV");
+			System.out.println("MOV"); //To jest potrzebne?
 			if (rozkaz[1] == "A") {
 				if (rozkaz[1] == "B") {
 					reg_A = reg_B;
