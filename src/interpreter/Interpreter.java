@@ -1,531 +1,372 @@
-package so_interpreter;
-import java.util.*;
+package interpreter;
+
+import java.util.Scanner;
 
 public class Interpreter {
-    private int reg_A=0, reg_B=0, reg_C=0, PC=0;
-    private Boolean done = false, working = false, fail = false, flag_F = false; 
-   
-    
-    public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail){
-        this.reg_A = reg_A;
-        this.reg_B = reg_B;
-        this.reg_C = reg_C;
-        this.PC = PC;
-        this.working = working;
-        this.done = done;
-        this.fail = fail;
-    }
-    
-    public void set_regA(int a){
-        this.reg_A = a;
-    }
-    public void set_regB(int b){
-        this.reg_B = b;
-    }
-    public void set_regC(int c){
-        this.reg_C = c;
-    }
-    public int get_regA(){
-        return reg_A;
-    }
-    public int get_regB(){
-        return reg_B;
-    }
-    public int get_regC(){
-        return reg_C;
-    }
-    public int get_PC(){
-        return PC;
-    }
-    
-    public Boolean exe(String rozkaz){
-        this.done = false;
-        this.working = false;
-        this.fail = false;
-        
-        Iterator it = commandList.iterator();
-        if(it.hasNext()){
-            this.working = true;
-            PC++;
-         
-            //Rozkazy arytmetyczne
-            Scanner s = new Scanner(rozkaz)
-            if(s.next() == "ADD"){
-		if (rozkaz.substring(4, 1) == "A"){
-                    reg_A += Integer.parseInt(rozkaz.substring(6, 1));
-		}
-                else{
-                   if (rozkaz == "B"){
-			reg_B += Integer.parseInt(rozkaz);
-                    }
-                    else{
-			reg_C += Integer.parseInt(rozkaz);
-			}
+	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
+	private Boolean done = false, working = false, fail = false, flag_F = false;
 
-                    this.working = false;
-                    return true;
-		}
-            }
-            else{
-		if(rozkaz == "SUB"){
-                    if (rozkaz == "A"){
-			reg_A -= Integer.parseInt(rozkaz);
-                    }
-                    else{
-                        if (rozkaz == "B"){
-                            reg_B -= Integer.parseInt(rozkaz);
-                        }
-			else{
-                            reg_C -= Integer.parseInt(rozkaz);
-			}
-                    }
+	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail) {
+		this.reg_A = reg_A;
+		this.reg_B = reg_B;
+		this.reg_C = reg_C;
+		this.PC = PC;
+		this.working = working;
+		this.done = done;
+		this.fail = fail;
+	}
 
-                    this.working = false;
-                    return true;
-		}
-		else{
-                    if (rozkaz.substring(0, 3) == "INC")
-                    {
-			if (rozkaz.substring(4, 5) == "A"){
-                            reg_A += 1;
-			}
-			else{
-                            if (rozkaz == "B"){
-				reg_B += 1;
-                            }
-                            else{
-				reg_C += 1;
-                            }
+	public void set_regA(int a) {
+		this.reg_A = a;
+	}
 
-                            this.working = false;
-                            return true;
-			}
-                    }
-                    else{
-                        if (rozkaz == "DEC"){
-                            if (rozkaz == "A"){
-				reg_A -= 1;
-                            }
-			else{
-                            if (rozkaz == "B"){
-				reg_B -= 1;
-                            }
-                            else{
-				reg_C -= 1;
-                            }
+	public void set_regB(int b) {
+		this.reg_B = b;
+	}
+
+	public void set_regC(int c) {
+		this.reg_C = c;
+	}
+
+	public int get_regA() {
+		return reg_A;
+	}
+
+	public int get_regB() {
+		return reg_B;
+	}
+
+	public int get_regC() {
+		return reg_C;
+	}
+
+	public int get_PC() {
+		return PC;
+	}
+
+	public Boolean exe(String rozkaz[]) {
+		this.done = false;
+		this.working = false;
+		this.fail = false;
+
+		// Rozkazy arytmetyczne
+		Scanner s = new Scanner(rozkaz[0]);
+		if (s.next() == "ADD") {
+			if (rozkaz[0].substring(4, 1) == "A") {
+				reg_A += Integer.parseInt(rozkaz[0].substring(6, 1));
+			} else if (rozkaz[0] == "B") {
+				reg_B += Integer.parseInt(rozkaz[0]);
+			} else {
+				reg_C += Integer.parseInt(rozkaz[0]);
 			}
 
 			this.working = false;
 			return true;
-                        }
-                        else{
-                            if(rozkaz == "SUB"){
-                                if (rozkaz == "A"){
-                                    reg_A -= Integer.parseInt(rozkaz);
-				}
-				else{
-                                    if (rozkaz == "B"){
-					reg_B -= Integer.parseInt(rozkaz);
-                                    }
-                                    else{	
-                                        reg_C -= Integer.parseInt(rozkaz);
-                                    }
+
+		} else if (rozkaz[0] == "SUB") {
+			if (rozkaz[0] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[0]);
+			} else if (rozkaz[0] == "B") {
+				reg_B -= Integer.parseInt(rozkaz[0]);
+			} else {
+				reg_C -= Integer.parseInt(rozkaz[0]);
+			}
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[0].substring(0, 3) == "INC") {
+			if (rozkaz[0].substring(4, 5) == "A") {
+				reg_A += 1;
+			} else if (rozkaz[0] == "B") {
+				reg_B += 1;
+			} else {
+				reg_C += 1;
+			}
+
+			this.working = false;
+			return true;
+
+		} else if (rozkaz[0] == "DEC") {
+			if (rozkaz[0] == "A") {
+				reg_A -= 1;
+			} else if (rozkaz[0] == "B") {
+				reg_B -= 1;
+			} else {
+				reg_C -= 1;
+			}
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[0] == "SUB") {
+			if (rozkaz[0] == "A") {
+				reg_A -= Integer.parseInt(rozkaz[0]);
+			} else if (rozkaz[0] == "B") {
+				reg_B -= Integer.parseInt(rozkaz[0]);
+			} else {
+				reg_C -= Integer.parseInt(rozkaz[0]);
+			}
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[0] == "MUL") {
+			if (rozkaz[0] == "A") {
+				reg_A *= Integer.parseInt(rozkaz[3]);
+			} else if (rozkaz[2] == "B") {
+				reg_B *= Integer.parseInt(rozkaz[3]);
+			} else {
+				reg_C *= Integer.parseInt(rozkaz[3]);
+			}
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "LOD") {
+			if (rozkaz[2] == "A") {
+				reg_A = Integer.parseInt(rozkaz[3]);
+			} else if (rozkaz[2] == "B") {
+				reg_B = Integer.parseInt(rozkaz[3]);
+			} else {
+				reg_C = Integer.parseInt(rozkaz[3]);
+			}
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "DIV") {
+			if (rozkaz[3] != "0") {
+				if (rozkaz[2] == "A") {
+					reg_A /= Integer.parseInt(rozkaz[3]);
+				} else if (rozkaz[2] == "B") {
+					reg_B /= Integer.parseInt(rozkaz[3]);
+				} else {
+					reg_C /= Integer.parseInt(rozkaz[3]);
 				}
 
 				this.working = false;
 				return true;
-                            }
-                            else{
-				if (rozkaz == "MUL"){
-                                    if (rozkaz == "A"){
-					reg_A *= Integer.parseInt(rozkaz[3]);
-                                    }
-				else{
-                                    if (rozkaz[2] == "B"){
-					reg_B *= Integer.parseInt(rozkaz[3]);
-                                    }
-                                    else{
-					reg_C *= Integer.parseInt(rozkaz[3]);
-                                    }
-				}
-
+			} else {
+				System.out.print("\n\nZle argumenty funkcji.\n\n");
 				this.working = false;
-				return true;
+				return false;
+			}
+		} else if (rozkaz[1] == "MOV") {
+			if (rozkaz[2] == "A") {
+				if (rozkaz[3] == "B") {
+					reg_A = reg_B;
+				} else if (rozkaz[3] == "C") {
+					reg_A = reg_C;
+				} else {
+					reg_A = Integer.parseInt(rozkaz[3]);
 				}
-				else{
-                                    if (rozkaz[1] == "LOD"){
-					if (rozkaz[2] == "A"){
-                                            reg_A = Integer.parseInt(rozkaz[3]);
-					}
-					else{
-                                            if (rozkaz[2] == "B"){
-                                                reg_B = Integer.parseInt(rozkaz[3]);
-                                            }
-					else{
-                                            reg_C = Integer.parseInt(rozkaz[3]);
-                                            }
-					}
 
-					this.working = false;
-					return true;
-                                    }
-                                    else{
-					if (rozkaz[1] == "DIV"){
-                                            if (rozkaz[3] != "0"){
-						if (rozkaz[2] == "A"){
-                                                    reg_A /= Integer.parseInt(rozkaz[3]);
-                                                }
-                                                else{
-                                                    if (rozkaz[2] == "B"){
-                                                        reg_B /= Integer.parseInt(rozkaz[3]);
-                                                    }
-                                                    else{
-                                                         reg_C /= Integer.parseInt(rozkaz[3]);
-                                                    }
-                                                }
-                                                
-                                                this.working = false;
-                                                return true;
-                                            }
-                                            else{
-						System.out.print("\n\nZle argumenty funkcji.\n\n");
-						this.working = false;
-						return false;
-                                            }
-					}
-					else{
-                                            if (rozkaz[1] == "MOV"){
-						if (rozkaz[2] == "A"){
-                                                    if (rozkaz[3] == "B"){
-							reg_A = reg_B;
-                                                    }
-                                                    else{
-                                                        if (rozkaz[3] == "C"){
-                                                            reg_A = reg_C;
-							}
-							else{
-                                                            reg_A = Integer.parseInt(rozkaz[3]);
-							}
-                                                    }
-						}
-						else{
-                                                    if (rozkaz[2] == "B"){
-							if (rozkaz[3] == "A"){
-                                                            reg_B = reg_A;
-							}
-							else{
-                                                            if (rozkaz[3] == "C"){
-                                                                reg_B = reg_C;
-                                                            }
-                                                            else{
-								reg_B = Integer.parseInt(rozkaz[3]);
-                                                            }
-							}
-                                                    }
-                                                    else{
-							if (rozkaz[3] == "A"){
-                                                            reg_C = reg_A;
-							}
-                                                        else{
-                                                            if (rozkaz[3] == "B"){
-								reg_C = reg_B;
-                                                            }
-                                                            else{
-								reg_C = Integer.parseInt(rozkaz[3]);
-                                                            }
-							}
-                                                    }
-						}
-
-						this.working = false;
-						return true;
-                                            }
-                                            else{
-						System.out.print("\n");
-                                            }
-					}
-                                    }
+			} else if (rozkaz[2] == "B") {
+				if (rozkaz[3] == "A") {
+					reg_B = reg_A;
+				} else if (rozkaz[3] == "C") {
+					reg_B = reg_C;
+				} else {
+					reg_B = Integer.parseInt(rozkaz[3]);
 				}
-                            }
-                        }
-                    }
-                }
-            }
-            if (rozkaz[1] == "PAP"){
-		PM.ls();
-            }
-            else{
-		if(rozkaz[1] == "KIL"){
-                    PM.kill(Integer.parseInt(rozkaz[2]));
-		}
-		else{
-                    if (rozkaz[1] == "FEK"){
-                        if (rozkaz[2] != ""){
-                            String bufor;
-                            String data;
-                           // std::fstream plik(rozkaz[2]);
-                            
-                            while (!plik.eof())
-                            {
-                                    getline(plik, bufor);
-                                    data += bufor;
-                            }
-                            int pom = bufor.size() % ROZMIAR;
-                            for (int i = 0; i < (ROZMIAR - pom); i++){
-                                    data += char(0);
-                            }
-                            BaseM = pamiec.znajdz_miejsce(data)*ROZMIAR;
-                            Limit = pamiec.wgraj_program(rozkaz[2]);
-                        }//sciezka
-                        if (BaseM != -1){
+			} else if (rozkaz[3] == "A") {
+				reg_C = reg_A;
+			} else if (rozkaz[3] == "B") {
+				reg_C = reg_B;
+			} else {
+				reg_C = Integer.parseInt(rozkaz[3]);
+			}
 
-                            PM.fork();
-                            Prioritylist.addToList(PM.pointertolastprocess());
-                            PM.setBaseandLimit(BaseM, Limit);
-                             PM.exec(regA, regB, regC, flaga_F);
-                        }
-                    }
-                    else{
-                        if (rozkaz[1] == "WTP"){
-                            PM.waitpid(Integer.parseInt(rozkaz[2]));
-                        }
-                        else{
-                            if (rozkaz[1] == "PPR"){
+			this.working = false;
+			return true;
+		} else {
+			System.out.print("\n");
+		}
 
-                                //Prioritylist.showReady();
-                                //Prioritylist.showPriorityList();
-                            }
-                            else{
-                                if (rozkaz[1] == "STN"){
-                                    pri.setNiceUp(Integer.parseInt(rozkaz[2]));
-                                }
-                                else{
-                                    if (rozkaz[1] == "PTP"){
-                                        PM.lstree();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if(rozkaz[1] == "DVM"){
-                pamiec.wyswietl_pamiec_wirtualna();
-            }
-            else{
-		if (rozkaz[1] == "DRM"){
-                    pamiec.wyswietlPamiecRAM();
+		if (rozkaz[1] == "PAP") {
+			// PM.ls();
+		} else if (rozkaz[1] == "KIL") {
+			// PM.kill(Integer.parseInt(rozkaz[2]));
+		} else if (rozkaz[1] == "FEK") {
+			/*
+			 * if (rozkaz[2] != ""){ String bufor; String data; // std::fstream
+			 * plik(rozkaz[2]);
+			 * 
+			 * while (!plik.eof()) { getline(plik, bufor); data += bufor; } int
+			 * pom = bufor.size() % ROZMIAR; for (int i = 0; i < (ROZMIAR -
+			 * pom); i++){ data += char(0); } BaseM =
+			 * pamiec.znajdz_miejsce(data)*ROZMIAR; Limit =
+			 * pamiec.wgraj_program(rozkaz[2]); }//sciezka if (BaseM != -1){
+			 * 
+			 * PM.fork(); Prioritylist.addToList(PM.pointertolastprocess());
+			 * PM.setBaseandLimit(BaseM, Limit); PM.exec(regA, regB, regC,
+			 * flaga_F); }
+			 */
+		} else {
+			/*
+			 * if (rozkaz[1] == "WTP"){ PM.waitpid(Integer.parseInt(rozkaz[2]));
+			 * } else{ if (rozkaz[1] == "PPR"){
+			 * 
+			 * //Prioritylist.showReady(); //Prioritylist.showPriorityList(); }
+			 * else{ if (rozkaz[1] == "STN"){
+			 * pri.setNiceUp(Integer.parseInt(rozkaz[2])); } else{ if (rozkaz[1]
+			 * == "PTP"){ PM.lstree(); } } } }
+			 */
 		}
-            }
-            //Logiczne
-            if (rozkaz[1] == "EQL"){
-		if (rozkaz[2] == rozkaz[3]){
-                    flag_F = true;
-		}
-                else 
-                    flag_F = false;
 
-		this.working = false;
-		return true;
+		if (rozkaz[1] == "DVM") {
+			// pamiec.wyswietl_pamiec_wirtualna();
+		} else if (rozkaz[1] == "DRM") {
+			// pamiec.wyswietlPamiecRAM();
 		}
-		else{
-                    if(rozkaz[1] == "JMP"){
+
+		// Logiczne
+		if (rozkaz[1] == "EQL") {
+			if (rozkaz[2] == rozkaz[3]) {
+				flag_F = true;
+			} else
+				flag_F = false;
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "JMP") {
 			PC = Integer.parseInt(rozkaz[2]);
 
-                        this.working = false;
-                        return true;
-                    }
-                    else{
-			if (rozkaz[1] == "JPT"){
-                            if (this.flag_F = true){
-				PC = Integer.parseInt(rozkaz[2]);
-                            }
-                            else{
-                                //do nothing
-                            }
-
-                            this.working = false;
-                            return true;
-			}
-			else{
-                            if (rozkaz[1] == "JPF"){
-				if (this.flag_F = false){
-                                    PC = Integer.parseInt(rozkaz[2]);
-				}
-				else{
-                                    //do nothing
-				}
-
-				this.working = false;
-				return true;
-                            }
-                            else{
-				System.out.print("\n");
-                            }
-			}
-                    }
-		}
-
-            }
-            else{
-              System.out.print("Nie ma takiego rozkazu.\n\n\n");
-            }
-        }
-
-    public Boolean execute(String command, FileManagement& fm){
-	this.done = false;
-	this.working = false;
-	this.fail = false;
-
-        Iterator it = commandList.iterator();
-	if (it.hasNext()){
-            this.working = true;
-            PC++;
-        
-            if (rozkaz == "FCR"){
-		fm.createFile(rozkaz);
-
-		this.working = false;
-		return true;
-            }
-            else
-		if (rozkaz == "FWR"){
-                    /*
-                    rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac
-                    rozkaz[3] -> co chcesz zapisac
-                    */
-                    fm.writeFile(fm.findFile(rozkaz[2]), rozkaz[3]);
-
-                    this.working = false;
-                    return true;
-		}
-		else{
-                    if (rozkaz == "FRD"){
-			/*
-			rozkaz[2] -> nazwe pliku, z ktorego mam czytac
-			rozkaz[3] ->  ilosc znakow do odczytania
-			*/
-                        String buff;
-			fm.readFile(fm.findFile(rozkaz[2]), buff, Integer.parseInt(rozkaz[3]));
-			System.out.print(buff);
 			this.working = false;
 			return true;
-                    }
-                    else{
-			if (rozkaz[1] == "FTR"){
-                            /*
-                            rozkaz[2] -> nazwa pliku do przyciecia
-                            rozkaz[3] -> Ile znakow w pliku zachowac
-                            */
-                            fm.truncateFile(rozkaz[2], Integer.parseInt(rozkaz[3]));
-
-                            this.working = false;
-                            return true;
+		} else if (rozkaz[1] == "JPT") {
+			if (this.flag_F = true) {
+				PC = Integer.parseInt(rozkaz[2]);
+			} else {
+				// do nothing
 			}
-			else{
-                            if (rozkaz[1] == "FDL"){
-				/*
-                                rozkaz[2] -> nazwa pliku do usuniecia
-				*/
-				fm.deleteFile(rozkaz[2]);
 
-				this.working = false;
-				return true;
-                            }
-                            else{
-				if (rozkaz[1] == "FOP"){
-                                    /*
-                                    rozkaz[2] -> nazwa pliku do otwarcia
-                                    rozkaz[3] -> tryb otwarcia
-                                    */
-                                    fm.openFile(fm.findFile(rozkaz[2]), Integer.parseInt(rozkaz[3]));
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "JPF") {
+			if (this.flag_F = false) {
+				PC = Integer.parseInt(rozkaz[2]);
+			} else {
+				// do nothing
+			}
 
-                                    this.working = false;
-                                    return true;
-				}
-                            else{
-				if (rozkaz[1] == "FCL"){
-                                    /*
-                                    rozkaz[2] -> nazwa pliku do zamkniecia
-                                    */
-                                    fm.closeFile(fm.findFile(rozkaz[2]));
+			this.working = false;
+			return true;
+		} else {
+			System.out.print("\n");
+		}
 
-                                    this.working = false;
-                                    return false;
-				}
-                                else{
-                                    if (rozkaz[1] == "FLS"){
-					/*
-					rozkaz[2] -> nazwa pliku, w ktorym przesunac offset
-					rozkaz[3] -> przesuniecie (ujemne w lewo, dodatnie w prawo): ";
-					*/
+		return done;
 
-					fm.lseekFile(fm.findFile(rozkaz[2]), Integer.parseInt(rozkaz[3]), Integer.parseInt(rozkaz[4]));
-
-					this.working = false;
-					return true;
-                                    }
-                                    else{
-					if (rozkaz[1] == "FRN"){
-                                            /*
-                                            rozkaz[2] -> Nazwa pliku, ktory chcesz zmienic
-                                            rozkaz[3] -> Na jaka
-                                            */
-
-                                            fm.renameFile(rozkaz[2], rozkaz[3]);
-
-                                            this.working = false;
-                                            return true;
-					}
-					else{
-                                            if (rozkaz[1] == "FFN"){
-						/*
-						rozkaz[2] -> nazwa szukanego pliku
-						*/
-						fm.findFile(rozkaz[2]);
-
-						this.working = false;
-						return true;
-                                            }
-                                            else{
-						if (rozkaz[1] == "FLT"){
-                                                    fm.listFiles();
-
-                                                    this.working = false;
-                                                    return true;
-						}
-                                                else{
-                                                    System.out.print("\n");
-                                                }
-                                            }
-					}
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
 	}
-    
-        else{
-            System.out.print("nie ma takiego rozkazu.\n\n");
-            return false;
-        }
-            System.out.print("\n");
-}
-    public void showCommandList(){
-        Iterator it = commandList.iterator();
-        while(it.hasNext()){
-            System.out.print(it);
-        }
-    }
-    public void showRegisters(){
-        System.out.print("Rejestry:");
-        System.out.print("\nA: " + get_regA());
-        System.out.print("\nB: " + get_regB());
-        System.out.print("\nC: " + get_regC());
-        System.out.print("\nPC: " + get_PC());
-    }
-}
 
+	public Boolean execute(String rozkaz[]) {
+		this.done = false;
+		this.working = false;
+		this.fail = false;
+
+		if (rozkaz[0] == "FCR") {
+			// fm.createFile(rozkaz[0]);
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[0] == "FWR") {
+			/*
+			 * rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac rozkaz[3] ->
+			 * co chcesz zapisac
+			 */
+			// fm.writeFile(fm.findFile(rozkaz[2]), rozkaz[3]);
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[0] == "FRD") {
+			/*
+			 * rozkaz[2] -> nazwe pliku, z ktorego mam czytac rozkaz[3] -> ilosc
+			 * znakow do odczytania
+			 */
+			// String buff;
+			// fm.readFile(fm.findFile(rozkaz[2]), buff,
+			// Integer.parseInt(rozkaz[3]));
+			// System.out.print(buff);
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FTR") {
+			/*
+			 * rozkaz[2] -> nazwa pliku do przyciecia rozkaz[3] -> Ile znakow w
+			 * pliku zachowac
+			 */
+			// fm.truncateFile(rozkaz[2], Integer.parseInt(rozkaz[3]));
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FDL") {
+			/*
+			 * rozkaz[2] -> nazwa pliku do usuniecia
+			 */
+			// fm.deleteFile(rozkaz[2]);
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FOP") {
+			/*
+			 * rozkaz[2] -> nazwa pliku do otwarcia rozkaz[3] -> tryb otwarcia
+			 */
+			// fm.openFile(fm.findFile(rozkaz[2]),
+			// Integer.parseInt(rozkaz[3]));
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FCL") {
+			/*
+			 * rozkaz[2] -> nazwa pliku do zamkniecia
+			 */
+			// fm.closeFile(fm.findFile(rozkaz[2]));
+
+			this.working = false;
+			return false;
+		} else if (rozkaz[1] == "FLS") {
+			/*
+			 * rozkaz[2] -> nazwa pliku, w ktorym przesunac offset rozkaz[3] ->
+			 * przesuniecie (ujemne w lewo, dodatnie w prawo): ";
+			 */
+
+			// fm.lseekFile(fm.findFile(rozkaz[2]),
+			// Integer.parseInt(rozkaz[3]),
+			// Integer.parseInt(rozkaz[4]));
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FRN") {
+			/*
+			 * rozkaz[2] -> Nazwa pliku, ktory chcesz zmienic rozkaz[3] -> Na
+			 * jaka
+			 */
+
+			// fm.renameFile(rozkaz[2], rozkaz[3]);
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FFN") {
+			/*
+			 * rozkaz[2] -> nazwa szukanego pliku
+			 */
+			// fm.findFile(rozkaz[2]);
+
+			this.working = false;
+			return true;
+		} else if (rozkaz[1] == "FLT") {
+			// fm.listFiles();
+
+			this.working = false;
+			return true;
+		} else {
+			System.out.print("\n");
+		}
+
+		return done;
+	}
+
+	public void showRegisters() {
+		System.out.print("Rejestry:");
+		System.out.print("\nA: " + get_regA());
+		System.out.print("\nB: " + get_regB());
+		System.out.print("\nC: " + get_regC());
+		System.out.print("\nPC: " + get_PC());
+	}
+}
