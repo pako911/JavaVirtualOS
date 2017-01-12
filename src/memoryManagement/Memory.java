@@ -6,7 +6,7 @@ import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
-	public int s=64;//ustawienie wielkości tablicy
+	public int s=128;//ustawienie wielkości tablicy
 	public char sign[]=new char[s];
 	private Semaphore FSBSEM; 
 	public ListFSB FSBPTR;

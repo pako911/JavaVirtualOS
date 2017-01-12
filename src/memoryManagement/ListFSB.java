@@ -10,7 +10,7 @@ public class ListFSB {
 	
 	//konstruktor
 	public ListFSB(){
-		head=new FSB(0,64);
+		head=new FSB(0,128);
 		//head=null;
 		tail=head;
 	}
@@ -89,7 +89,6 @@ public class ListFSB {
 		int space=0;
 		while(bufor.next!=null){
 			space=space+bufor.size;
-			System.out.println(space);
 			bufor=bufor.next;
 		}
 		System.out.println("calosc "+space);
@@ -132,9 +131,9 @@ public class ListFSB {
 		Memory ho=new Memory();
 		PCB i=new PCB();
 		ho.memoryAllocation(20, i);
-		//ho.memoryAllocation(40, new PCB() );
-		//ho.memoryReleasing(i);
-		//ho.memoryAllocation(22, new PCB());
+		ho.memoryAllocation(40, new PCB() );
+		ho.memoryReleasing(i);
+		ho.memoryAllocation(22, new PCB());
 		ho.FSBPTR.wypisz();
 	}
 }
