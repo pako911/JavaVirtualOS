@@ -132,7 +132,7 @@ public class Process {
 		String rozkaz[] = new String[3];
 		
 		rozkaz = kod.split(" ");
-		System.out.println(rozkaz[0]+" "+rozkaz[1]+" "+rozkaz[2]);
+		//System.out.println(kod);
 		return rozkaz;
 	}
 }

@@ -25,11 +25,11 @@ public class Procesor {
 	private ProcessManager processManager;
 	private Interpreter interpreter;
 
-	public Procesor(ProcessManager processManager) {
-
+	public Procesor(ProcessManager processManager, Interpreter interpreter) {
+		this.interpreter = interpreter;
 		this.processManager = processManager;
 		alpha = 0.5;
-		Running = processManager.getProcesPCB(0);
+		Running = processManager.getMain().pcb;
 		theta = 10;
 		time = 0;
 	}
@@ -48,7 +48,6 @@ public class Procesor {
 		}
 		if(Running!=null && Running.state!=Stany.AKTYWNY)
 		//if (true) {
-			System.out.println("JESTEM TUTAJ");
 			if (lista_procesow_gotowych.size() > 0)
 			// if(true)
 			{
@@ -106,7 +105,6 @@ public class Procesor {
 
 	public void wykonaj() {
 		Scheduler();
-		wyswietl_liste_procesow_gotowych();
 		Process process = processManager.getProces(Running.PID);
 		String rozkaz[] = process.getNextRozkaz();
 		interpreter.exe(rozkaz);
@@ -131,6 +129,15 @@ public class Procesor {
 	public void wyswietl_liste_procesow_gotowych() {
 		System.out.println("Lista procesow gotowych");
 		for (PCB proces : lista_procesow_gotowych) {
+			System.out.println("-------------------------");
+			System.out.println("PID " + proces.PID);
+			System.out.println("-------------------------");
+		}
+	}
+	
+	public void wyswietl_liste_procesow_gotowych2() {
+		System.out.println("Lista procesow gotowych");
+		for (PCB proces : lista_procesow_gotowych2) {
 			System.out.println("-------------------------");
 			System.out.println("PID " + proces.PID);
 			System.out.println("-------------------------");

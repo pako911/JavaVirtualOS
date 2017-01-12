@@ -1,8 +1,6 @@
 package interpreter;
 
-import java.util.Scanner;
-
-import dysc.Disc;
+import dysk.Disc;
 import memoryManagement.Memory;
 
 public class Interpreter {
@@ -59,9 +57,9 @@ public class Interpreter {
 
 		// Rozkazy arytmetyczne
 		if (rozkaz[0] == "ADD") {
-			if (rozkaz[0] == "A") {
-				reg_A += Integer.parseInt(rozkaz[0]);
-			} else if (rozkaz[0] == "B") {
+			if (rozkaz[1] == "A") {
+				reg_A += Integer.parseInt(rozkaz[2]);
+			} else if (rozkaz[1] == "B") {
 				reg_B += Integer.parseInt(rozkaz[0]);
 			} else {
 				reg_C += Integer.parseInt(rozkaz[0]);

@@ -77,4 +77,8 @@ public class ProcessManager {
 	public Process getProces(int PID) {
 		return mainProcess.getProces(PID);
 	}
+	
+	public Process getMain() {
+		return mainProcess;
+	}
 }

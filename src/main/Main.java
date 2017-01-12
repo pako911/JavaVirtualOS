@@ -88,9 +88,9 @@ public class Main {
 		load("ŁADOWANIE MODUŁU MENADŻERA PROCESÓW");
 		ProcessManager processManager = new ProcessManager(memory);
 		load("ŁADOWANIE MODUŁU PROCESORA");
-		Procesor procesor = new Procesor(processManager);
-
 		Interpreter interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail, memory, disc);
+		Procesor procesor = new Procesor(processManager, interpreter);
+
 		
 		while(true) {
 			System.out.print("javaOS:$ ");
