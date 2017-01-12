@@ -2,6 +2,9 @@ package interpreter;
 
 import java.util.Scanner;
 
+import dysc.Disc;
+import memoryManagement.Memory;
+
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
@@ -10,6 +13,7 @@ public class Interpreter {
 
 	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk) 
         {
+		this.memory = memory;
 		this.reg_A = reg_A;
 		this.reg_B = reg_B;
 		this.reg_C = reg_C;

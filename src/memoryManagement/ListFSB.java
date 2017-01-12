@@ -11,7 +11,7 @@ public class ListFSB {
 	//konstruktor
 	public ListFSB(){
 		head=new FSB(0,64);
-		head=null;
+		//head=null;
 		tail=head;
 	}
 	//dodaje blok wolnej pamięci
@@ -71,14 +71,18 @@ public class ListFSB {
 	}
 	//szuka miejsca
 	public FSB searchForSpace(int size){
-		FSB bufor=head;
-		while(bufor.size<size&&bufor.next!=null)
-			bufor=bufor.next;
-		if(bufor.size>=size){
-			FSB a=new FSB(bufor.address, bufor.size);
-			return a;
+		if(head==null){
+			return new FSB(-1, -1);
+		}else{
+			FSB bufor=head;
+			while(bufor.size<size&&bufor.next!=null)
+				bufor=bufor.next;
+			if(bufor.size>=size){
+				FSB a=new FSB(bufor.address, bufor.size);
+				return a;
+			}
+			else return new FSB(-1, -1);
 		}
-		else return new FSB(-1, -1);
 	}
 	public int fullSpace(){//sprawdza czy po defragmentacji będzie miejsce na proces
 		FSB bufor=head;
@@ -110,11 +114,13 @@ public class ListFSB {
 	//wypisz wolne bloki pamięci
 	public void wypisz(){
 		FSB bufor=head;
+		if(bufor!=null){
 		System.out.println(bufor.address + " " +bufor.size);
 		while(bufor.next!=null){
 			bufor=bufor.next;
 			System.out.println(bufor.address + " " +bufor.size);
-		}
+			}
+		}else System.out.println("Nie ma co wypisać");
 	}
 	public static void main(String[] args){
 		/*ListFSB nowa=new ListFSB();
@@ -125,11 +131,10 @@ public class ListFSB {
 		
 		Memory ho=new Memory();
 		PCB i=new PCB();
-		PCB o= new PCB();
 		ho.memoryAllocation(20, i);
-		ho.memoryAllocation(40, new PCB() );
-		ho.memoryReleasing(i);
-		ho.memoryAllocation(22, new PCB());
+		//ho.memoryAllocation(40, new PCB() );
+		//ho.memoryReleasing(i);
+		//ho.memoryAllocation(22, new PCB());
 		ho.FSBPTR.wypisz();
 	}
 }

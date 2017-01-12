@@ -24,20 +24,12 @@ public class Procesor {
 	public int time;
 	private ProcessManager processManager;
 	private Interpreter interpreter;
-	private Boolean working;
-	private Boolean fail;
-	private Boolean done;
-	private int reg_A;
-	private int reg_C;
-	private int reg_B;
-	private int PC;
 
 	public Procesor(ProcessManager processManager) {
 
-		interpreter = new Interpreter(reg_A, reg_B, reg_C, PC, done, working, fail);
 		this.processManager = processManager;
 		alpha = 0.5;
-		Running = null;
+		Running = processManager.getProcesPCB(0);
 		theta = 10;
 		time = 0;
 	}
@@ -54,8 +46,9 @@ public class Procesor {
 		if (Running != null && Running.state == Stany.ZAKONCZONY) {
 			time = Running.timer;
 		}
-		// if(Running!=null && Running.stan!=Proces.Stan.AKTYWNY)
-		if (true) {
+		if(Running!=null && Running.state!=Stany.AKTYWNY)
+		//if (true) {
+			System.out.println("JESTEM TUTAJ");
 			if (lista_procesow_gotowych.size() > 0)
 			// if(true)
 			{
@@ -109,12 +102,13 @@ public class Procesor {
 
 		}
 
-	}
+
 
 	public void wykonaj() {
 		Scheduler();
+		wyswietl_liste_procesow_gotowych();
 		Process process = processManager.getProces(Running.PID);
-		String rozkaz[] = process.getRozkaz(process.pcb.counter);
+		String rozkaz[] = process.getNextRozkaz();
 		interpreter.exe(rozkaz);
 
 		/*
