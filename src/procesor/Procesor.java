@@ -46,9 +46,14 @@ public class Procesor {
 		if (Running != null && Running.state == Stany.ZAKONCZONY) {
 			time = Running.timer;
 			processManager.kill(Running.PID);
-			Running = null;
+			interpreter.set_regA(0);
+			interpreter.set_regB(0);
+			interpreter.set_regC(0);
+			Running = processManager.getMain().pcb;
 		}
+		
 		if(Running!=null && Running.state!=Stany.AKTYWNY)
+		{
 		//if (true) {
 			if (lista_procesow_gotowych.size() > 0)
 			// if(true)
@@ -78,18 +83,20 @@ public class Procesor {
 				}
 
 			} else {
-				System.out.println("Nie ma zadnego procesu na liscie.");
-				Running = null;
+				if (!(lista_procesow_gotowych2.size() > 0)) {
+					System.out.println("Nie ma zadnego procesu na liscie.");
+				}
+				Running = processManager.getMain().pcb;
 			}
 
 			int index_nastepnego = 0;
 
 			if (lista_procesow_gotowych2.size() > 0) {
 				PCB nastepny = lista_procesow_gotowych2.get(0);
-				System.out.println();
+				//System.out.println();
 				for (int i = 1; i < lista_procesow_gotowych2.size(); i++) {
 					PCB ptemp = lista_procesow_gotowych2.get(i);
-					System.out.println(ptemp.thau);
+					//System.out.println(ptemp.thau);
 					if (ptemp.thau < nastepny.thau) {
 						nastepny = ptemp;
 						index_nastepnego = i;
@@ -103,14 +110,22 @@ public class Procesor {
 
 		}
 
-
+	}
 
 	public void wykonaj() {
 		Scheduler();
-		if(Running != null) {
+		if(Running != null && Running.PID != 0) {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
 			interpreter.exe(rozkaz);
+			Running.A = interpreter.get_regA();
+			Running.B = interpreter.get_regB();
+			Running.C = interpreter.get_regC();
+			System.out.println("WYKONYWANY "+Running.PID);
+			System.out.println("COUNTER "+Running.counter);
+			System.out.println("A "+Running.A);
+			System.out.println("B "+Running.B);
+			System.out.println("C "+Running.C);
 		}
 
 		/*
@@ -137,14 +152,10 @@ public class Procesor {
 			System.out.println("PID " + proces.PID);
 			System.out.println("-------------------------");
 		}
-	}
-	
-	public void wyswietl_liste_procesow_gotowych2() {
-		System.out.println("Lista procesow gotowych");
 		for (PCB proces : lista_procesow_gotowych2) {
-			System.out.println("-------------------------");
+			System.out.println("------------2-------------");
 			System.out.println("PID " + proces.PID);
-			System.out.println("-------------------------");
+			System.out.println("------------2-------------");
 		}
 	}
 

@@ -128,7 +128,6 @@ public class Process {
 			kod = kod + memory.sign[i+pcb.base];
 		}
 		int a = kod.split(";").length;
-		System.out.println(a+" "+pcb.counter);
 		if(a-1 == pcb.counter) { pcb.state = Stany.ZAKONCZONY; }
 		kod = kod.split(";")[pcb.counter];
 		pcb.counter++;
