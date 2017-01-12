@@ -105,7 +105,6 @@ public class Main {
 					System.out.println("PMEMORY - Wyświetla stan pamięci");
 					System.out.println("PFAT - Wyświetla stan tablicy Fat");
 					System.out.println("PDISK - Wyświetla stan dysku");
-					System.out.println("PSEMAPHORE - Wyświetla stean semafor");
 					System.out.println("OPEN <PLIK> - Otwiera plik z kodem programu");
 					System.out.println("EXIT - Kończy prace systemu");
 					System.out.println("ABOUT - Autorzy");
@@ -128,9 +127,6 @@ public class Main {
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
 					disc.wyswietlaPliki();
-					
-				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
-					System.out.println("PSEMAPHORE");
 					
 				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
 					String file = line.split(" ")[1];

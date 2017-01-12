@@ -1,0 +1,7 @@
+XR
+XS 1 tekst1
+XR
+XS 3 tekst2
+XS 4 tekst3
+XR
+XD
