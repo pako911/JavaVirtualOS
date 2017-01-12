@@ -114,17 +114,15 @@ public class ListFSB {
 	}
 	public static void main(String[] args){
 		ListFSB nowa=new ListFSB();
-		nowa.addFSB(23, 2);
-		nowa.addFSB(12, 4);
-		nowa.addFSB(7, 4);
-		nowa.wypisz();
+		//nowa.addFSB(23, 2);
+		//nowa.addFSB(12, 4);
+		//nowa.addFSB(7, 4);
+		//nowa.wypisz();
 		//nowa.sortList();
 		//nowa.removeFSB(7);
-		//Memory ho=new Memory();
+		Memory ho=new Memory();
 		//ho.showMemory();
-		//ho.memoryAllocation(12, new PCB() );
-		//ho.showMemory();
-		
-		
+		ho.memoryAllocation(12, new PCB() );
+		ho.showMemory();	
 	}
 }
