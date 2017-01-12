@@ -5,8 +5,11 @@ import java.util.Scanner;
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
+        private final Disc disk;
+        private Memory memory;
 
-	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail) {
+	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk) 
+        {
 		this.reg_A = reg_A;
 		this.reg_B = reg_B;
 		this.reg_C = reg_C;
@@ -14,6 +17,7 @@ public class Interpreter {
 		this.working = working;
 		this.done = done;
 		this.fail = fail;
+                this.disk = disk;
 	}
 
 	public void set_regA(int a) {
