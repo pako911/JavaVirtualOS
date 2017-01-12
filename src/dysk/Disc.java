@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import Main.Tab_Fat;
+
 public class Disc {
 
 	
@@ -17,7 +19,7 @@ public class Disc {
 	public Tab_Fat[] atrybuty = new Tab_Fat[64];	//wpis do katlogu glownego
 	public int spacefree = 1984;						//wlne miejsce
 	
-	public Disc()
+	Disc()
 	{
 		
 		for(int i = 0; i < atrybuty.length; i ++) {
@@ -33,11 +35,11 @@ public class Disc {
 		{
 			fat[i] = 0;	
 			atrybuty[i].status= false;
-			atrybuty[i].zapisany = false;//zerwoanie tabliicy fat
+			atrybuty[i].zapisany = false;
 		}
 	}
 	
-	public void tworzeniaPliku(String nazwa, String ext)		//parametry nazwa rozszerzenie
+	void tworzeniaPliku(String nazwa, String ext)		//parametry nazwa rozszerzenie
 	{
 		
 	
@@ -84,7 +86,7 @@ public class Disc {
 			System.out.println("Istnieje ju� plik o takiej nazwie");
 	}
 
-	public int file_jap(String nazwa, String ext)
+	int file_jap(String nazwa, String ext)
 	{
 
 		for (int i = 0; i < 64; i++) {
@@ -93,7 +95,7 @@ public class Disc {
 		}
 		return -1;
 	}
-	public void wys()
+	void wys()
 	{
 		for (int i = 0; i<64; i++)
 		{
@@ -110,7 +112,7 @@ public class Disc {
 		}
 	}
 	
-	public void wpisywanieDoPliku(String nazwa, String ext, String data)
+	void wpisywanieDoPliku(String nazwa, String ext, String data)
 	{
 		/* Zadeklarowanie potrzebnych zmiennych */
 		int jap_pr;
@@ -124,7 +126,7 @@ public class Disc {
 		count_jap = Math.ceil((length / 64));
 
 		/* Czy katalog wolny?  */
-		int cat = what_catalog(nazwa, ext);
+		int cat = ktory_katalog(nazwa, ext);
 		if (cat != -1){
 		if (atrybuty[cat].zapisany == false) 
 			
@@ -169,7 +171,7 @@ public class Disc {
 						}
 					}
 					System.out.println("Wpisanie do pliku pomyslne"); 
-				atrybuty[what_catalog(nazwa, ext)].rozmiar = data.length();
+				atrybuty[ktory_katalog(nazwa, ext)].rozmiar = data.length();
 
 				}
 				else System.out.println( "Za malo miejsca na dysku aby dopisac plik");
@@ -182,7 +184,7 @@ public class Disc {
 
 	}
 
-	public int wolneMiejsceDysk()
+	int wolneMiejsceDysk()
 	{
 		int count = 0;
 		for (int i=0; i< 2048; i++)
@@ -198,7 +200,7 @@ public class Disc {
 		}
 		return count;
 	}
-	public void usuwaniePliku(String nazwa , String ext)
+	void usuwaniePliku(String nazwa , String ext)
 	{
 		int jap = file_jap(nazwa,ext);
 		int kolejnyJap;
@@ -226,7 +228,7 @@ public class Disc {
 				}
 				fat[tab[i]] = 0;
 		}
-			int x =what_catalog(nazwa, ext);
+			int x =ktory_katalog(nazwa, ext);
 				if(atrybuty[x].nazwa == nazwa && atrybuty[x].ext == ext)
 				{
 					atrybuty[x].nazwa ="";
@@ -245,7 +247,7 @@ public class Disc {
 		}	
 			
 
-	public void WyswietlaPliki()
+	void WyswietlaPliki()
 	{
 		int allsize = 0;
 		int l = 0;
@@ -253,29 +255,35 @@ public class Disc {
 		System.out.println( "  Directory of root:");
 		System.out.println();
 		
-		System.out.println("\t" +"Nazwa \t" +"\t" + "Rozszerzenie \t" + "Rozmiar " + "\t" + "Data \t" + "Godzina");
-		for (int i = 1; i < 64; i++)
+		System.out.printf("%15s" ,"Nazwa "  + "Rozszerzenie " + "Rozmiar " + "Pierwszy Jap " + "  " + "Data "+" \t "   +"Godzina");
+		System.out.println();
+		for (int i = 0; i < 64; i++)
 		{
 			if (atrybuty[i].status == true)
 			{
-				System.out.println( "\t" + atrybuty[i].nazwa + " \t"+"\t"  + atrybuty[i].ext + "\t" +"\t" +"     " + atrybuty[i].rozmiar + "\t    " + atrybuty[i].rok + "-" + atrybuty[i].miesiac + "-" + atrybuty[i].dzien + "\t" + atrybuty[i].godzina +":"+ atrybuty[i].minuta);
+				//System.out.printf("%15s" , atrybuty[i].nazwa);
+				//System.out.printf("%15s" , atrybuty[i].ext);
+				//System.out.printf("%15s" , atrybuty[i].rozmiar);
+				//System.out.printf("%15s" , atrybuty[i].jap1);
+				System.out.printf("%1$13s" , atrybuty[i].nazwa +  " \t "   + atrybuty[i].ext +" \t " +" \t "   +  + atrybuty[i].rozmiar +" \t "   + atrybuty[i].jap1 +" \t "   + atrybuty[i].rok + "-" + atrybuty[i].miesiac + "-" + atrybuty[i].dzien + " \t "   + atrybuty[i].godzina +":"+ atrybuty[i].minuta);
 				System.out.println();
 				l++;
 				allsize += atrybuty[i].rozmiar;
 			}
 		}
-		if (dysk[3] == 'n')
-		{
-			System.out.println("Brak plikow w katalogu ");
-		}
+	//	if (dysk[3] == 'n')
+	//	{
+	//		System.out.println("Brak plikow w katalogu ");
+		//}
 		System.out.println();
 		int a = 1984-allsize;
-		System.out.println("\t" + "\t" + l + " file(s)" + " \t" + allsize + " bytes");
-		System.out.println( "\t" + "\t" + " " +"\t" +"\t"+ a + " bytes free");
+		System.out.printf("%15s",  l + " file(s)" + " \t" + allsize + " bytes");
+		System.out.println();
+		System.out.printf("%-15s",  "\t"+ a + " bytes free");
 		System.out.println();
 	}
 
-	public void iloscWolnegoMiejsca()
+	void iloscWolnegoMiejsca()
 	{
 		
 		int free =0;
@@ -291,7 +299,7 @@ public class Disc {
 		spacefree =  free * 64; 
 	}
 
-	public void drukujDysk(String nazwa, String ext)
+	void drukujDysk(String nazwa, String ext)
 {
 	int jap = file_jap(nazwa,ext);
 	int nextJap;
@@ -327,7 +335,7 @@ public class Disc {
 	}
 }
 
-	public void zmianaNazwy(String nazwa, String ext, String newname, String newext)
+	void zmianaNazwy(String nazwa, String ext, String newname, String newext)
 	{
 		if(nazwaIstnieje(newname, newext)==true)
 		{
@@ -354,7 +362,7 @@ public class Disc {
 		}
 	}
 	
-	public void dopiszDoPliku(String nazwa, String ext, String data)
+	void dopiszDoPliku(String nazwa, String ext, String data)
 	{
 		if(file_jap(nazwa,ext) != -1)
 		{
@@ -381,7 +389,7 @@ public class Disc {
 				jap = nextjap;
 			}
 			
-			cat = what_catalog(nazwa,ext);
+			cat = ktory_katalog(nazwa,ext);
 			how =wolnyJap(lastjap);
 			
 			lenght = data.length();
@@ -392,7 +400,7 @@ public class Disc {
 			{
 				if (spacefree > (lenght - how))
 				{
-					atrybuty[what_catalog(nazwa, ext)].rozmiar += data.length();
+					atrybuty[ktory_katalog(nazwa, ext)].rozmiar += data.length();
 					
 					i = (lastjap *64) + (64 - how);
 					k = i + how;
@@ -451,7 +459,7 @@ public class Disc {
 	
 		}
 
-	public int wolnyJap(int nr_jap)
+		int wolnyJap(int nr_jap)
 		{
 			int i = nr_jap *64;
 			int k = i +64;
@@ -465,7 +473,7 @@ public class Disc {
 			}
 			return l;
 		}
-	public int what_catalog(String nazwa , String ext)
+		int ktory_katalog(String nazwa , String ext)
 		{
 			for (int i =0; i<64; i++)
 			{
@@ -476,7 +484,7 @@ public class Disc {
 			}
 			return -1;//-1
 		}
-	public int wolnyKatalog()
+		int wolnyKatalog()
 		{
 			for (int i =0; i<64;i++)
 			{
@@ -489,7 +497,7 @@ public class Disc {
 			return -1;
 		}
 		
-	public boolean nazwaIstnieje(String nazwa, String ext)
+		Boolean nazwaIstnieje(String nazwa, String ext)
 		{
 			for(int i = 0; i<64; i++)
 			{
@@ -501,7 +509,7 @@ public class Disc {
 			return true;
 		}
 
-	public int szukanieWolnegoJap()
+		int szukanieWolnegoJap()
 		{
 			for (int i =0 ; i<64; i++)
 			{
@@ -513,22 +521,5 @@ public class Disc {
 			return -1;
 		}
 
-	public void directory_entry()
-		{
-			System.out.println();
-			System.out.println("  Directory of root:");
-			System.out.println();
-			
-			
-			System.out.println("\t" + " nazwa \t" + "Ext. \t" + "rozmiar \t" + "FJap \t" + "Write? \t" + "Numer");
-			for (int i = 0; i < 64; i++)
-			if (atrybuty[i].status == true)
-			{
-				System.out.println("\t" + atrybuty[i].nazwa + "\t" + atrybuty[i].ext + "\t" + atrybuty[i].rozmiar + "\t" +"\t" + atrybuty[i].jap1 + "\t" + atrybuty[i].zapisany + "\t" + i);
-			}
-			System.out.println();
-
-		}
-		
 	}
 	

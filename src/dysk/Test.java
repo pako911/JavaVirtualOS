@@ -11,18 +11,21 @@ public class Test {
 				Disc disc = new Disc();
 				
 				disc.tworzeniaPliku("TEST", "TXT");
-				disc.wpisywanieDoPliku("TEST", "TXT", "Jarkoasdoiaskdhjfkl zaa");
+				//disc.wpisywanieDoPliku("TEST", "TXT", "Jarkoasdoiaskdhjfkl zaa");
 				disc.tworzeniaPliku("zd", "TXT");
-				disc.wpisywanieDoPliku("zd", "TXT", "jajajjajaj");
-				disc.wys();
-				disc.dopiszDoPliku("zd", "TXT", " dskj");
+				//disc.wpisywanieDoPliku("zd", "TXT", "jajajjajaj");
+				
+				//disc.dopiszDoPliku("zd", "TXT", " dskjjsdhjjh");
 				disc.tworzeniaPliku("TEST", "TXT");
-				disc.tworzeniaPliku("TEST2", "TXT");
-				disc.usuwaniePliku("TEST", "TXT");
+				disc.tworzeniaPliku("TEST3", "TXT");
 				disc.wys();
-				disc.tworzeniaPliku("TEST222", "TXT");
-				disc.WyswietlaPliki();
-				disc.wys();
+				//disc.usuwaniePliku("TEST", "TXT");
+				//disc.wys();
+				//disc.tworzeniaPliku("TEST222", "TXT");
+				//disc.zmianaNazwy("TEST2", "TXT", "suchy", "txt");
+				//disc.WyswietlaPliki();
+				//disc.wys();
+				//disc.drukujDysk("TEST", "TXT");
 				
 				//disc.extended_Fat();
 			//	disc.delete_file("TEST", "TXT");
@@ -128,10 +131,10 @@ disc.write_file("kak", "txt", "asd");
 				
 			
 				//disc.wyswietl();
-				disc.directory_entry();
+			
 			
 				
-				//disc.WyswietlaPliki();
+				disc.WyswietlaPliki();
 				//disc.wyswietl();
 				
 			}
