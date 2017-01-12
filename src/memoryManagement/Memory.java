@@ -6,10 +6,10 @@ import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
-	public int s=64;
+	public int s=64;//ustawienie wielkości tablicy
 	public char sign[]=new char[s];
 	private Semaphore FSBSEM; 
-	private ListFSB FSBPTR;
+	public ListFSB FSBPTR;
 	public ArrayList <PCB> processList;//lista obszarów zajętych
 	//private Semaphore FSBSEM; //semafor bloków wolnej pamięci 
 	private Semaphore MEMORY; //semafor pamięci
@@ -38,7 +38,7 @@ public class Memory {
 	}
 	public boolean memoryAllocation(int size, PCB proces){
 		FSB tmp=FSBPTR.searchForSpace(size);
-		if(tmp.address>=0&&tmp.address<256){
+		if(tmp.address>=0&&tmp.address<s){
 			proces.base=tmp.address;
 			proces.limit=size;
 			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
@@ -46,6 +46,7 @@ public class Memory {
 			processList.add(proces);
 			return true;
 		}else{
+			//System.out.println(FSBPTR.fullSpace());
 					if(size<FSBPTR.fullSpace()){
 					defrag();
 					tmp=FSBPTR.searchForSpace(size);
@@ -54,6 +55,7 @@ public class Memory {
 					processList.add(proces);
 					return true;
 				}else{
+					System.out.println("Nie znaleziono pamięci. Wchodzę pod semafor");
 					MEMORY.P();
 					return false;
 					}

@@ -10,7 +10,8 @@ public class ListFSB {
 	
 	//konstruktor
 	public ListFSB(){
-		head=new FSB(0,256);
+		head=new FSB(0,64);
+		head=null;
 		tail=head;
 	}
 	//dodaje blok wolnej pamięci
@@ -33,12 +34,13 @@ public class ListFSB {
 				bufor=bufor.next;
 			if((bufor.size+bufor.address+1)==address){
 				bufor.size=bufor.size+size;
-				bufor.address=address;
+				//bufor.address=address;
 				f=false;
 			}
-			if(f)
+			if(f){
 			tail.next=new FSB(address, size);
 			tail=tail.next;
+			}
 		}
 	}
 	//usuwa blok wolnej pamięci
@@ -83,23 +85,25 @@ public class ListFSB {
 		int space=0;
 		while(bufor.next!=null){
 			space=space+bufor.size;
+			System.out.println(space);
 			bufor=bufor.next;
 		}
+		System.out.println("calosc "+space);
 		return space;
 	}
 	//sortowanie listy
 	public void sortList(){
-		FSB biggest=head;
+		FSB smallest=head;
 		ListFSB tmp=new ListFSB();//tymczasowa lista
 		
 		while(head!=null){
-			while(biggest.next!=null){
-				if(biggest.size<biggest.next.size&&biggest.next!=null)
-					biggest=biggest.next;
+			while(smallest.next!=null){
+				if(smallest.size>smallest.next.size&&smallest.next!=null)
+					smallest=smallest.next;
 			}
-			tmp.addFSB(biggest.address, biggest.size);
-			removeFSB(biggest.size);
-			biggest=head;
+			tmp.addFSB(smallest.address, smallest.size);
+			removeFSB(smallest.size);
+			smallest=head;
 		}
 		head=tmp.head;
 	}
@@ -113,15 +117,19 @@ public class ListFSB {
 		}
 	}
 	public static void main(String[] args){
-		ListFSB nowa=new ListFSB();
-		//nowa.addFSB(23, 2);
-		//nowa.addFSB(12, 4);
-		//nowa.addFSB(7, 4);
-		//nowa.wypisz();
-		//nowa.sortList();
-		//nowa.removeFSB(7);
+		/*ListFSB nowa=new ListFSB();
+		nowa.addFSB(23, 2);
+		nowa.addFSB(12, 4);
+		nowa.addFSB(7, 4);
+		nowa.wypisz();*/
+		
 		Memory ho=new Memory();
-		ho.memoryAllocation(12, new PCB() );	
-		nowa.wypisz();
+		PCB i=new PCB();
+		PCB o= new PCB();
+		ho.memoryAllocation(20, i);
+		ho.memoryAllocation(40, new PCB() );
+		ho.memoryReleasing(i);
+		ho.memoryAllocation(22, new PCB());
+		ho.FSBPTR.wypisz();
 	}
 }
