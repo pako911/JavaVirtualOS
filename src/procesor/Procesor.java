@@ -45,6 +45,8 @@ public class Procesor {
 	public void Scheduler() {
 		if (Running != null && Running.state == Stany.ZAKONCZONY) {
 			time = Running.timer;
+			processManager.kill(Running.PID);
+			Running = null;
 		}
 		if(Running!=null && Running.state!=Stany.AKTYWNY)
 		//if (true) {
@@ -105,9 +107,11 @@ public class Procesor {
 
 	public void wykonaj() {
 		Scheduler();
-		Process process = processManager.getProces(Running.PID);
-		String rozkaz[] = process.getNextRozkaz();
-		interpreter.exe(rozkaz);
+		if(Running != null) {
+			Process process = processManager.getProces(Running.PID);
+			String rozkaz[] = process.getNextRozkaz();
+			interpreter.exe(rozkaz);
+		}
 
 		/*
 		 * if(Running!=null) { Random r=new Random(); int probability;
