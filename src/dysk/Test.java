@@ -11,11 +11,13 @@ public class Test {
 				Disc disc = new Disc();
 				
 				disc.tworzeniaPliku("TEST", "TXT");
-				disc.wpisywanieDoPliku("TEST", "TXT", "Jarkoasdoiaskdhjfkl zaa");
+				disc.wpisywanieDoPliku("TEST", "TXT", "Jarkoasdoiaskdhjfkl sdfsadfsoidfhasdgfjksahfjkhsajkdhfjkasdhdjkfhdsjakhfjkashjkfhajskhfjksahjkfhasjkhfjkasdhdfjkhasjkfhjksadhdfjkdshzaa");
 				disc.tworzeniaPliku("zd", "TXT");
 				disc.wpisywanieDoPliku("zd", "TXT", "jajajjajaj");
-				
-				
+				disc.dopiszDoPliku("zd", "TXT", "jajo");
+				disc.wyswietlaPliki();
+				disc.wys();
+				disc.drukujDysk("zd", "TXT");
 			}
 		
 
