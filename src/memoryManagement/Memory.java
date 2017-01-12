@@ -6,7 +6,8 @@ import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
-	public char sign[]=new char[256];
+	public int s=64;
+	public char sign[]=new char[s];
 	private Semaphore FSBSEM; 
 	private ListFSB FSBPTR;
 	public ArrayList <PCB> processList;//lista obszarów zajętych
@@ -14,7 +15,7 @@ public class Memory {
 	private Semaphore MEMORY; //semafor pamięci
 	
 	public Memory(){
-		for(int i=0; i<256; i++)
+		for(int i=0; i<s; i++)
 			sign[i]='#';
 		FSBPTR = new ListFSB();
 		try {
@@ -85,7 +86,7 @@ public class Memory {
 		processList=tmp;
 	}
 	public void showMemory(){
-		for(int i=0; i<256; i++){
+		for(int i=0; i<s; i++){
 			//if(i%4==0)System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t\n");
 			//else System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t");
 			System.out.println("\t"+i+"| \t"+sign[i]);

@@ -121,8 +121,7 @@ public class ListFSB {
 		//nowa.sortList();
 		//nowa.removeFSB(7);
 		Memory ho=new Memory();
-		//ho.showMemory();
-		ho.memoryAllocation(12, new PCB() );
-		ho.showMemory();	
+		ho.memoryAllocation(12, new PCB() );	
+		nowa.wypisz();
 	}
 }
