@@ -5,16 +5,15 @@ import memoryManagement.ListFSB;
 import processManager.PCB;
 
 public class ListFSB {
-	public FSB head;//pierwszy element listy
-	public FSB tail;//ostatni element listy
+	public FSB head;//first element in list
+	public FSB tail;//last element in list
 	
-	//konstruktor
+	//constructor for whole list
 	public ListFSB(){
-		head=new FSB(0,128);
-		//head=null;
+		head=new FSB(0,128);//first free-space-block's size is equal to whole memory
 		tail=head;
 	}
-	//dodaje blok wolnej pamięci
+	//add free space block that starts in address field and have size of "size" argument
 	public void addFSB(int address, int size){
 		FSB bufor=head;
 		if(head==null){
@@ -43,7 +42,7 @@ public class ListFSB {
 			}
 		}
 	}
-	//usuwa blok wolnej pamięci
+	//removing free space block with size given in argument
 	public void removeFSB(int size){
 		FSB bufor=head;
 		
@@ -69,7 +68,7 @@ public class ListFSB {
 				bufor.next=bufor.next.next;
 		}else System.out.println("brak takiego elementu");
 	}
-	//szuka miejsca
+	//looking for space
 	public FSB searchForSpace(int size){
 		if(head==null){
 			return new FSB(-1, -1);
@@ -84,7 +83,8 @@ public class ListFSB {
 			else return new FSB(-1, -1);
 		}
 	}
-	public int fullSpace(){//sprawdza czy po defragmentacji będzie miejsce na proces
+	//checks if after defragmentation there will be space for process
+	public int fullSpace(){
 		FSB bufor=head;
 		int space=0;
 		while(bufor.next!=null){
@@ -95,46 +95,32 @@ public class ListFSB {
 		System.out.println("calosc "+space);
 		return space;
 	}
-	//sortowanie listy
+	//sorting free space blocks in list
 	public void sortList(){
-		FSB smallest=head;
 		ListFSB tmp=new ListFSB();//tymczasowa lista
-		
 		while(head!=null){
+			FSB smallest=head;
 			while(smallest.next!=null){
-				if(smallest.size>smallest.next.size&&smallest.next!=null)
+				if(smallest.size>smallest.next.size)
 					smallest=smallest.next;
 			}
 			tmp.addFSB(smallest.address, smallest.size);
 			removeFSB(smallest.size);
 			smallest=head;
 		}
+		if(tmp.head!=null)
 		head=tmp.head;
+		else System.out.println("nie ma co sortowac");
 	}
-	//wypisz wolne bloki pamięci
+	//write out free space blocks
 	public void wypisz(){
 		FSB bufor=head;
 		if(bufor!=null){
-		System.out.println(bufor.address + " " +bufor.size);
-		while(bufor.next!=null){
-			bufor=bufor.next;
-			System.out.println(bufor.address + " " +bufor.size);
-			}
+			System.out.println("FSB: "+bufor.address + " " +bufor.size);
+			while(bufor.next!=null){
+				bufor=bufor.next;
+				System.out.println("FSB: "+bufor.address + " " +bufor.size);
+				}
 		}else System.out.println("Nie ma co wypisać");
-	}
-	public static void main(String[] args){
-		/*ListFSB nowa=new ListFSB();
-		nowa.addFSB(23, 2);
-		nowa.addFSB(12, 4);
-		nowa.addFSB(7, 4);
-		nowa.wypisz();
-		System.out.println(nowa.fullSpace());*/
-		Memory ho=new Memory();
-		PCB i=new PCB();
-		ho.memoryAllocation(80, i);
-		ho.memoryAllocation(50, new PCB() );
-		ho.memoryReleasing(i);
-		ho.memoryAllocation(90, new PCB());
-		ho.FSBPTR.wypisz();
 	}
 }
