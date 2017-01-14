@@ -70,7 +70,6 @@ public class Disc {
 			fat[buffor] = -1;													
 			
 			System.out.println("Plik zostal pomyslnie utworzony");
-			System.out.println(buffor);
 		//	iloscWolnegoMiejsca();
 			
 		}
@@ -157,7 +156,8 @@ public class Disc {
 			int k;
 			int o=0;
 		    dlugosc = data.length();
-		//	count_jap = wielkosc(nazwa, ext, data)+ Math.ceil((dlugosc ));
+		    count_jap = Math.ceil(dlugosc/64);
+		    System.out.println("DLUGOSC JAP "+count_jap);
 			// Czy katalog wolny?  
 			if (ktory_katalog(nazwa, ext) != -1){
 			if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
@@ -166,38 +166,42 @@ public class Disc {
 				if (file_jap(nazwa, ext) != -1) {
 					if ((spacefree) > dlugosc) {
 						jap1 = file_jap(nazwa, ext);
-						System.out.println(jap1);
-						k = 0;
+						//k = 0;
 						
 						//DLA PIERWSZEGO 
+						System.out.println("początek pliku "+jap1);
 						char datachar[] = data.toCharArray();
-						for (int q = jap1; q < jap1 *64 ; q++) {
-							if (k <= dlugosc - 1) {
-								dysk[q] = datachar[k];
-								k++;
+						for (int q = 0; q < data.length() && q < 64; q++) {
+							//if (k <= dlugosc - 1) {
+								dysk[q+jap1*64] = datachar[q];
+								System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+								//k++;
 							
-							}
+							//}
 						//	System.out.println(k);
 						}
 						//DLA WIECEJ
-						char datachar1[] = data.toCharArray();
 						if (count_jap > 1) {
-							for (int j = 2; j <= count_jap; j++) {
+							for (int j = 1; j <= count_jap-1; j++) {
 								nastepnyJap = szukanieWolnegoJap();
+								System.out.println("WOLNY NEXT JAP "+nastepnyJap);
 								fat[nastepnyJap] = -1;
 								fat[jap1] = nastepnyJap;
 								jap1 = nastepnyJap;
-								for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
+								for (int q = 0; q < 64 && q < data.length()-j*64; q++) {
+										dysk[q+jap1*64] = datachar[q+j*64];
+										System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+								}
+								/*for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
 									if (k <= dlugosc - 1)
 									{
-										dysk[i1] = datachar1[k];
+										dysk[i1] = datachar[k];
 										k++;
 									}
-								}
+								}*/
 							}
 						}
 						System.out.println("Wpisanie do pliku pomyslne"); 
-						System.out.println(k);
 					atrybuty[ktory_katalog(nazwa, ext)].rozmiar = data.length();
 
 					}

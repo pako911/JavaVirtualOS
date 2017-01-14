@@ -37,17 +37,21 @@ public class Test {
 				//disc.wyswietlDanyPlik("test", "txt");
 				disc.tworzeniaPliku("tsest", "txt");
 				disc.wpisywanieDoPliku("tsest", "txt", "jak duzy jestem");
+				
 				disc.tworzeniaPliku("tse3st", "txt");
-				disc.wpisywanieDoPliku("tsse3st", "txt", "tak duzy ja");
-				disc.wpisywanieDoPliku("tsest", "txt", "dalsza czesc");
+				disc.wpisywanieDoPliku("tse3st", "txt", "tak duzy ja");
+				
+				//disc.wpisywanieDoPliku("tsest", "txt", "dalsza czesc");
 			//	disc.usuwaniePliku("tsest", "txt");
 			//	disc.www();
 				//disc.usuwaniePliku("test", "txt");
+				disc.usuwaniePliku("test", "txt");
 				disc.tworzeniaPliku("tst", "txt");
-				disc.wpisywanieDoPliku("tst", "txt", " taki maly ");
+				disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
 				//disc.www();
 				disc.tworzeniaPliku("tse3est", "txt");
 				disc.wpisywanieDoPliku("tse3est", "txt", " farmet mial ");
+				
 				disc.www();
 			}
 		
