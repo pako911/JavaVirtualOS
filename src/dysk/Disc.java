@@ -17,8 +17,7 @@ public class Disc {
 	public char[] dysk = new char [2048];				//dysk
 	public int [] fat = new int [64];					//tablica fat 64 bity
 	public Tab_Fat[] atrybuty = new Tab_Fat[64];		//wpis do katlogu glownego
-	public int spacefree = 2048;						//wlne miejsce
-	private int nr;
+	public int spacefree = 2048;						//wlne miejsce`
 	public Disc()
 	{
 		
@@ -114,47 +113,14 @@ public class Disc {
 			
 		}
 	}
-
-	void wpisz(String nazwa, String ext, String data)
-	{
-		int jap = ktory_katalog(nazwa, ext);
-		char datachar[] = data.toCharArray();
-		char datachar1[] = data.toCharArray();
-		if (jap != -1 )
-		{
-			if(atrybuty[jap].zapisany == false)
-			{
-				atrybuty[jap].zapisany = true;
-			}
-			int pierwszyJap = file_jap(nazwa,ext);
-			if ( pierwszyJap != -1)
-			{
-				if( spacefree > data.length())
-				{
-					{
-					for (int i= 0;i< data.length(); i++)	
-					{
-						dysk [nr] = datachar[i];
-						nr++;
-					}
-					}System.out.println("Wpisano pomyślnie");
-				}else System.out.println("Za malo miejsca");
-			} else System.out.println("Nie mozna nadpisac danych");
-			
-		} else System.out.println("Plik nie istnieje");
-		
-			
-	}
 	 public void wpisywanieDoPliku(String nazwa, String ext, String data)
 	{
 		
-		 int jap1;
+		    int jap1;
 			int nastepnyJap;
 			double dlugosc;
 			double count_jap=0;
-			double wiel ;
-			int k;
-			int o=0;
+			
 		    dlugosc = data.length();
 		    count_jap = Math.ceil(dlugosc/64);
 		    System.out.println("DLUGOSC JAP "+count_jap);
@@ -166,7 +132,6 @@ public class Disc {
 				if (file_jap(nazwa, ext) != -1) {
 					if ((spacefree) > dlugosc) {
 						jap1 = file_jap(nazwa, ext);
-						//k = 0;
 						
 						//DLA PIERWSZEGO 
 						System.out.println("początek pliku "+jap1);
@@ -175,10 +140,7 @@ public class Disc {
 							//if (k <= dlugosc - 1) {
 								dysk[q+jap1*64] = datachar[q];
 								System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
-								//k++;
-							
-							//}
-						//	System.out.println(k);
+					
 						}
 						//DLA WIECEJ
 						if (count_jap > 1) {
@@ -192,13 +154,7 @@ public class Disc {
 										dysk[q+jap1*64] = datachar[q+j*64];
 										System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
 								}
-								/*for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
-									if (k <= dlugosc - 1)
-									{
-										dysk[i1] = datachar[k];
-										k++;
-									}
-								}*/
+								
 							}
 						}
 						System.out.println("Wpisanie do pliku pomyslne"); 
@@ -323,11 +279,11 @@ public class Disc {
 		spacefree =  free * 64; 
 	}
 	
-/*	public void drukujDysk(String nazwa, String ext)
+	public void drukujDysk(String nazwa, String ext)
 {
 	int jap = file_jap(nazwa,ext);
 	int nextJap;
-	int l=-1;
+	int l=1;
 	int[] tab = new int [64];
 	tab[0] = jap;
 	
@@ -341,7 +297,8 @@ public class Disc {
 			l++;
 		}
 		l-=1;
-		
+		System.out.println("Plik o nazwie "+ nazwa+"."+ext);
+		System.out.println("O zawartosci: ");
 		for ( int i =0 ;i<l;i++)
 		{
 			int j = 64 *tab[i];
@@ -352,36 +309,13 @@ public class Disc {
 				System.out.print(dysk[z]);
 			}
 			
-		}
+		}System.out.println();
 	}
 	else
 	{
 		System.out.println("Nie znaleziono podanego pliku");
 	}
-}*/
-	
-	void wyswietlDanyPlik(String nazwa, String ext)
-	{
-		int i =0;
-		int pierwszy = file_jap(nazwa, ext);
-		int japNr = ktory_katalog(nazwa, ext);
-		
-		if (japNr!=-1 && atrybuty[japNr].nazwa == nazwa && atrybuty[japNr].ext == ext)
-		{
-			for ( int j =0;j<atrybuty[japNr].rozmiar;j++)
-			{
-				
-			}
-			{	
-				System.out.println(atrybuty[ktory_katalog(nazwa, ext)].nazwa +"   "+ atrybuty[ktory_katalog(nazwa, ext)].ext);
-				System.out.println("O zawartosci: ");
-			}
-		}
-		else
-		{
-			System.out.println("Nie znalazlo takiego pliku");
-		}
-	}
+}
 	
 	void www()
 	{
@@ -419,7 +353,7 @@ public class Disc {
 		}
 	}
 	
-	public void dopiszDoPliku(String nazwa, String ext, String data)
+	public void dopiszDoPliku(String nazwa, String ext, String data)//naprawoc
 	{
 		if(file_jap(nazwa,ext) != -1)
 		{
@@ -431,7 +365,8 @@ public class Disc {
 			double lenght;
 			int nastepnyJap;
 			double count_jap;
-			
+			int rozmiar = atrybuty[jap].rozmiar;
+			System.out.println(rozmiar);
 			while(jap != -1)
 			{
 				nextjap = fat[jap];
@@ -446,16 +381,20 @@ public class Disc {
 			how =wolnyJap(ostatniJap);
 			
 			lenght = data.length();
+			System.out.println(lenght);
+			
 			count_jap = Math.ceil((lenght - how)/64);
+			
 			if(atrybuty[ktory_katalog(nazwa,ext)].zapisany == true)
 			{
 				if (spacefree > (lenght - how))
 				{
 					atrybuty[ktory_katalog(nazwa, ext)].rozmiar += data.length();
+
 					
 					l = 0;
 					char datachar[] = data.toCharArray();
-					for( int i =(ostatniJap *64) + (64 - how); i<(ostatniJap *64) + (64 - how) + how;i++ )
+					for( int i =((ostatniJap *64)+rozmiar) ; i<(ostatniJap *64) + (64 - how) + how;i++ )
 					{
 						if(l<lenght)
 						{
@@ -470,13 +409,11 @@ public class Disc {
 						fat[ostatniJap] = nastepnyJap;
 						ostatniJap = nastepnyJap;
 						//
-						
-						char datachar2[] = data.toCharArray();
-						for(int z=nastepnyJap *64;z<nastepnyJap *64;z++)
+						for(int z=0;z< 64 && z < data.length()-j*64;z++)
 						{
 							if(l < lenght)
 							{
-								dysk[z] = datachar2 [l];
+								dysk[z+jap*64+rozmiar] = datachar [z+j*64];
 								l++;
 							}
 							

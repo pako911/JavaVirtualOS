@@ -33,26 +33,48 @@ public class Test {
 				disc.wpisywanieDoPliku("test", "txt", "hestm");
 				//disc.wyswietlaPliki();
 				//disc.www();
-				
+			//	disc.drukujDysk("test", "txt");
 				//disc.wyswietlDanyPlik("test", "txt");
 				disc.tworzeniaPliku("tsest", "txt");
 				disc.wpisywanieDoPliku("tsest", "txt", "jak duzy jestem");
+				disc.drukujDysk("test", "txt");
+				disc.dopiszDoPliku("test", "txt", " malym ludzikiem");
+				disc.drukujDysk("test", "txt");
+				disc.dopiszDoPliku("tsest", "txt", " taki jak maly jestem");
+				disc.tworzeniaPliku("tst", "txt");
+				disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolpabcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
+				//disc.dopiszDoPliku("tst", "txt", " jakubm ");
+				disc.www();
+				//disc.tworzeniaPliku("tse3st", "txt");
+				//disc.wpisywanieDoPliku("tse3st", "txt", "tak duzy ja");
+			//	disc.dopiszDoPliku("tse3sr", "txt", "      k jarko z bogdanca");
+				//disc.drukujDysk("tsest", "txt");
+				//disc.zmianaNazwy("tsest", "txt", "jate", "txt");
+				//disc.drukujDysk("tsest", "txt");
+				//disc.drukujDysk("jate", "txt");
 				
-				disc.tworzeniaPliku("tse3st", "txt");
-				disc.wpisywanieDoPliku("tse3st", "txt", "tak duzy ja");
-				
+				//disc.wyswietlaPliki();
+				//disc.wys();
 				//disc.wpisywanieDoPliku("tsest", "txt", "dalsza czesc");
 			//	disc.usuwaniePliku("tsest", "txt");
 			//	disc.www();
 				//disc.usuwaniePliku("test", "txt");
-				disc.usuwaniePliku("test", "txt");
-				disc.tworzeniaPliku("tst", "txt");
-				disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
-				//disc.www();
-				disc.tworzeniaPliku("tse3est", "txt");
+			/*	disc.tworzeniaPliku("tse3est", "txt");
 				disc.wpisywanieDoPliku("tse3est", "txt", " farmet mial ");
-				
-				disc.www();
+				disc.tworzeniaPliku("tsed3est", "txt");
+				disc.wpisywanieDoPliku("tsed3est", "txt", " jajeczko male bylo sobie w domku");
+				disc.tworzeniaPliku("tses3est", "txt");
+				disc.wpisywanieDoPliku("tses3est", "txt", " Mateusz kupil sobie deske i ");
+				disc.drukujDysk("tsest", "txt");
+				disc.drukujDysk("jate", "txt");
+				disc.usuwaniePliku("test", "txt");
+				disc.usuwaniePliku("tse3est", "txt");
+				disc.tworzeniaPliku("tst", "txt");
+				disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolpabcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
+				//disc.www();
+			//disc.drukujDysk("tst", "txt");
+				//disc.wys();
+				//disc.www();*/
 			}
 		
 
