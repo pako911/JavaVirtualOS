@@ -3,15 +3,16 @@ package interpreter;
 import dysk.Disc;
 import memoryManagement.Memory;
 import processManager.ProcessManager;
-	
+import komunikacjaMiedzyprocesowa.IPC
+        
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-
-	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk) 
+        private IPC box;
+	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box) 
         {
 		this.memory = memory;
 		this.reg_A = reg_A;
@@ -22,6 +23,9 @@ public class Interpreter {
 		this.done = done;
 		this.fail = fail;
                 this.disk = disk;
+                this.memory = memory;
+                this.manager = manager;
+                this.box = box;
 	}
 
 	public void set_regA(int a) {
@@ -300,7 +304,7 @@ public class Interpreter {
 
 	}
 
-	public Boolean execute(String rozkaz[]) {
+	public Boolean filesExecute(String rozkaz[]) {
 		this.done = false;
 		this.working = false;
 		this.fail = false;
@@ -374,17 +378,14 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FRN") {
-			/*
-			 * rozkaz[2] -> Nazwa pliku, ktory chcesz zmienic rozkaz[3] -> Na
-			 * jaka
-			 */
+		} else if (rozkaz[0].equals("FRN")) {
+			
 
-			// fm.renameFile(rozkaz[2], rozkaz[3]);
+			disk.zmianaNazwy(rozkaz[1],rozkaz[2],rozkaz[3],rozkaz[4]);
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FFN") {
+		} else if (rozkaz[0].equals("FFN")) {
 			/*
 			 * rozkaz[2] -> nazwa szukanego pliku
 			 */
@@ -392,17 +393,55 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0] == "FLT") {
+		} else if (rozkaz[0].equals("FLT")) {
 			// fm.listFiles();
 
 			this.working = false;
 			return true;
-		} else {
+		} else if(rozkaz[0].equals("FAD")){
+                        disk.dopiszDoPliku(rozkaz[1], rozkaz[2], rozkaz[3]);
+                        this.working = false;
+                        return true;
+                } else {
 			System.out.print("\n");
 		}
 
 		return done;
 	}
+        
+        public Boolean semaphore(String rozkaz[]) {
+		this.done = false;
+		this.working = false;
+		this.fail = false;
+                
+                if(rozkaz[0].equals("SSH")){
+                    
+                } else if(rozkaz[0].equals("")){}
+                    
+               return done;
+        }
+        
+        public Boolean boxes(String rozkaz[]){
+            this.done = false;
+            this.working = false;
+            this.fail = false;
+            
+            if(rozkaz[0].equals("XR")){
+                box.odbierz(rozkaz[1]);
+                this.working = false;
+		return true;
+            } else if(rozkaz[0].equals("XS")){
+                box.wyslij(rozkaz[1], rozkaz[2]);
+                this.working = false;
+		return true;
+            } else if(rozkaz[0].equals("XD")){
+                box.usunSkrzynke(rozkaz[1]);
+                this.working = false;
+		return true;
+            }
+            
+            return done;
+        }
 
 	public void showRegisters() {
 		System.out.print("Rejestry:");
