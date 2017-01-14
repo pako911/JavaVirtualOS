@@ -31,10 +31,24 @@ public class Test {
 				 
 				disc.tworzeniaPliku("test", "txt");
 				disc.wpisywanieDoPliku("test", "txt", "hestm");
-				disc.wyswietlaPliki();
-				disc.usuwaniePliku("test", "txt");
-				disc.wyswietlaPliki();
+				//disc.wyswietlaPliki();
+				//disc.www();
 				
+				//disc.wyswietlDanyPlik("test", "txt");
+				disc.tworzeniaPliku("tsest", "txt");
+				disc.wpisywanieDoPliku("tsest", "txt", "jak duzy jestem");
+				disc.tworzeniaPliku("tse3st", "txt");
+				disc.wpisywanieDoPliku("tsse3st", "txt", "tak duzy ja");
+				disc.wpisywanieDoPliku("tsest", "txt", "dalsza czesc");
+			//	disc.usuwaniePliku("tsest", "txt");
+			//	disc.www();
+				//disc.usuwaniePliku("test", "txt");
+				disc.tworzeniaPliku("tst", "txt");
+				disc.wpisywanieDoPliku("tst", "txt", " taki maly ");
+				//disc.www();
+				disc.tworzeniaPliku("tse3est", "txt");
+				disc.wpisywanieDoPliku("tse3est", "txt", " farmet mial ");
+				disc.www();
 			}
 		
 

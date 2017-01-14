@@ -18,7 +18,7 @@ public class Disc {
 	public int [] fat = new int [64];					//tablica fat 64 bity
 	public Tab_Fat[] atrybuty = new Tab_Fat[64];		//wpis do katlogu glownego
 	public int spacefree = 2048;						//wlne miejsce
-	
+	private int nr;
 	public Disc()
 	{
 		
@@ -70,7 +70,7 @@ public class Disc {
 			fat[buffor] = -1;													
 			
 			System.out.println("Plik zostal pomyslnie utworzony");
-			
+			System.out.println(buffor);
 		//	iloscWolnegoMiejsca();
 			
 		}
@@ -115,62 +115,99 @@ public class Disc {
 			
 		}
 	}
-	
+
+	void wpisz(String nazwa, String ext, String data)
+	{
+		int jap = ktory_katalog(nazwa, ext);
+		char datachar[] = data.toCharArray();
+		char datachar1[] = data.toCharArray();
+		if (jap != -1 )
+		{
+			if(atrybuty[jap].zapisany == false)
+			{
+				atrybuty[jap].zapisany = true;
+			}
+			int pierwszyJap = file_jap(nazwa,ext);
+			if ( pierwszyJap != -1)
+			{
+				if( spacefree > data.length())
+				{
+					{
+					for (int i= 0;i< data.length(); i++)	
+					{
+						dysk [nr] = datachar[i];
+						nr++;
+					}
+					}System.out.println("Wpisano pomyślnie");
+				}else System.out.println("Za malo miejsca");
+			} else System.out.println("Nie mozna nadpisac danych");
+			
+		} else System.out.println("Plik nie istnieje");
+		
+			
+	}
 	 public void wpisywanieDoPliku(String nazwa, String ext, String data)
 	{
 		
-		int jap1;
-		int nastepnyJap;
-		double dlugosc;
-		double count_jap;
-		int k;
-		dlugosc = data.length();
-		count_jap = Math.ceil((dlugosc / 64));
-		// Czy katalog wolny?  
-		if (ktory_katalog(nazwa, ext) != -1){
-		if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
-				atrybuty[ktory_katalog(nazwa, ext)].zapisany = true;
-	
-			if (file_jap(nazwa, ext) != -1) {
-				if ((spacefree) > dlugosc) {
-					jap1 = file_jap(nazwa, ext);
-					k = 0;
-					//DLA PIERWSZEGO 
-					char datachar[] = data.toCharArray();
-					for (int q = 0; q < jap1 *64 ; q++) {
-						if (k <= dlugosc - 1) {
-							dysk[q] = datachar[k];
-							k++;
+		 int jap1;
+			int nastepnyJap;
+			double dlugosc;
+			double count_jap=0;
+			double wiel ;
+			int k;
+			int o=0;
+		    dlugosc = data.length();
+		//	count_jap = wielkosc(nazwa, ext, data)+ Math.ceil((dlugosc ));
+			// Czy katalog wolny?  
+			if (ktory_katalog(nazwa, ext) != -1){
+			if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
+					atrybuty[ktory_katalog(nazwa, ext)].zapisany = true;
+		
+				if (file_jap(nazwa, ext) != -1) {
+					if ((spacefree) > dlugosc) {
+						jap1 = file_jap(nazwa, ext);
+						System.out.println(jap1);
+						k = 0;
+						
+						//DLA PIERWSZEGO 
+						char datachar[] = data.toCharArray();
+						for (int q = jap1; q < jap1 *64 ; q++) {
+							if (k <= dlugosc - 1) {
+								dysk[q] = datachar[k];
+								k++;
+							
+							}
+						//	System.out.println(k);
 						}
-					}
-					//DLA WIECEJ 
-					
-					char datachar1[] = data.toCharArray();
-					if (count_jap > 1) {
-						for (int j = 2; j <= count_jap; j++) {
-							nastepnyJap = szukanieWolnegoJap();
-							fat[nastepnyJap] = -1;
-							fat[jap1] = nastepnyJap;
-							jap1 = nastepnyJap;
-							for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
-								if (k <= dlugosc - 1)
-								{
-									dysk[i1] = datachar1[k];
-									k++;
+						//DLA WIECEJ
+						char datachar1[] = data.toCharArray();
+						if (count_jap > 1) {
+							for (int j = 2; j <= count_jap; j++) {
+								nastepnyJap = szukanieWolnegoJap();
+								fat[nastepnyJap] = -1;
+								fat[jap1] = nastepnyJap;
+								jap1 = nastepnyJap;
+								for (int i1 = 0; i1 < nastepnyJap * 64; i1++) {
+									if (k <= dlugosc - 1)
+									{
+										dysk[i1] = datachar1[k];
+										k++;
+									}
 								}
 							}
 						}
-					}
-					System.out.println("Wpisanie do pliku pomyslne"); 
-				atrybuty[ktory_katalog(nazwa, ext)].rozmiar = data.length();
+						System.out.println("Wpisanie do pliku pomyslne"); 
+						System.out.println(k);
+					atrybuty[ktory_katalog(nazwa, ext)].rozmiar = data.length();
 
+					}
+					else System.out.println( "Za malo miejsca na dysku");
 				}
-				else System.out.println( "Za malo miejsca na dysku");
+				else  System.out.println( "Nie mozna nadpisac danych");
 			}
-			else  System.out.println( "Nie mozna nadpisac danych");
-		}
-		else System.out.println ("Blad! Plik nie istnieje" );
-		iloscWolnegoMiejsca();
+			else System.out.println ("Blad! Plik nie istnieje" );
+			iloscWolnegoMiejsca();
+
 
 
 	}
@@ -230,7 +267,7 @@ public class Disc {
 					atrybuty[x].zapisany = false;
 				}
 				iloscWolnegoMiejsca();
-				System.out.println("Usuwanie pliku przebieg�o pomy�lne");
+				System.out.println("Usuwanie pliku przebieglo pomyslnie");
 		}
 		else
 			System.out.println("Plik nie istnieje");
@@ -282,7 +319,7 @@ public class Disc {
 		spacefree =  free * 64; 
 	}
 	
-	public void drukujDysk(String nazwa, String ext)
+/*	public void drukujDysk(String nazwa, String ext)
 {
 	int jap = file_jap(nazwa,ext);
 	int nextJap;
@@ -317,32 +354,36 @@ public class Disc {
 	{
 		System.out.println("Nie znaleziono podanego pliku");
 	}
-}
-	/*
+}*/
+	
 	void wyswietlDanyPlik(String nazwa, String ext)
 	{
 		int i =0;
-		if (atrybuty[ktory_katalog(nazwa, ext)].nazwa == nazwa && atrybuty[ktory_katalog(nazwa, ext)].ext == ext)
+		int pierwszy = file_jap(nazwa, ext);
+		int japNr = ktory_katalog(nazwa, ext);
+		
+		if (japNr!=-1 && atrybuty[japNr].nazwa == nazwa && atrybuty[japNr].ext == ext)
 		{
+			for ( int j =0;j<atrybuty[japNr].rozmiar;j++)
 			{
+				
+			}
+			{	
 				System.out.println(atrybuty[ktory_katalog(nazwa, ext)].nazwa +"   "+ atrybuty[ktory_katalog(nazwa, ext)].ext);
-				while(file_jap(nazwa, ext) !=-1)
-				{
-					
-					System.out.print(dysk[fat[i]]);
-					i++;
-				}
+				System.out.println("O zawartosci: ");
 			}
 		}
 		else
+		{
 			System.out.println("Nie znalazlo takiego pliku");
+		}
 	}
-	*/
+	
 	void www()
 	{
 		for ( int i =0 ; i< 2048; i++)
 		{
-			System.out.print(dysk[i]);
+			System.out.println("nr"+i+" "+dysk[i]+" ");
 		}
 	}
 
@@ -427,7 +468,7 @@ public class Disc {
 						//
 						
 						char datachar2[] = data.toCharArray();
-						for(int z=nastepnyJap *64;z<nastepnyJap *64 +64;z++)
+						for(int z=nastepnyJap *64;z<nastepnyJap *64;z++)
 						{
 							if(l < lenght)
 							{
@@ -461,7 +502,7 @@ public class Disc {
 		int wolnyJap(int nr_jap)
 		{
 			int l = 0; 
-			for (int j =0; j<nr_jap *64 +64;j++)
+			for (int j =0; j<nr_jap *64;j++)
 			{
 				if (dysk[j]== 0)
 				{
