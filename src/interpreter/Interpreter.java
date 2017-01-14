@@ -410,6 +410,7 @@ public class Interpreter {
 		System.out.print("\nB: " + get_regB());
 		System.out.print("\nC: " + get_regC());
 		System.out.print("\nPC: " + get_PC());
+		System.out.println("\nflag_F "+ get_flag_F());
 	}
 
 	public Boolean get_flag_F() {

@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import dysk.Disc;
 import interpreter.Interpreter;
@@ -25,7 +26,9 @@ public class Main {
 		char[] loadingc = co.toCharArray();
 		for(int i = 0; i<co.length();i++) {
 			System.out.print(loadingc[i]);
+			
 		}	
+		
 		System.out.println();
 	}
 	
@@ -127,6 +130,11 @@ public class Main {
 					
 				} else if(line.split(" ")[0].equals("PDISK")) {
 					disc.wyswietlaPliki();
+					
+				} else if(line.split(" ")[0].equals("A")) {
+					String[] a = line.split(" ");
+					interpreter.exe(a);
+					interpreter.showRegisters();
 					
 				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
 					String file = line.split(" ")[1];

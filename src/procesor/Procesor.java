@@ -124,12 +124,8 @@ public class Procesor {
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
 			Running.flag_F = interpreter.get_flag_F();
-			System.out.println("WYKONYWANY "+Running.PID);
-			System.out.println("COUNTER "+Running.counter);
-			System.out.println("A "+Running.A);
-			System.out.println("B "+Running.B);
-			System.out.println("C "+Running.C);
-			System.out.println("flag_F "+Running.flag_F);
+			System.out.println("PID" + Running.PID);
+			interpreter.showRegisters();
 		}
 
 		/*
