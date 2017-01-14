@@ -37,8 +37,8 @@ public class Interpreter {
         {
 		this.reg_B = b;
 	}
-	public void set_regC(int c) {
-		this.reg_C = c;
+	public void set_regC(int C) {
+		this.reg_C = C;
 	}
 
 	public int get_regA() {
