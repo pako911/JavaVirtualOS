@@ -319,22 +319,10 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "FRD") {
-			/*
-			 * rozkaz[2] -> nazwe pliku, z ktorego mam czytac rozkaz[3] -> ilosc
-			 * znakow do odczytania
-			 */
-			// String buff;
-			// fm.readFile(fm.findFile(rozkaz[2]), buff,
-			// Integer.parseInt(rozkaz[3]));
-			// System.out.print(buff);
+			disk.wyswietlDanyPlik(rozkaz[1], rozkaz[2]);
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "FTR") {
-			/*
-			 * rozkaz[2] -> nazwa pliku do przyciecia rozkaz[3] -> Ile znakow w
-			 * pliku zachowac
-			 */
-			// fm.truncateFile(rozkaz[2], Integer.parseInt(rozkaz[3]));
                         //przycinanie
 			this.working = false;
 			return true;
@@ -376,16 +364,13 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("FFN")) {
-			/*
-			 * rozkaz[2] -> nazwa szukanego pliku
-			 */
+			
 			//szukanie
 
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("FLT")) {
-			// fm.listFiles();
-
+			disk.wyswietlaPliki();
 			this.working = false;
 			return true;
 		} else if(rozkaz[0].equals("FAD")){
