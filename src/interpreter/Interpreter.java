@@ -12,6 +12,7 @@ public class Interpreter {
         private Memory memory;
 	private ProcessManager manager;
         private IPC box;
+        
 	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box) 
         {
 		this.memory = memory;
@@ -99,13 +100,12 @@ public class Interpreter {
 				} else if (rozkaz[2].equals("C")) {
 					reg_B -= get_regC();
 				}
-			} else {
-				if (rozkaz[2].equals("A")) {
+			} else if (rozkaz[2].equals("A")) {
 					reg_C -= get_regA();
 				} else if (rozkaz[2].equals("B")) {
 					reg_C -= get_regB();
 				}
-			}
+			
 
 			this.working = false;
 			return true;
@@ -311,17 +311,11 @@ public class Interpreter {
 
 		if (rozkaz[0].equals("FCR")) {
 			disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("FWR")) {
-			/*
-			 * rozkaz[2] -> nazwa pliku do ktorego chcesz zapisac rozkaz[3] ->
-			 * co chcesz zapisac
-			 */
 			System.out.println(rozkaz[1]+" "+rozkaz[2]+" "+rozkaz[3]);
 			disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "FRD") {
@@ -341,12 +335,11 @@ public class Interpreter {
 			 * pliku zachowac
 			 */
 			// fm.truncateFile(rozkaz[2], Integer.parseInt(rozkaz[3]));
-
+                        //przycinanie
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("FDL")) {
 			disk.usuwaniePliku(rozkaz[1], rozkaz[2]);
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "FOP") {
@@ -355,7 +348,7 @@ public class Interpreter {
 			 */
 			// fm.openFile(fm.findFile(rozkaz[2]),
 			// Integer.parseInt(rozkaz[3]));
-
+                        //otwieranie
 			this.working = false;
 			return true;
 		} else if (rozkaz[0] == "FCL") {
@@ -363,7 +356,7 @@ public class Interpreter {
 			 * rozkaz[2] -> nazwa pliku do zamkniecia
 			 */
 			// fm.closeFile(fm.findFile(rozkaz[2]));
-
+                        //zamykanie
 			this.working = false;
 			return false;
 		} else if (rozkaz[0] == "FLS") {
@@ -378,18 +371,15 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else if (rozkaz[0].equals("FRN")) {
-			
-
+		} else if (rozkaz[0].equals("FRN")) {	
 			disk.zmianaNazwy(rozkaz[1],rozkaz[2],rozkaz[3],rozkaz[4]);
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("FFN")) {
 			/*
 			 * rozkaz[2] -> nazwa szukanego pliku
 			 */
-			// fm.findFile(rozkaz[2]);
+			//szukanie
 
 			this.working = false;
 			return true;
@@ -409,35 +399,38 @@ public class Interpreter {
 		return done;
 	}
         
-        public Boolean semaphore(String rozkaz[]) {
-		this.done = false;
-		this.working = false;
-		this.fail = false;
-                
-                if(rozkaz[0].equals("SSH")){
-                    
-                } else if(rozkaz[0].equals("")){}
-                    
-               return done;
-        }
+//        public Boolean semaphore(String rozkaz[]) {
+//		this.done = false;
+//		this.working = false;
+//		this.fail = false;
+//                
+//                if(rozkaz[0].equals("SSH")){
+//                    
+//                } else if(rozkaz[0].equals("")){}
+//                    
+//               return done;
+//        }
         
         public Boolean boxes(String rozkaz[]){
             this.done = false;
             this.working = false;
             this.fail = false;
             
-            if(rozkaz[0].equals("XR")){
-                box.odbierz(rozkaz[1]);
-                this.working = false;
-		return true;
-            } else if(rozkaz[0].equals("XS")){
-                box.wyslij(rozkaz[1], rozkaz[2]);
-                this.working = false;
-		return true;
-            } else if(rozkaz[0].equals("XD")){
-                box.usunSkrzynke(rozkaz[1]);
-                this.working = false;
-		return true;
+            switch (rozkaz[0]) {
+                case "XR":
+                    box.odbierz(rozkaz[1]);
+                    this.working = false;
+                    return true;
+                case "XS":
+                    box.wyslij(rozkaz[1], rozkaz[2]);
+                    this.working = false;
+                    return true;
+                case "XD":
+                    box.usunSkrzynke(rozkaz[1]);
+                    this.working = false;
+                    return true;
+                default:
+                    break;
             }
             
             return done;
