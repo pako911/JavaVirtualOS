@@ -1,12 +1,14 @@
 package processManager;
 
+import java.util.ArrayList;
+
 import memoryManagement.Memory;
 import processManager.PCB.Stany;
 
 public class Test {
 
 	public static void main(String[] args) {
-		Memory memory = new Memory();
+		Memory memory = new Memory(new ArrayList<PCB>());
 		ProcessManager processManager = new ProcessManager(memory);
 		processManager.newProcess("A.TXT");
 		processManager.newProcess("A.TXT");
