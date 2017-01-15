@@ -3,8 +3,8 @@ package interpreter;
 import dysk.Disc;
 import memoryManagement.Memory;
 import processManager.ProcessManager;
-import komunikacjaMiedzyprocesowa.IPC
-        
+import komunikacjaMiedzyprocesowa.IPC;
+import procesor.Procesor procesor;  
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
@@ -12,8 +12,9 @@ public class Interpreter {
         private Memory memory;
 	private ProcessManager manager;
         private IPC box;
+        private Procesor procesor;
         
-	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box) 
+	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
         {
 		this.memory = memory;
 		this.reg_A = reg_A;
@@ -27,6 +28,7 @@ public class Interpreter {
                 this.memory = memory;
                 this.manager = manager;
                 this.box = box;
+                this.procesor = procesor;
 	}
 
 	public void set_regA(int a) {
@@ -195,7 +197,7 @@ public class Interpreter {
 				return false;
 			}
 		} else if (rozkaz[0].equals("MOV")) {
-			System.out.println("MOV"); //To jest potrzebne?
+			System.out.println("MOV");
 			if (rozkaz[1].equals("A")) {
 				if (rozkaz[2].equals("B")) {
 					reg_A = reg_B;
@@ -227,8 +229,9 @@ public class Interpreter {
 			System.out.print("\n");
 		}
 
-		if (rozkaz[0].equals("PAP")) {
-			// PM.ls();
+		if (rozkaz[0].equals("PAP")) { //wyswietlanie procesow
+			manager.ps();
+                        procesor.wyswietl_liste_procesow_gotowych(); //?
 		} else if (rozkaz[0].equals("KIL")) {
 			manager.kill(Integer.parseInt(rozkaz[1]));
 		} else if (rozkaz[0].equals("FEK")) {
@@ -258,9 +261,7 @@ public class Interpreter {
 			 */
 		}
 
-		if (rozkaz[0].equals("DVM")) {
-			// pamiec.wyswietl_pamiec_wirtualna();
-		} else if (rozkaz[0].equals("DRM")) {
+		if (rozkaz[0].equals("DRM")) {
 			memory.showMemory();
 		}
 
@@ -268,32 +269,27 @@ public class Interpreter {
 		if (rozkaz[0].equals("EQL")) {
 			if (rozkaz[1].equals("A") && rozkaz[2].equals("B") && reg_A == reg_B || rozkaz[1].equals("A") && rozkaz[2].equals("C") && reg_A == reg_C || rozkaz[1].equals("C") && rozkaz[2].equals("B") && reg_C == reg_B) {
 				flag_F = true;
-			} else
+                                System.out.print("Rejestry maja rowne wartosci");
+			} else{
 				flag_F = false;
-
+                                System.out.print("Rejestry nie maja rownych wartosci");
+                        }
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("JMP")) {
 			PC = Integer.parseInt(rozkaz[1]);
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("JPT")) {
 			if (this.flag_F = true) {
 				PC = Integer.parseInt(rozkaz[1]);
-			} else {
-				// do nothing
 			}
-
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("JPF")) {
 			if (this.flag_F = false) {
 				PC = Integer.parseInt(rozkaz[1]);
-			} else {
-				// do nothing
 			}
-
 			this.working = false;
 			return true;
 		} else {
@@ -309,77 +305,50 @@ public class Interpreter {
 		this.working = false;
 		this.fail = false;
 
-		if (rozkaz[0].equals("FCR")) {
-			disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
-			this.working = false;
-			return true;
-		} else if (rozkaz[0].equals("FWR")) {
-			System.out.println(rozkaz[1]+" "+rozkaz[2]+" "+rozkaz[3]);
-			disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
-			this.working = false;
-			return true;
-		} else if (rozkaz[0] == "FRD") {
-			disk.wyswietlDanyPlik(rozkaz[1], rozkaz[2]);
-			this.working = false;
-			return true;
-		} else if (rozkaz[0] == "FTR") {
-                        //przycinanie
-			this.working = false;
-			return true;
-		} else if (rozkaz[0].equals("FDL")) {
-			disk.usuwaniePliku(rozkaz[1], rozkaz[2]);
-			this.working = false;
-			return true;
-		} else if (rozkaz[0] == "FOP") {
-			/*
-			 * rozkaz[2] -> nazwa pliku do otwarcia rozkaz[3] -> tryb otwarcia
-			 */
-			// fm.openFile(fm.findFile(rozkaz[2]),
-			// Integer.parseInt(rozkaz[3]));
-                        //otwieranie
-			this.working = false;
-			return true;
-		} else if (rozkaz[0] == "FCL") {
-			/*
-			 * rozkaz[2] -> nazwa pliku do zamkniecia
-			 */
-			// fm.closeFile(fm.findFile(rozkaz[2]));
-                        //zamykanie
-			this.working = false;
-			return false;
-		} else if (rozkaz[0] == "FLS") {
-			/*
-			 * rozkaz[2] -> nazwa pliku, w ktorym przesunac offset rozkaz[3] ->
-			 * przesuniecie (ujemne w lewo, dodatnie w prawo): ";
-			 */
-
-			// fm.lseekFile(fm.findFile(rozkaz[2]),
-			// Integer.parseInt(rozkaz[3]),
-			// Integer.parseInt(rozkaz[4]));
-
-			this.working = false;
-			return true;
-		} else if (rozkaz[0].equals("FRN")) {	
-			disk.zmianaNazwy(rozkaz[1],rozkaz[2],rozkaz[3],rozkaz[4]);
-			this.working = false;
-			return true;
-		} else if (rozkaz[0].equals("FFN")) {
-			
-			//szukanie
-
-			this.working = false;
-			return true;
-		} else if (rozkaz[0].equals("FLT")) {
-			disk.wyswietlaPliki();
-			this.working = false;
-			return true;
-		} else if(rozkaz[0].equals("FAD")){
-                        disk.dopiszDoPliku(rozkaz[1], rozkaz[2], rozkaz[3]);
-                        this.working = false;
-                        return true;
-                } else {
-			System.out.print("\n");
-		}
+            switch (rozkaz[0]) {
+                case "FCR":
+                    disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
+                    this.working = false;
+                    return true;
+                case "FWR":
+                    System.out.println(rozkaz[1]+" "+rozkaz[2]+" "+rozkaz[3]);
+                    disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
+                    this.working = false;
+                    return true;
+                case "FRD":
+                    disk.wyswietlDanyPlik(rozkaz[1], rozkaz[2]);
+                    this.working = false;
+                    return true;
+                case "FTR":
+                    //przycinanie
+                    this.working = false;
+                    return true;
+                case "FDL":
+                    disk.usuwaniePliku(rozkaz[1], rozkaz[2]);
+                    this.working = false;
+                    return true;
+                case "FRN":
+                    disk.zmianaNazwy(rozkaz[1],rozkaz[2],rozkaz[3],rozkaz[4]);
+                    this.working = false;
+                    return true;
+                case "FLT":
+                    disk.wyswietlaPliki();
+                    this.working = false;
+                    return true;
+                case "FAD":
+                    disk.dopiszDoPliku(rozkaz[1], rozkaz[2], rozkaz[3]);
+                    this.working = false;
+                    return true;
+                case "FAT":
+                    disk.wys();
+                    break;
+                case "FPR":
+                    disk.drukujDysk(rozkaz[1], rozkaz[2]);
+                    break;
+                default:
+                    System.out.print("\n");
+                    break;
+            }
 
 		return done;
 	}
