@@ -11,10 +11,9 @@ public class Interpreter {
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-        private IPC;
         private Procesor procesor;
         
-	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
+	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, Procesor procesor) 
         {
 		this.memory = memory;
 		this.reg_A = reg_A;
@@ -27,7 +26,6 @@ public class Interpreter {
                 this.disk = disk;
                 this.memory = memory;
                 this.manager = manager;
-                this.box = box;
                 this.procesor = procesor;
 	}
 
@@ -370,7 +368,8 @@ public class Interpreter {
             this.working = false;
             this.fail = false;
             
-            switch (rozkaz[0]) {
+            switch (rozkaz[0]) 
+            {
                 case "XR":
                     IPC.odbierz(rozkaz[1]);
                     this.working = false;
