@@ -11,7 +11,7 @@ public class Interpreter {
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-        private IPC box;
+        private IPC;
         private Procesor procesor;
         
 	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
@@ -372,15 +372,15 @@ public class Interpreter {
             
             switch (rozkaz[0]) {
                 case "XR":
-                    box.odbierz(rozkaz[1]);
+                    IPC.odbierz(rozkaz[1]);
                     this.working = false;
                     return true;
                 case "XS":
-                    box.wyslij(rozkaz[1], rozkaz[2]);
+                    IPC.wyslij(rozkaz[1], rozkaz[2]);
                     this.working = false;
                     return true;
                 case "XD":
-                    box.usunSkrzynke(rozkaz[1]);
+                    IPC.usunSkrzynke(rozkaz[1]);
                     this.working = false;
                     return true;
                 default:
