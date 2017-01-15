@@ -28,6 +28,7 @@ public class Memory {
 	}
 	public void wypiszPCB()
 	{
+		System.out.println("Show PCB");
 		for (PCB now: processList)
 			System.out.println("PCB start in: "+now.base+""
 					+ " | end in: "+(now.limit+now.base-1)+""
@@ -69,7 +70,8 @@ public class Memory {
 			defrag();//use of defragmentation method
 			tmp=FSBPTR.searchForSpace(size);
 			proces.base=tmp.address;
-			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
+			tmp.address+=size;
+			tmp.size-=size;
 			processList.add(proces);
 			fillMemory(proces.base,proces.limit);
 			return true;
@@ -105,31 +107,24 @@ public class Memory {
 	}
 	public void showMemory(){//write out memory's frames
 		for(int i=0; i<sizeOfMemory; i++){
-			//if(i%4==0)System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t\n");
-			//else System.out.printf ("%1$13s","| "+i +" "+ sign[i]+" \t");
-			System.out.println("\t"+i+"| \t"+sign[i]);
+			if((i+1)%4==0)System.out.printf ("%1$7s",i +"|"+ sign[i]+"\t\n");
+			else System.out.printf ("%1$7s",i +"|"+ sign[i]+"\t");
+			/*System.out.println("\t"+i+"| \t"+sign[i]);
+			i++;
+			System.out.print("\t"+i+"| \t"+sign[i]);*/
 		}
 	}
 	public static void main(String[] args){
-		/*ListFSB nowa=new ListFSB();
-		nowa.addFSB(23, 2);
-		nowa.addFSB(12, 4);
-		nowa.addFSB(7, 4);
-		nowa.wypisz();
-		System.out.println(nowa.fullSpace());*/
 		Memory ho=new Memory();
 		PCB i=new PCB();
 		PCB r=new PCB();
 		ho.memoryAllocation(30, r);
 		ho.memoryAllocation(70, new PCB());
 		ho.memoryReleasing(r);
-		
 		ho.memoryAllocation(50, new PCB() );
-		ho.defrag();
-		ho.FSBPTR.sortList();
+		//ho.defrag();
+		//ho.FSBPTR.sortList();
 		ho.showMemory();
-		ho.wypiszPCB();
-		
 		ho.FSBPTR.wypisz();
 		System.out.println("PROCESS TERMINATED");
 	}

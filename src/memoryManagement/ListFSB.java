@@ -2,7 +2,6 @@ package memoryManagement;
 
 import memoryManagement.FSB;
 import memoryManagement.ListFSB;
-import processManager.PCB;
 
 public class ListFSB {
 	public FSB head;//first element in list
@@ -125,6 +124,7 @@ public class ListFSB {
 	}
 	//write out free space blocks
 	public void wypisz(){
+		System.out.println("Show FSB");
 		FSB bufor=head;
 		if(bufor!=null){
 			System.out.println("FSB: starts: "+bufor.address +" |ends in: "+(bufor.address+bufor.size-1)+" |with size of: " +bufor.size);
