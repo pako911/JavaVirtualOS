@@ -150,6 +150,7 @@ public class Main {
 					String file = line.split(" ")[1];
 					procesor.dodaj_proces(file);
 				} else if(line.split(" ")[0].equals("KILL")) {
+					processManager.kill(Integer.parseInt(line.split(" ")[1]));
 					System.out.println("KILL");	} 
 				else if(line.split(" ")[0].equals("")) {
 						System.out.println("HELP");
