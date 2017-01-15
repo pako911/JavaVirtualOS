@@ -118,12 +118,14 @@ public class Memory {
 	public static void main(String[] args){
 		Memory ho=new Memory();
 		PCB r=new PCB();
+		PCB i= new PCB();
 		ho.memoryAllocation(30, r);
-		ho.memoryAllocation(70, new PCB());
+		ho.memoryAllocation(70, i);
+		ho.wypiszPCB();
+		
 		ho.memoryReleasing(r);
-		ho.memoryAllocation(50, new PCB() );
+		ho.memoryReleasing(i);
 
-		ho.showMemory();
 		ho.FSBPTR.wypisz();
 		ho.wypiszPCB();
 		System.out.println("PROCESS TERMINATED");

@@ -26,24 +26,38 @@ public class ListFSB {
 			if(tail==null)
 				tail=head;
 			boolean f=true;
-			while(bufor.address!=(address+size)&&bufor.next!=null)
-				bufor=bufor.next;
-			if(bufor.address==(address+size)){
-				bufor.address=address;
-				bufor.size=bufor.size+size;
-				f=false;
+			/*if(f){
+				while(bufor.next.next!=null&&bufor.size+bufor.address!=address&&bufor.next.address!=(address+size))
+					bufor=bufor.next;
+				if(bufor.next.next!=null&&bufor.size+bufor.address!=address&&bufor.next.address!=(address+size)){
+					bufor.size=bufor.size+size+bufor.next.size;
+					f=false;
+					removeFSB(bufor.next.size);
+				}
+			}*/
+			if(f){
+				while((bufor.size+bufor.address)!=address&&bufor.next!=null)
+					bufor=bufor.next;
+				if((bufor.size+bufor.address)==address){
+					bufor.size=bufor.size+size;
+					f=false;
+				}
 			}
 			bufor=head;
-			while((bufor.size+bufor.address)!=address&&bufor.next!=null)
-				bufor=bufor.next;
-			if((bufor.size+bufor.address)==address){
-				bufor.size=bufor.size+size;
-				f=false;
+			if(f){
+				while(bufor.address!=(address+size)&&bufor.next!=null)
+					bufor=bufor.next;
+				if(bufor.address==(address+size)){
+					bufor.address=address;
+					bufor.size=bufor.size+size;
+					f=false;
+				}
 			}
 			if(f){
 			tail.next=new FSB(address, size);
 			tail=tail.next;
 			}
+			else addFSB(bufor.address,bufor.size);
 		}
 	}
 	//removing free space block with size given in argument
