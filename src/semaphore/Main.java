@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package semaphore;
-
+import processManager.Process;
 /**
  *
  * @author LUCYNA
