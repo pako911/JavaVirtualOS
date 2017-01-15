@@ -60,6 +60,12 @@ public class Main {
 					PID = Integer.parseInt(str.substring(7,8)); //zamiana numeru procesu, do testowania
 				}
 				
+				if(str.startsWith("delete")){
+					int numera = Integer.parseInt(str.substring(7,8));
+					while(IPC.usunSkrzynke(numera)); //usuwanie wszystkich skrzynek, ktorych wlascicielem jest obecny numer procesu
+					
+				}
+				
 				if(str.startsWith("XR")){  					//test komendy, proces ma czytac komunikat
 					pw.println("->KOMENDA XR "); 			//rowniez informacyjnie, jak dalsze zaczynajace sie na "->"
 					numerSkrzynki = Integer.parseInt(str.substring(3)); //pobranie numeru skrzynki, z ktorej chce czytac
@@ -74,9 +80,9 @@ public class Main {
 															//i tu nalezy proces zawiesic@@@@@@@@@@@@@@@@@@@@@@@@@
 				if(str.startsWith("XS")){ 										//komenda do wysylania komunikatu
 					pw.println("->KOMENDA XS ");
-					int numerOdbiorcy = Integer.parseInt(str.substring(3,4));
-					Wiadomosc wiadomosc = new Wiadomosc(PID, numerOdbiorcy, str.substring(5)); 	//skrzynka procesu wysylajacego wiadomosc ma numer procesu,
-						IPC.wyslij(wiadomosc);//wiadomosc ma id nadawcy, id odbiorcy i tresc
+					int numerSkrzynki = Integer.parseInt(str.substring(3,4));
+					Wiadomosc wiadomosc = new Wiadomosc(PID, str.substring(5)); 	//skrzynka procesu wysylajacego wiadomosc ma numer procesu,
+						IPC.wyslij(wiadomosc,numerSkrzynki);//wiadomosc ma id nadawcy, id odbiorcy i tresc
 				}						//metoda odpowiedzialna za utworzenie skrzynki 
 				
 				if(str.startsWith("sab")){

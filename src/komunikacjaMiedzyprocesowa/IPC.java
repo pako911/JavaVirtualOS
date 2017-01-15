@@ -8,29 +8,33 @@ public class IPC {
 	
 	//wysyla wiadomosc, jesli pierwszy raz do danego procesu to tworzy skrzynke dla odbiorcy, jesli
 	//nie ma tego procesu to zwraca wiadomosc i kontynuuje wykonywanie procesu
-	public static void wyslij(Wiadomosc wiadomosc){  //metoda do wyslania wiadomosci
-		
+	public static void wyslij(Wiadomosc wiadomosc,int nrSkrzynki){  //metoda do wyslania wiadomosci
 		if(wiadomosc.pobierzIDnadawcy()==wiadomosc.pobierzIDodbiorcy()){
 			System.out.println("Proba wyslania wiadomosci o tym samym adresacie i odbiorcy");
 			System.out.println("Wysylanie nie powiodlo sie");
 			return;
 		}
 			boolean wyslany = false;							//do sprawdzenia czy skrzynka istnieje (pierwsze wyslanie)
-			for(Skrzynka x : SkrzynkaPocztowa){					//sposrod wszystkich skrzynek...
-				if(x.pobierzWlascicielaSkrzynki()==wiadomosc.pobierzIDnadawcy()){ 	//szuka tej o podanym numerze procesu i jesli jest to wysyla do niej
+			for(Skrzynka x : SkrzynkaPocztowa){					//sposrod wszystkich skrzynek..
+				if(x.pobierzNumerSkrzynki()==nrSkrzynki){ 	//szuka tej o podanym numerze procesu i jesli jest to wysyla do niej
+					if(x.pobierzWlascicielaSkrzynki()!=wiadomosc.pobierzIDnadawcy()){
+						System.out.println("Proces nie jest wlascicielem skrzynki "+nrSkrzynki);
+						System.out.println("Wiadomosc nie zostala wyslana do skrzynki!");
+						return;
+					}
 					x.dodajWiadomosc(wiadomosc);
 					wyslany =true;  							//i konczy
-					System.out.println("Komunikat zostal wyslany: "+wiadomosc.pobierzWiadomosc()+" do skrzynki: "+wiadomosc.pobierzIDnadawcy()); //informuje
+					System.out.println("Komunikat zostal wyslany: "+wiadomosc.pobierzWiadomosc()+" do skrzynki: "+nrSkrzynki); //informuje
 					
 				}
 			}
-		
+			
 			if(wyslany == false){//jesli nie ma na liscie podanego numeru skrzynki to 
-					Skrzynka skrzynka = new Skrzynka(wiadomosc.pobierzIDnadawcy());  							//utworz
+					Skrzynka skrzynka = new Skrzynka(wiadomosc.pobierzIDnadawcy(),nrSkrzynki);  							//utworz
 					SkrzynkaPocztowa.add(skrzynka);
-					System.out.println("Skrzynka wlasciciela: "+wiadomosc.pobierzIDnadawcy()+" zostala utworzona"); //poinformuj o utworzeniu
+					System.out.println("Skrzynka wlasciciela: "+wiadomosc.pobierzIDnadawcy()+" o numerze: "+nrSkrzynki+" zostala utworzona"); //poinformuj o utworzeniu
 					skrzynka.dodajWiadomosc(wiadomosc);  									//i dokoncz j.w.
-					System.out.println("Komunikat zostal wyslany: "+wiadomosc.pobierzWiadomosc()+" do skrzynki: "+wiadomosc.pobierzIDnadawcy());
+					System.out.println("Komunikat zostal wyslany: "+wiadomosc.pobierzWiadomosc()+" do skrzynki: "+nrSkrzynki);
 			}
 	}
 	//jesli true to wiadomosc zostaje odebrana i kontynuuje, jesli nie, proces powinien sie zawiesic, wykorzystanie
@@ -38,37 +42,38 @@ public class IPC {
 	public static boolean odbierz(int numerSkrzynki, int obecnyProces){
 		try{
 			for(Skrzynka x : SkrzynkaPocztowa){  		//sprawdza skrzynki...//sprawdza czy jest skrzynka, jesli tak to...
-				if(x.pobierzWlascicielaSkrzynki()==numerSkrzynki){
-					if(numerSkrzynki==obecnyProces){
-						System.out.println("Proces jest wlascicielem skrzynki "+numerSkrzynki+".");
+				if(x.pobierzNumerSkrzynki()==numerSkrzynki){
+					if(x.pobierzWlascicielaSkrzynki()==obecnyProces){
+						System.out.println("Proces nie jest wlascicielem skrzynki "+numerSkrzynki+".");
 						System.out.println("Wlasciciel skrzynki nie ma mozliwosci czytania z niej wiadomosci!");
 						return false;
 					}
-				   //jesli znajdzie numer i bedzie tam wiadomosc...
-						//		System.out.println("Komunikat zostal odebrany: "+x.pobierzWiadomosc());   WYWALILEM BO ZDUBLUJE I POBEIRZE 2 WIADOMOSCI
-					return x.pobierzWiadomosc(obecnyProces); 		//pobierz
+					else
+						return x.pobierzWiadomosc();
 				}
-			} throw new InterruptedException("demo");
+			}	   //jesli znajdzie numer i bedzie tam wiadomosc...
+						//		System.out.println("Komunikat zostal odebrany: "+x.pobierzWiadomosc());   WYWALILEM BO ZDUBLUJE I POBEIRZE 2 WIADOMOSCI
+					throw new InterruptedException("demo");
+				
+		 
 		}catch(InterruptedException e){
 		System.out.println("Wiadomosc nie zostala odebrana, skrzynka nie istnieje"); 
 		return false;
 		}
 	}
+	
 	//usuwa skrzynke, przyklad w Czytnik metodzie Przetworz przy odebraniu komendy XD
 	public static boolean usunSkrzynke(int wlascicielSkrzynki){
-		try{
 			for(Skrzynka x : SkrzynkaPocztowa){ 												//sprawdza numer procesu ze skrzynka
 				if(x.pobierzWlascicielaSkrzynki() == wlascicielSkrzynki){
+					System.out.println("Skrzynka "+x.pobierzNumerSkrzynki()+" zostala usunieta");
 					x.usunWiadomosci(); //usuwa wiadomosci jesli tam wystepuja, aby pozbyc sie bledu zwalniania pamieci po obiekcie
 					SkrzynkaPocztowa.remove(x); 		//i usuwa ja
-					//USUNAC WIADOMOSCI Z TEJ SKRZYNKI
 					return true;
+					//USUNAC WIADOMOSCI Z TEJ SKRZYNKI
 				}
-			}throw new InterruptedException("demo");
-		}catch(InterruptedException e){
-			System.out.println("Blad: wlasciciel "+wlascicielSkrzynki+" nie posiada skrzynki");
+			}
 			return false;
-		}
 	}
 	
 	public static void informacje(int wlasciciel){ 		//informuje o tym czy jest skrzynka (z zawartoscia) czy nie istnieje

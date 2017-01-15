@@ -2,13 +2,12 @@ package komunikacjaMiedzyprocesowa;
 
 public class Wiadomosc {
 	private int IDnadawcy;
-	private int IDodbiorcy;
+	//private int IDodbiorcy;
 	private String trescWiadomosci;
 	private int rozmiarWiadomosci;
-	
-	public Wiadomosc(int IDnadawcy, int IDodbiorcy, String trescWiadomosci){ //wiadomosc zawiera od kogo wiadomosc (IDnadawcy), tresc (trescWiadomosci) 							
+	//								int IDodbiorcy
+	public Wiadomosc(int IDnadawcy, String trescWiadomosci){ //wiadomosc zawiera od kogo wiadomosc (IDnadawcy), tresc (trescWiadomosci) 							
 		this.IDnadawcy = IDnadawcy;		
-		this.IDodbiorcy = IDodbiorcy;//i rozmiarWiadomosci - nie uzyty pozniej, chyba ze ograniczaamy dlugosc wiadomosci	
 		this.trescWiadomosci = trescWiadomosci;
 		this.rozmiarWiadomosci = trescWiadomosci.length();
 	
@@ -25,14 +24,14 @@ public class Wiadomosc {
 		return IDnadawcy;
 	}
 	
-	public int pobierzIDodbiorcy(){
+	/*public int pobierzIDodbiorcy(){
 		return IDodbiorcy;
-	}
+	}*/
 	
 	public int pobierzRozmiarWiadomosci(){
 		return rozmiarWiadomosci;
 	}
 	public void wyswietlInfo(){	//tj wyswietla wiadomosc konkretna
-		System.out.println(this.pobierzIDodbiorcy()+": \t "+this.pobierzWiadomosc());
-	}
+		System.out.println(this.pobierzWiadomosc());
+	} 	//					this.pobierzIDodbiorcy()+
 }
