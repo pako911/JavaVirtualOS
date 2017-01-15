@@ -9,11 +9,11 @@ public class IPC {
 	//wysyla wiadomosc, jesli pierwszy raz do danego procesu to tworzy skrzynke dla odbiorcy, jesli
 	//nie ma tego procesu to zwraca wiadomosc i kontynuuje wykonywanie procesu
 	public static void wyslij(Wiadomosc wiadomosc,int nrSkrzynki){  //metoda do wyslania wiadomosci
-		if(wiadomosc.pobierzIDnadawcy()==wiadomosc.pobierzIDodbiorcy()){
+		/*if(wiadomosc.pobierzIDnadawcy()==wiadomosc.pobierzIDodbiorcy()){
 			System.out.println("Proba wyslania wiadomosci o tym samym adresacie i odbiorcy");
 			System.out.println("Wysylanie nie powiodlo sie");
 			return;
-		}
+		}*/
 			boolean wyslany = false;							//do sprawdzenia czy skrzynka istnieje (pierwsze wyslanie)
 			for(Skrzynka x : SkrzynkaPocztowa){					//sposrod wszystkich skrzynek..
 				if(x.pobierzNumerSkrzynki()==nrSkrzynki){ 	//szuka tej o podanym numerze procesu i jesli jest to wysyla do niej
