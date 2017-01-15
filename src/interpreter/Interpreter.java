@@ -11,15 +11,13 @@ public class Interpreter {
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-        private IPC box;
         
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager, IPC box) 
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager) 
         {
 		this.memory = memory;
         this.disk = disk;
         this.memory = memory;
         this.manager = manager;
-        this.box = box;
 	}
 
 	public void set_regA(int a) {
@@ -363,20 +361,20 @@ public class Interpreter {
             this.working = false;
             this.fail = false;
             
-            switch (rozkaz[0]) {
+            switch (rozkaz[0]) 
+            {
                 case "XR":
-                    box.odbierz(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
+
+                    IPC.odbierz(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
                 case "XS":
-                    //box.wyslij(rozkaz[1]);
-                	
-                	
                 	//TODO
+                    IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
                 case "XD":
-                    box.usunSkrzynke(Integer.parseInt(rozkaz[1]));
+                    IPC.usunSkrzynke(Integer.parseInt(rozkaz[1]));
                     this.working = false;
                     return true;
                 default:

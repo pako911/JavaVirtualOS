@@ -117,7 +117,7 @@ public class Memory {
 		}
 	}
 	public static void main(String[] args){
-		Memory ho=new Memory();
+		Memory ho=new Memory(new ArrayList());
 		PCB r=new PCB();
 		PCB i= new PCB();
 		ho.memoryAllocation(30, r);
