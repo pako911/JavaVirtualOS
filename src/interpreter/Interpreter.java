@@ -4,7 +4,7 @@ import dysk.Disc;
 import memoryManagement.Memory;
 import processManager.ProcessManager;
 import komunikacjaMiedzyprocesowa.IPC;
-import procesor.Procesor procesor;  
+import procesor.Procesor;  
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
@@ -14,21 +14,14 @@ public class Interpreter {
         private IPC box;
         private Procesor procesor;
         
-	public Interpreter(int reg_A, int reg_B, int reg_C, int PC, Boolean done, Boolean working, Boolean fail, Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
         {
 		this.memory = memory;
-		this.reg_A = reg_A;
-		this.reg_B = reg_B;
-		this.reg_C = reg_C;
-		this.PC = PC;
-		this.working = working;
-		this.done = done;
-		this.fail = fail;
-                this.disk = disk;
-                this.memory = memory;
-                this.manager = manager;
-                this.box = box;
-                this.procesor = procesor;
+        this.disk = disk;
+        this.memory = memory;
+        this.manager = manager;
+        this.box = box;
+        this.procesor = procesor;
 	}
 
 	public void set_regA(int a) {
@@ -315,10 +308,10 @@ public class Interpreter {
                     disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
                     this.working = false;
                     return true;
-                case "FRD":
+                /*case "FRD":
                     disk.wyswietlDanyPlik(rozkaz[1], rozkaz[2]);
                     this.working = false;
-                    return true;
+                    return true;*/
                 case "FTR":
                     //przycinanie
                     this.working = false;
@@ -372,15 +365,18 @@ public class Interpreter {
             
             switch (rozkaz[0]) {
                 case "XR":
-                    box.odbierz(rozkaz[1]);
+                    box.odbierz(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
                 case "XS":
-                    box.wyslij(rozkaz[1], rozkaz[2]);
+                    //box.wyslij(rozkaz[1]);
+                	
+                	
+                	//TODO
                     this.working = false;
                     return true;
                 case "XD":
-                    box.usunSkrzynke(rozkaz[1]);
+                    box.usunSkrzynke(Integer.parseInt(rozkaz[1]));
                     this.working = false;
                     return true;
                 default:

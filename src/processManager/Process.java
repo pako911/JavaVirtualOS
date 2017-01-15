@@ -30,7 +30,10 @@ public class Process {
 	public Process(String name, int PPID, Memory memory) {
 		pcb = new PCB();
 		this.memory = memory;
-		pcb.name = name;
+		if(CPID==0)
+			pcb.name="main";
+		else
+			pcb.name = "proces "+CPID ;
 		pcb.PPID = PPID;
 		pcb.PID = CPID++;
 		pcb.state = Stany.NOWY;
@@ -59,6 +62,7 @@ public class Process {
 				process.pcb.state = Stany.OCZEKUJACY;
 			}
 			getChildren().put(process.pcb.PID, process);
+			fileInputStream.close();
 			return process;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

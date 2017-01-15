@@ -7,18 +7,23 @@ package semaphore;
 
 import java.util.ArrayList;
 
+import processManager.PCB;
+import processManager.ProcessManager;
+
 /**
  *
  * @author LUCYNA
  */
 public class Semaphore 
 {
-    private ArrayList<Process> listaOczekujacych = new ArrayList<Process>();
+    private ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
     
     private int wartosc;
     
-    public Semaphore(int wartosc) throws InvalidSemaphoreValueException
+    public ProcessManager procesManager;
+    public Semaphore(int wartosc, ProcessManager procesManager) throws InvalidSemaphoreValueException
     {
+    	this.procesManager=procesManager;
         this.wartosc=wartosc;
         if(wartosc<0||wartosc>1)
         {
@@ -29,7 +34,7 @@ public class Semaphore
     {
     	return listaOczekujacych.size();
     }
-    public void P()
+    public void P(PCB proces)
     {
         System.out.println("Proces "+Process.aktualny.nazwa+" wykonuje operacje P");
         if(wartosc==1)
@@ -40,7 +45,7 @@ public class Semaphore
         else
         {
             System.out.println("Proces dołącza do kolejki oczekuących");
-            listaOczekujacych.add(Process.aktualny);
+            listaOczekujacych.add(proces);
             System.out.println("Następuje przełączenie procesów");
         }
         System.out.println("koniec operacji P");
@@ -52,9 +57,9 @@ public class Semaphore
         if(wartosc==0)
         { 
             if(listaOczekujacych.size()>0){
-                Process p = listaOczekujacych.get(0);
+                PCB p = listaOczekujacych.get(0);
                 listaOczekujacych.remove(0);
-                System.out.println("proces "+p.nazwa +" został usunięty z listy oczekujących");
+                System.out.println("proces "+p.PID +" został usunięty z listy oczekujących");
             }
             else
             {

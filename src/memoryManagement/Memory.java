@@ -3,6 +3,7 @@ package memoryManagement;
 import java.util.ArrayList;
 import java.util.Collections;
 import processManager.PCB;
+import processManager.ProcessManager;
 import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
@@ -78,7 +79,7 @@ public class Memory {
 			return true;
 		}else{
 			System.out.println("Nie znaleziono pamięci. Wchodzę pod semafor");
-			MEMORY.P();// only use of P semaphore function
+			MEMORY.P(proces);// only use of P semaphore function
 			return false;
 		}
 	}

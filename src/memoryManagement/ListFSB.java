@@ -27,7 +27,7 @@ public class ListFSB {
 				tail=head;
 			boolean f=true;
 			/*if(f){
-				while(bufor.next.next!=null&&bufor.size+bufor.address!=address&&bufor.next.address!=(address+size))
+				while(bufor.next!=null&&bufor.next.next!=null&&bufor.size+bufor.address!=address&&bufor.next.address!=(address+size))
 					bufor=bufor.next;
 				if(bufor.next.next!=null&&bufor.size+bufor.address!=address&&bufor.next.address!=(address+size)){
 					bufor.size=bufor.size+size+bufor.next.size;

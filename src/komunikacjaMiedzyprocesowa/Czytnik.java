@@ -40,7 +40,6 @@ public class Czytnik {
 				if(!IPC.odbierz(PID)) //sprawdza czy wiadomosc zostala wyslana, true jest tak
 					return false;
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}//wlasciwa metoda odpowiedzialna za czytanie, jesli odczyta wiadomosc 
 				//ListaProcesow.zablokujProces(id);//blokowanie procesu gdy niue odczytal
@@ -56,9 +55,8 @@ public class Czytnik {
 			int odb = Integer.parseInt(s.substring(3,4));
 			Wiadomosc wiadomosc = new Wiadomosc(getPID(),odb,s.substring(5)); 	//skrzynka procesu wysylajacego wiadomosc ma numer procesu,
 			try {
-				IPC.wyslij(wiadomosc, odb);
+				IPC.wyslij(wiadomosc);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 					//	wiadomosc ma ten sam numer
 		}						//metoda odpowiedzialna za utworzenie skrzynki 
