@@ -101,7 +101,7 @@ public class ListFSB {
 			bufor=bufor.next;
 		}
 		space=space+bufor.size;
-		System.out.println("calosc "+space);
+		System.out.println("whole free space: "+space);
 		return space;
 	}
 	//sorting free space blocks in list

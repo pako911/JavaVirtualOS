@@ -70,6 +70,7 @@ public class Memory {
 			defrag();//use of defragmentation method
 			tmp=FSBPTR.searchForSpace(size);
 			proces.base=tmp.address;
+			proces.limit=size;
 			tmp.address+=size;
 			tmp.size-=size;
 			processList.add(proces);
@@ -116,16 +117,15 @@ public class Memory {
 	}
 	public static void main(String[] args){
 		Memory ho=new Memory();
-		PCB i=new PCB();
 		PCB r=new PCB();
 		ho.memoryAllocation(30, r);
 		ho.memoryAllocation(70, new PCB());
 		ho.memoryReleasing(r);
 		ho.memoryAllocation(50, new PCB() );
-		//ho.defrag();
-		//ho.FSBPTR.sortList();
+
 		ho.showMemory();
 		ho.FSBPTR.wypisz();
+		ho.wypiszPCB();
 		System.out.println("PROCESS TERMINATED");
 	}
 }
