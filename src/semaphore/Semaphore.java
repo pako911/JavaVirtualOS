@@ -8,6 +8,7 @@ package semaphore;
 import java.util.ArrayList;
 
 import processManager.PCB;
+import processManager.PCB.Stany;
 import processManager.ProcessManager;
 
 /**
@@ -16,14 +17,13 @@ import processManager.ProcessManager;
  */
 public class Semaphore 
 {
-    private ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
+    private ArrayList<PCB> listaOczekujacych;
     
     private int wartosc;
     
-    public ProcessManager procesManager;
-    public Semaphore(int wartosc, ProcessManager procesManager) throws InvalidSemaphoreValueException
+    public Semaphore(int wartosc, ArrayList<PCB> listaOczekujacych) throws InvalidSemaphoreValueException
     {
-    	this.procesManager=procesManager;
+    	this.listaOczekujacych=listaOczekujacych;
         this.wartosc=wartosc;
         if(wartosc<0||wartosc>1)
         {
@@ -36,7 +36,7 @@ public class Semaphore
     }
     public void P(PCB proces)
     {
-        System.out.println("Proces "+Process.aktualny.nazwa+" wykonuje operacje P");
+        System.out.println("Proces "+proces.name+" wykonuje operacje P");
         if(wartosc==1)
         {
             System.out.println("Proces działa dalej");
@@ -45,6 +45,7 @@ public class Semaphore
         else
         {
             System.out.println("Proces dołącza do kolejki oczekuących");
+            proces.state=Stany.OCZEKUJACY;
             listaOczekujacych.add(proces);
             System.out.println("Następuje przełączenie procesów");
         }
@@ -53,11 +54,12 @@ public class Semaphore
     
     public void V() throws InvalidSemaphoreValueException
     {
-       System.out.println("Proces "+Process.aktualny.nazwa+" wykonuje operacje V");
+       System.out.println("Proces wykonuje operacje V");
         if(wartosc==0)
         { 
             if(listaOczekujacych.size()>0){
                 PCB p = listaOczekujacych.get(0);
+                p.state=Stany.GOTOWY;
                 listaOczekujacych.remove(0);
                 System.out.println("proces "+p.PID +" został usunięty z listy oczekujących");
             }

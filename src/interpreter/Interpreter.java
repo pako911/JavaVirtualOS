@@ -12,16 +12,14 @@ public class Interpreter {
         private Memory memory;
 	private ProcessManager manager;
         private IPC box;
-        private Procesor procesor;
         
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager, IPC box, Procesor procesor) 
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager, IPC box) 
         {
 		this.memory = memory;
         this.disk = disk;
         this.memory = memory;
         this.manager = manager;
         this.box = box;
-        this.procesor = procesor;
 	}
 
 	public void set_regA(int a) {
@@ -222,10 +220,12 @@ public class Interpreter {
 			System.out.print("\n");
 		}
 
-		if (rozkaz[0].equals("PAP")) { //wyswietlanie procesow
+		/*if (rozkaz[0].equals("PAP")) { //wyswietlanie procesow
 			manager.ps();
-                        procesor.wyswietl_liste_procesow_gotowych(); //?
-		} else if (rozkaz[0].equals("KIL")) {
+                        procesor.wyswietl_liste_procesow_gotowych(); 
+		} 
+		else*/
+			if (rozkaz[0].equals("KIL")) {
 			manager.kill(Integer.parseInt(rozkaz[1]));
 		} else if (rozkaz[0].equals("FEK")) {
 			/*

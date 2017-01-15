@@ -3,12 +3,14 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import dysk.Disc;
 import interpreter.Interpreter;
 import komunikacjaMiedzyprocesowa.IPC;
 import memoryManagement.Memory;
 import procesor.Procesor;
+import processManager.PCB;
 import processManager.ProcessManager;
 
 public class Main {
@@ -80,15 +82,16 @@ public class Main {
 							+ "                                      @@@  @  @     @     @  @    @@@    @@@                         \n");
 
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
-
+		
+		ArrayList<PCB> listaOczekujacych=new ArrayList<PCB>();
 		load("ŁADOWANIE MODUŁU PAMIĘCI OPERACYJNEJ");
-		Memory memory = new Memory();		
+		Memory memory = new Memory(listaOczekujacych);		
 		load("ŁADOWANIE MODUŁU DYSKU");
 		Disc disc = new Disc();
 		load("ŁADOWANIE MODUŁU MENADŻERA PROCESÓW");
 		ProcessManager processManager = new ProcessManager(memory);
 		load("ŁADOWANIE MODUŁU PROCESORA");
-		Interpreter interpreter = new Interpreter(memory, disc, processManager, , procesor);
+		Interpreter interpreter = new Interpreter(memory, disc, processManager);
 		Procesor procesor = new Procesor(processManager, interpreter);
 
 		

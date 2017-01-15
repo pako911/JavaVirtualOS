@@ -15,13 +15,13 @@ public class Memory {
 	private Semaphore MEMORY; //memory semaphore
 	//private Semaphore FSBSEM; //semaphore of free space blocks
 	
-	public Memory(){
+	public Memory(ArrayList <PCB> listaOczekujacych){
 		for(int i=0; i<sizeOfMemory; i++)
 			sign[i]= '_';
 		FSBPTR = new ListFSB(sizeOfMemory);
 		try {
 			//FSBSEM=new Semaphore(1);//not needed for now
-			MEMORY=new Semaphore(0);
+			MEMORY=new Semaphore(0, listaOczekujacych);
 		} catch (InvalidSemaphoreValueException e) {
 			System.out.println("Semaphore error");
 		}
