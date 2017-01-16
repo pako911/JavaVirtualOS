@@ -22,6 +22,7 @@ public class ProcessManager {
 	public ProcessManager(Memory memory) {
 		this.memory = memory;
 		mainProcess = new Process("main", 0, memory); // główny proces 
+		mainProcess.pcb.state = Stany.GOTOWY;
 	}
 
 	public int newProcess(String file) { // tworzy nowy proces do poprawienia

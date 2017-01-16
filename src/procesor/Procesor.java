@@ -1,4 +1,4 @@
-package procesor;
+﻿package procesor;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class Procesor {
 	public void dodaj_proces(String file) {
 		int PID = processManager.newProcess(file);
 		proces = processManager.getProces(PID).pcb;
-		proces.state = Stany.GOTOWY;
+		//proces.state = Stany.GOTOWY;
 		lista_procesow_gotowych.add(proces);
 
 	}
@@ -45,17 +45,20 @@ public class Procesor {
 	public void Scheduler() {
 		if (Running != null && Running.state == Stany.ZAKONCZONY) {
 			time = Running.timer;
+			for (int i = 0; i < lista_procesow_gotowych2.size(); i++) {
+				PCB ptemp = lista_procesow_gotowych2.get(i);
+				System.out.println(ptemp.PID +" "+ Running.PID);
+				if (ptemp.PID == Running.PID) {
+					lista_procesow_gotowych2.remove(i);
+				}
+			}
 			processManager.kill(Running.PID);
-			interpreter.set_regA(0);
-			interpreter.set_regB(0);
-			interpreter.set_regC(0);
-			interpreter.set_flag_F(false);
 			Running = processManager.getMain().pcb;
 		}
-		
-		if(Running!=null && Running.state!=Stany.AKTYWNY)
-		{
-		//if (true) {
+
+		//if(Running!=null && Running.state!=Stany.AKTYWNY)
+		//{
+		if (true) {
 			if (lista_procesow_gotowych.size() > 0)
 			// if(true)
 			{
@@ -95,7 +98,7 @@ public class Procesor {
 			if (lista_procesow_gotowych2.size() > 0) {
 				PCB nastepny = lista_procesow_gotowych2.get(0);
 				//System.out.println();
-				for (int i = 1; i < lista_procesow_gotowych2.size(); i++) {
+				for (int i = 0; i < lista_procesow_gotowych2.size(); i++) {
 					PCB ptemp = lista_procesow_gotowych2.get(i);
 					//System.out.println(ptemp.thau);
 					if (ptemp.thau < nastepny.thau) {
@@ -103,7 +106,7 @@ public class Procesor {
 						index_nastepnego = i;
 					}
 				}
-				lista_procesow_gotowych2.remove(index_nastepnego);
+				//lista_procesow_gotowych2.remove(index_nastepnego);
 				Running = nastepny;
 				Running.state = Stany.AKTYWNY;
 
@@ -115,15 +118,25 @@ public class Procesor {
 
 	public void wykonaj() {
 		Scheduler();
+		System.out.println("PID: " + Running.PID);
 		if(Running != null && Running.PID != 0) {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
-			interpreter.exe(rozkaz);
+			
+			interpreter.set_regA(process.pcb.A);
+			interpreter.set_regB(process.pcb.B);
+			interpreter.set_regC(process.pcb.C);
+			interpreter.set_PC(process.pcb.counter);
+			interpreter.set_flag_F(process.pcb.flag_F);
+			
+			interpreter.exe(rozkaz,process.getPID());
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
+			Running.counter = interpreter.get_PC();
 			Running.flag_F = interpreter.get_flag_F();
-			System.out.println("PID" + Running.PID);
+			
+			System.out.println("PID: " + Running.PID);
 			interpreter.showRegisters();
 		}
 

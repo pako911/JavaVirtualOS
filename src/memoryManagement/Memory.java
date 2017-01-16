@@ -8,7 +8,7 @@ import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
-	private int sizeOfMemory=128;//setting size of memory's table of characters
+	private int sizeOfMemory=1024;//setting size of memory's table of characters
 	public char sign[]=new char[sizeOfMemory];
 	private ListFSB FSBPTR;
 	private ArrayList <PCB> processList;//list of occupied areas

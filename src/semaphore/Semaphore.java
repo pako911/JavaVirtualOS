@@ -9,17 +9,23 @@ import java.util.ArrayList;
 
 import processManager.PCB;
 import processManager.PCB.Stany;
-import processManager.ProcessManager;
 
 /**
  *
  * @author LUCYNA
  */
-public class Semaphore 
+public class Semaphore /*siedziałam na skype od 23, chyba mam coś z mikrofonem, nie wstawiałam wcześniej nic bo i tak mi gówno działało
+serio ciągle siedzę i staram się to jakoś ogarnąć, chciałam załatwić korki, ale nikt nie miał wolnych terminów
+tak więc nie mam tego w dupie po prostu jestem głupia
+i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę ;/
+*/
 {
-    private ArrayList<PCB> listaOczekujacych;
+   
+    public ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
+    public ArrayList<PCB> listaGotowych = new ArrayList<PCB>();
     
     private int wartosc;
+	private PCB proces;
     
     public Semaphore(int wartosc, ArrayList<PCB> listaOczekujacych) throws InvalidSemaphoreValueException
     {
@@ -36,7 +42,7 @@ public class Semaphore
     }
     public void P(PCB proces)
     {
-         PCB p = listaOczekujacych.get(0);
+    	 
         System.out.println("Proces "+proces.name+" wykonuje operacje P");
         if(wartosc==1)
         {
@@ -45,7 +51,7 @@ public class Semaphore
         }
         else
         {
-            System.out.println("Proces dołącza do kolejki oczekuących");
+            System.out.println("Proces dołącza do kolejki oczekujących");
             proces.state=Stany.OCZEKUJACY;
             listaOczekujacych.add(proces);
             System.out.println("Następuje przełączenie procesów");
@@ -75,5 +81,17 @@ public class Semaphore
             throw new InvalidSemaphoreValueException();
         System.out.println("koniec operacji V");
     }
+	public ArrayList<PCB> getListaGotowych() {
+		return listaGotowych;
+	}
+	public void setListaGotowych(ArrayList<PCB> listaGotowych) {
+		this.listaGotowych = listaGotowych;
+	}
+	public PCB getProces() {
+		return proces;
+	}
+	public void setProces(PCB proces) {
+		this.proces = proces;
+	}
     
 }

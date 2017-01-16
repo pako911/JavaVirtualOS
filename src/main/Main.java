@@ -109,12 +109,13 @@ public class Main {
 					System.out.println("PFAT - Wyświetla stan tablicy Fat");
 					System.out.println("PDISK - Wyświetla stan dysku");
 					System.out.println("OPEN <PLIK> - Otwiera plik z kodem programu");
+					System.out.println("DELBOX <nr_wlasciciela> - Usuwa skrzynki wlasciciela wraz z wiadomosciami");
 					System.out.println("EXIT - Kończy prace systemu");
 					System.out.println("ABOUT - Autorzy");
 					
 				} else if(line.split(" ")[0].equals("PPROCES")) {
 					processManager.ps();
-					procesor.wyswietl_liste_procesow_gotowych();
+					//procesor.wyswietl_liste_procesow_gotowych();
 				} else if(line.split(" ")[0].equals("PBOXYS")) {
 					IPC.wszystkieSkrzynki();
 					
@@ -153,6 +154,8 @@ public class Main {
 				} else if(line.split(" ")[0].equals("KILL")) {
 					processManager.kill(Integer.parseInt(line.split(" ")[1]));
 					System.out.println("KILL");	
+				} else if(line.split(" ")[0].equals("DELBOX")) {
+					while(IPC.usunSkrzynke(Integer.parseInt(line.split(" ")[1])));	
 				} else if(line.split(" ")[0].equals("")) {
 						System.out.println("HELP");
 				} else if(line.split(" ")[0].equals("EXIT")) {

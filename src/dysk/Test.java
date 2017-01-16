@@ -42,7 +42,9 @@ public class Test {
 				disc.drukujDysk("test", "txt");
 				disc.dopiszDoPliku("tsest", "txt", " taki jak maly jestem");
 				disc.tworzeniaPliku("tst", "txt");
-				disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolpabcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
+				disc.usuwaniePliku("test", "txt");
+				disc.usuwaniePliku("tsest", "txt");
+				//disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolpabcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
 				//disc.dopiszDoPliku("tst", "txt", " jakubm ");
 				disc.www();
 				//disc.tworzeniaPliku("tse3st", "txt");

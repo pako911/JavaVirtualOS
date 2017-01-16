@@ -44,7 +44,7 @@ public class IPC {
 			for(Skrzynka x : SkrzynkaPocztowa){  		//sprawdza skrzynki...//sprawdza czy jest skrzynka, jesli tak to...
 				if(x.pobierzNumerSkrzynki()==numerSkrzynki){
 					if(x.pobierzWlascicielaSkrzynki()==obecnyProces){
-						System.out.println("Proces nie jest wlascicielem skrzynki "+numerSkrzynki+".");
+						System.out.println("Proces jest wlascicielem skrzynki "+numerSkrzynki+".");
 						System.out.println("Wlasciciel skrzynki nie ma mozliwosci czytania z niej wiadomosci!");
 						return false;
 					}
@@ -74,6 +74,31 @@ public class IPC {
 				}
 			}
 			return false;
+	}
+	
+	public static boolean usunSkrzynkeNr(int numerSkrzynki, int nrprocesu){
+		boolean jest=false;
+		for(Skrzynka x : SkrzynkaPocztowa){ 												//sprawdza numer procesu ze skrzynka
+			if(x.pobierzNumerSkrzynki() == numerSkrzynki){
+				jest=true;
+				if(x.pobierzWlascicielaSkrzynki()==nrprocesu){
+				System.out.println("Skrzynka "+x.pobierzNumerSkrzynki()+" zostala usunieta");
+				x.usunWiadomosci(); //usuwa wiadomosci jesli tam wystepuja, aby pozbyc sie bledu zwalniania pamieci po obiekcie
+				SkrzynkaPocztowa.remove(x); 		//i usuwa ja
+				//USUNAC WIADOMOSCI Z TEJ SKRZYNKI
+				return true;
+				}
+			}
+		}
+		if(jest){
+			System.out.println("Proces "+nrprocesu+" nie jest wlascicielem skrzynki nr "+numerSkrzynki+".");
+			System.out.println("Usuwanie nie powiodlo sie");
+			return false;
+		}else{
+		System.out.println("Nie ma skrzynki o numerze "+numerSkrzynki+".");
+		System.out.println("Usuwanie nie powiodlo sie");
+		return false;
+		}
 	}
 	
 	public static void informacje(int wlasciciel){ 		//informuje o tym czy jest skrzynka (z zawartoscia) czy nie istnieje
