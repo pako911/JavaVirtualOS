@@ -158,6 +158,8 @@ public class Main {
 					disc.wpisywanieDoPliku(line.split(" ")[1], line.split(" ")[2],dane);
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");
+				} else if(line.split(" ")[0].equals("PFILE")) {
+					disc.drukujDysk(line.split(" ")[1], line.split(" ")[2]);
 				} else if(line.split(" ")[0].equals("OPEN")) { // OPEN A.TXT
 					String file = line.split(" ")[1];
 					procesor.dodaj_proces(file);

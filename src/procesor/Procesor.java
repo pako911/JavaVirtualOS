@@ -153,11 +153,11 @@ public class Procesor {
 
 	public void wyswietl_liste_procesow_gotowych() {
 		System.out.println("Lista procesow gotowych");
-		for (PCB proces : lista_procesow_gotowych) {
+		/*for (PCB proces : lista_procesow_gotowych) {
 			System.out.println("-------------------------");
 			System.out.println("PID " + proces.PID);
 			System.out.println("-------------------------");
-		}
+		}*/
 		for (PCB proces : lista_procesow_gotowych2) {
 			System.out.println("------------2-------------");
 			System.out.println("PID " + proces.PID);

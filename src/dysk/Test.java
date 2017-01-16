@@ -49,7 +49,7 @@ public class Test {
 				disc.tworzeniaPliku("tst", "txt");
 				
 				//disc.usuwaniePliku("test", "txt");
-				disc.usuwaniePliku("tsest", "txt");
+				//disc.usuwaniePliku("tsest", "txt");
 				//disc.wpisywanieDoPliku("tst", "txt", "abcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolpabcdefghijklmoprstuwxyz123456789qwertyuiopasdfghjklzxcvbnm987654321qazwsxedcrfvtgbyhnujmikolp");
 				//disc.dopiszDoPliku("tst", "txt", " jakubm ");
 				disc.www();
