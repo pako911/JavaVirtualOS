@@ -1,0 +1,6 @@
+DRM
+MOV A 0
+MOV B 5
+INC A
+EQL A B
+JPF 4
