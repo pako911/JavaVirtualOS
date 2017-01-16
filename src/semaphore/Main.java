@@ -17,23 +17,23 @@ public class Main {
     public static void main(String[] args) {
        
         try{
-            Process p1= new Process("p1");
-            Process p2= new Process("p2");
-            Process p3= new Process("p3");
+            Process p1= new Process("p1", 0, null);
+            Process p2= new Process("p2",0, null);
+            Process p3= new Process("p3",0, null);
 
-            Semaphore s = new Semaphore(1);
+            Semaphore s = new Semaphore(1, null);
             
-            Process.aktualny=p1;
-            s.P();
-            Process.aktualny=p2;
-            s.P();
-            Process.aktualny=p3;
-            s.P();
-            Process.aktualny=p1;
+            PCB proces1=p1.pcb;
+            s.P(proces1);
+            PCB proces2=p2.pcb;
+            s.P(proces2);
+            PCB proces3=p3.pcb;
+            s.P(proces3);
+            PCB proces11=p1.pcb;
             s.V();
-            Process.aktualny=p2;
+            PCB proces22=p2.pcb;
             s.V();
-            Process.aktualny=p3;
+            PCB proces33=p3.pcb;
             s.V();
         // TODO code application logic here
         }
