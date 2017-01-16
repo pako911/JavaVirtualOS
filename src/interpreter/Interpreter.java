@@ -330,13 +330,8 @@ public class Interpreter {
                     this.working = false;
                     return true;
                 case "XS":
-<<<<<<< HEAD
-                	//TODO
-                   // IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
-=======
 					Wiadomosc wiadomosc = new Wiadomosc(PID, rozkaz[2]); //manager.getMain().pcb.PID
                     IPC.wyslij(wiadomosc,Integer.parseInt(rozkaz[1]));
->>>>>>> origin/master
                     this.working = false;
                     return true;
                 case "XDB":
