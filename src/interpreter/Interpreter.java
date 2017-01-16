@@ -15,11 +15,7 @@ public class Interpreter {
         private Memory memory;
 	private ProcessManager manager;
 	
-<<<<<<< HEAD
 	public Interpreter( Memory memory, Disc disk, ProcessManager manager ) 
-=======
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager, Semaphore semafor) 
->>>>>>> origin/master
         {
 		this.memory = memory;
        		this.disk = disk;
