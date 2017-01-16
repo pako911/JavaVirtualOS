@@ -114,7 +114,7 @@ public class Main {
 					
 				} else if(line.split(" ")[0].equals("PPROCES")) {
 					processManager.ps();
-					procesor.wyswietl_liste_procesow_gotowych();
+					//procesor.wyswietl_liste_procesow_gotowych();
 				} else if(line.split(" ")[0].equals("PBOXYS")) {
 					IPC.wszystkieSkrzynki();
 					

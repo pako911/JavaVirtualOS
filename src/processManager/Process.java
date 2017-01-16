@@ -33,7 +33,7 @@ public class Process {
 		if(CPID==0)
 			pcb.name="main";
 		else
-			pcb.name = "proces "+CPID ;
+			pcb.name = "proces_"+CPID ;
 		pcb.PPID = PPID;
 		pcb.PID = CPID++;
 		pcb.state = Stany.NOWY;
@@ -59,6 +59,7 @@ public class Process {
 				}
 				process.pcb.state = Stany.GOTOWY;
 			} else {
+				System.out.println("OCZEKUJACY");
 				process.pcb.state = Stany.OCZEKUJACY;
 			}
 			getChildren().put(process.pcb.PID, process);
