@@ -14,7 +14,11 @@ import processManager.PCB.Stany;
  *
  * @author LUCYNA
  */
-public class Semaphore 
+public class Semaphore /*siedziałam na skype od 23, chyba mam coś z mikrofonem, nie wstawiałam wcześniej nic bo i tak mi gówno działało
+serio ciągle siedzę i staram się to jakoś ogarnąć, chciałam załatwić korki, ale nikt nie miał wolnych terminów
+tak więc nie mam tego w dupie po prostu jestem głupia
+i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę ;/
+*/
 {
     private ArrayList<PCB> listaOczekujacych;
     private ArrayList<PCB> listaGotowych;
