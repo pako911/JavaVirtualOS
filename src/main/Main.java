@@ -143,6 +143,7 @@ public class Main {
 					for (int i=2; i<line.split(" ").length; i++){
 						dane=line.split(" ")[i];
 					}
+					System.out.print(line.split(" ")[1]+" "+line.split(" ")[2]+" "+line.split(" ")[3]);
 					disc.wpisywanieDoPliku(line.split(" ")[1], line.split(" ")[2],dane);
 				} else if(line.split(" ")[0].equals("PSEMAPHORE")) {
 					System.out.println("PSEMAPHORE");

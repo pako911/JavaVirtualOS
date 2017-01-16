@@ -2,8 +2,8 @@ package dysk;
 
 public class Tab_Fat {
 
-	public String nazwa;						// nazwa
-	public String ext;						// rozszerzenie
+	public String nazwa = "";						// nazwa
+	public String ext = "";						// rozszerzenie
 	public boolean status;					// status
 	public boolean zapisany;					// Czy plik zapisany				
 	public int jap1;						// numer pierwszego jap

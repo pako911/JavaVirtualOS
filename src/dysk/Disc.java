@@ -88,7 +88,7 @@ public class Disc {
 	{
 
 		for (int i = 0; i < 64; i++) {
-			if (atrybuty[i].nazwa == nazwa && atrybuty[i].ext == ext)
+			if (atrybuty[i].nazwa.equals(nazwa) && atrybuty[i].ext.equals(ext))
 				return atrybuty[i].jap1;
 		}
 		return -1;
@@ -217,7 +217,7 @@ public class Disc {
 				fat[tab[i]] = 0;
 		}
 			int x =ktory_katalog(nazwa, ext);
-				if(atrybuty[x].nazwa == nazwa && atrybuty[x].ext == ext)
+				if(atrybuty[x].nazwa.equals(nazwa) && atrybuty[x].ext.equals(ext))
 				{
 					atrybuty[x].nazwa ="";
 					atrybuty[x].ext ="";
@@ -287,7 +287,7 @@ public class Disc {
 	int[] tab = new int [64];
 	tab[0] = jap;
 	
-	if(jap != -1 && atrybuty[ktory_katalog(nazwa, ext)].nazwa == nazwa && atrybuty[ktory_katalog(nazwa, ext)].ext == ext)
+	if(jap != -1 && atrybuty[ktory_katalog(nazwa, ext)].nazwa.equals(nazwa) && atrybuty[ktory_katalog(nazwa, ext)].ext.equals(ext))
 	{
 		while(jap !=-1)
 		{
@@ -334,7 +334,7 @@ public class Disc {
 			{
 				for(int i =0; i <64; i++)
 				{
-					if(atrybuty[i].nazwa == nazwa && atrybuty[i].ext == ext)
+					if(atrybuty[i].nazwa.equals(nazwa) && atrybuty[i].ext.equals(ext))
 					{
 						atrybuty[i].nazwa = newname;
 						atrybuty[i].ext = newext;
@@ -456,7 +456,7 @@ public class Disc {
 		{
 			for (int i =0; i<64; i++)
 			{
-				if (atrybuty[i].nazwa == nazwa && atrybuty[i].ext == ext)
+				if (atrybuty[i].nazwa.equals(nazwa) && atrybuty[i].ext.equals(ext))
 				{
 					return i;
 				}
@@ -480,7 +480,7 @@ public class Disc {
 		{
 			for(int i = 0; i<64; i++)
 			{
-				if(atrybuty[i].nazwa == nazwa && atrybuty[i].ext == ext)
+				if(atrybuty[i].nazwa.equals(nazwa) && atrybuty[i].ext.equals(ext))
 				{
 					return false;
 				}
