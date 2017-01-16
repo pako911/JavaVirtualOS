@@ -6,19 +6,23 @@ import processManager.ProcessManager;
 import komunikacjaMiedzyprocesowa.IPC;
 import komunikacjaMiedzyprocesowa.Wiadomosc;
 import procesor.Procesor;  
+import semaphore.Semaphore;
+
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
 	private Boolean done = false, working = false, fail = false, flag_F = false;
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-        
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager) 
+        private Semaphore semafor;
+	
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager, Semaphore semafor;) 
         {
 		this.memory = memory;
-        this.disk = disk;
-        this.memory = memory;
-        this.manager = manager;
+       		this.disk = disk;
+		this.memory = memory;
+       		this.manager = manager;
+		this.semafor = semafor;
 	}
 
 	public void set_regA(int a) {
@@ -333,13 +337,21 @@ public class Interpreter {
                     this.working = false;
                     return true;
                 case "XS":
-					Wiadomosc wiadomosc = new Wiadomosc(PID, rozkaz[2]); //manager.getMain().pcb.PID
+		    Wiadomosc wiadomosc = new Wiadomosc(PID, rozkaz[2]); //manager.getMain().pcb.PID
                     IPC.wyslij(wiadomosc,Integer.parseInt(rozkaz[1]));
                     this.working = false;
                     return true;
                 case "XDB":
                     if(IPC.usunSkrzynkeNr(Integer.parseInt(rozkaz[1]),PID))
                     this.working = false;
+                    return true;
+		case "XP":
+                    semafor.P();
+                    this.working = false;
+                    return true;
+                case "XV":
+                    semafor.V();
+		    this.working = false;
                     return true;
                 default:
                     return false;
