@@ -1,8 +1,5 @@
-XR
-XS 4 tekst1
-XR
-XS 2 tekst2
-XS 3 tekst3
-XS 1 tekst4
-XR
-XD
+XS 1 abc
+XR 1
+XS 2 CAB 
+XR 3
+XS 2 aaA
