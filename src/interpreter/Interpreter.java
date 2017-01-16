@@ -48,7 +48,8 @@ public class Interpreter {
 		return PC;
 	}
 
-	public Boolean exe(String rozkaz[]) {
+	public Boolean exe(String rozkaz[]) 
+        {
 		this.done = false;
 		this.working = false;
 		this.fail = false;
@@ -286,17 +287,9 @@ public class Interpreter {
 		} else {
 			System.out.print("\n");
 		}
-
-		return done;
-
-	}
-
-	public Boolean filesExecute(String rozkaz[]) {
-		this.done = false;
-		this.working = false;
-		this.fail = false;
-
-            switch (rozkaz[0]) {
+                
+            switch (rozkaz[0]) 
+            {
                 case "FCR":
                     disk.tworzeniaPliku(rozkaz[1], rozkaz[2]);
                     this.working = false;
@@ -332,39 +325,11 @@ public class Interpreter {
                     return true;
                 case "FAT":
                     disk.wys();
-                    break;
+                    return true;
                 case "FPR":
                     disk.drukujDysk(rozkaz[1], rozkaz[2]);
-                    break;
-                default:
-                    System.out.print("\n");
-                    break;
-            }
-
-		return done;
-	}
-        
-//        public Boolean semaphore(String rozkaz[]) {
-//		this.done = false;
-//		this.working = false;
-//		this.fail = false;
-//                
-//                if(rozkaz[0].equals("SSH")){
-//                    
-//                } else if(rozkaz[0].equals("")){}
-//                    
-//               return done;
-//        }
-        
-        public Boolean boxes(String rozkaz[]){
-            this.done = false;
-            this.working = false;
-            this.fail = false;
-            
-            switch (rozkaz[0]) 
-            {
+                    return true;
                 case "XR":
-
                     IPC.odbierz(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
@@ -378,9 +343,8 @@ public class Interpreter {
                     this.working = false;
                     return true;
                 default:
-                    break;
+                    return false;
             }
-            
             return done;
         }
 
