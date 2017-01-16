@@ -36,6 +36,7 @@ public class Semaphore
     }
     public void P(PCB proces)
     {
+         PCB p = listaOczekujacych.get(0);
         System.out.println("Proces "+proces.name+" wykonuje operacje P");
         if(wartosc==1)
         {
