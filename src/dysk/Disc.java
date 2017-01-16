@@ -120,7 +120,7 @@ public class Disc {
 			
 		    dlugosc = data.length();
 		    count_jap = Math.ceil(dlugosc/64);
-		    System.out.println("DLUGOSC JAP "+count_jap);
+		    //System.out.println("DLUGOSC JAP "+count_jap);
 			// Czy katalog wolny?  
 			if (ktory_katalog(nazwa, ext) != -1){
 			if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
@@ -131,25 +131,25 @@ public class Disc {
 						jap1 = file_jap(nazwa, ext);
 						
 						//DLA PIERWSZEGO 
-						System.out.println("początek pliku "+jap1);
+						//System.out.println("początek pliku "+jap1);
 						char datachar[] = data.toCharArray();
 						for (int q = 0; q < data.length() && q < 64; q++) {
 							//if (k <= dlugosc - 1) {
 								dysk[q+jap1*64] = datachar[q];
-								System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+								//System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
 					
 						}
 						//DLA WIECEJ
 						if (count_jap > 1) {
 							for (int j = 1; j <= count_jap-1; j++) {
 								nastepnyJap = szukanieWolnegoJap();
-								System.out.println("WOLNY NEXT JAP "+nastepnyJap);
+								//System.out.println("WOLNY NEXT JAP "+nastepnyJap);
 								fat[nastepnyJap] = -1;
 								fat[jap1] = nastepnyJap;
 								jap1 = nastepnyJap;
 								for (int q = 0; q < 64 && q < data.length()-j*64; q++) {
 										dysk[q+jap1*64] = datachar[q+j*64];
-										System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+									//	System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
 								}
 								
 							}
@@ -348,8 +348,152 @@ public class Disc {
 			System.out.println("Plik nie istnieje");
 		}
 	}
+	public void dopiszDoPliku(String nazwa,String ext, String data)
+	{
+		String dane1 = "";
+		int jap = file_jap(nazwa,ext);
+		int nextJap;
+		int l=1;
+		int[] tab = new int [64];
+		tab[0] = jap;
+		
 	
-	public void dopiszDoPliku(String nazwa, String ext, String data)//naprawoc
+		while(jap !=-1)
+		{
+			nextJap = fat[jap];
+			jap = nextJap;
+			tab[l] = nextJap;
+			l++;
+		}
+		l-=1;
+
+		for ( int i =0 ;i<l;i++)
+		{
+			int j = 64 *tab[i];
+			
+			int k =j+64;
+			for(int z= j; z<k;z++)
+			{
+				if(dysk[z] != 0)
+				dane1 += dysk[z];
+			}
+			
+		}
+		jap = file_jap(nazwa,ext);
+		int kolejnyJap;
+		int buffor=1;
+		tab[0]=jap;
+		while(jap != -1)
+		{
+			kolejnyJap = fat[jap];
+			jap= kolejnyJap;
+			tab[buffor] = kolejnyJap;
+			buffor++;
+		}
+		buffor -= 1;
+		
+		
+			for (int i =0; i<buffor;i++)
+				{
+				for (int j=0; j < 64; j++)
+				{
+					dysk[(tab[i]*64) + j] = 0;
+				}
+				fat[tab[i]] = 0;
+		}
+			int x =ktory_katalog(nazwa, ext);
+				if(atrybuty[x].nazwa.equals(nazwa) && atrybuty[x].ext.equals(ext))
+				{
+					atrybuty[x].nazwa ="";
+					atrybuty[x].ext ="";
+					atrybuty[x].rozmiar = 0;
+					atrybuty[x].status = false;
+					atrybuty[x].jap1 = 0;
+					atrybuty[x].zapisany = false;
+				}
+				iloscWolnegoMiejsca();
+
+
+
+				int buffor1;
+					
+				
+					buffor = szukanieWolnegoJap();
+					buffor1 = wolnyKatalog();
+					
+					
+					Calendar cal = Calendar.getInstance();
+
+					
+					//uzupelnienie wpisow do katalogu
+					atrybuty[buffor1].nazwa = nazwa;
+					atrybuty[buffor1].status = true;
+					atrybuty[buffor1].jap1 = buffor;
+					atrybuty[buffor1].ext = ext;
+					atrybuty[buffor1].rozmiar = 0;
+					atrybuty[buffor1].zapisany = false;
+					atrybuty[buffor1].godzina = cal.get(Calendar.HOUR_OF_DAY);
+					atrybuty[buffor1].minuta = cal.get(Calendar.MINUTE);
+					atrybuty[buffor1].dzien = cal.get(Calendar.DAY_OF_MONTH) ;
+					atrybuty[buffor1].miesiac = cal.get(Calendar.MONTH)+1;
+					atrybuty[buffor1].rok = cal.get(Calendar.YEAR);
+					fat[buffor] = -1;													
+					data = dane1 + data;
+					 int jap1;
+						int nastepnyJap;
+						double dlugosc;
+						double count_jap=0;
+						
+					    dlugosc = data.length();
+					    count_jap = Math.ceil(dlugosc/64);
+					 //   System.out.println("DLUGOSC JAP "+count_jap);
+						// Czy katalog wolny?  
+						if (ktory_katalog(nazwa, ext) != -1){
+						if (atrybuty[ktory_katalog(nazwa, ext)].zapisany == false) 
+								atrybuty[ktory_katalog(nazwa, ext)].zapisany = true;
+					
+							if (file_jap(nazwa, ext) != -1) {
+								if ((spacefree) > dlugosc) {
+									jap1 = file_jap(nazwa, ext);
+									
+									//DLA PIERWSZEGO 
+								//	System.out.println("początek pliku "+jap1);
+									char datachar[] = data.toCharArray();
+									for (int q = 0; q < data.length() && q < 64; q++) {
+										//if (k <= dlugosc - 1) {
+											dysk[q+jap1*64] = datachar[q];
+											//System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+								
+									}
+									//DLA WIECEJ
+									if (count_jap > 1) {
+										for (int j = 1; j <= count_jap-1; j++) {
+											nastepnyJap = szukanieWolnegoJap();
+											//System.out.println("WOLNY NEXT JAP "+nastepnyJap);
+											fat[nastepnyJap] = -1;
+											fat[jap1] = nastepnyJap;
+											jap1 = nastepnyJap;
+											for (int q = 0; q < 64 && q < data.length()-j*64; q++) {
+													dysk[q+jap1*64] = datachar[q+j*64];
+												//	System.out.println(q+jap1*64+" -> "+dysk[q+jap1*64]);
+											}
+											
+										}
+									}
+									System.out.println("Wpisanie do pliku pomyslne"); 
+								atrybuty[ktory_katalog(nazwa, ext)].rozmiar = data.length();
+
+								}
+								else System.out.println( "Za malo miejsca na dysku");
+							}
+							else  System.out.println( "Nie mozna nadpisac danych");
+						}
+						else System.out.println ("Blad! Plik nie istnieje" );
+						iloscWolnegoMiejsca();
+					
+			
+	}
+	/*public void dopiszDoPliku(String nazwa, String ext, String data)//naprawoc
 	{
 		if(file_jap(nazwa,ext) != -1)
 		{
@@ -398,8 +542,10 @@ public class Disc {
 							l++;
 						}
 					}
-					for(int j = 1; j <= count_jap; j++)
+					
+					for(int j = 1; j <= count_jap*64; j++)
 					{
+						System.out.println("oetka");
 						nastepnyJap = szukanieWolnegoJap();
 						fat[nastepnyJap] = -1;
 						fat[ostatniJap] = nastepnyJap;
@@ -434,7 +580,7 @@ public class Disc {
 			System.out.println("Plik o podanej nazwie nie istnieje");
 		}
 	
-		}
+		}*/
 
 		int wolnyJap(int nr_jap)
 		{
