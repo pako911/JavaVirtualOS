@@ -1,10 +1,6 @@
 package dysk;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
-import java.util.Scanner;
-import java.util.StringTokenizer;
 
 import dysk.Tab_Fat;
 
@@ -14,10 +10,11 @@ public class Disc {
 
 	
 	public static final int FFFF = -1;
-	public char[] dysk = new char [2048];				//dysk
+	public int rozmiarDysku = 512; // rozmiar dysku
+	public char[] dysk = new char [rozmiarDysku];				//dysk
 	public int [] fat = new int [64];					//tablica fat 64 bity
 	public Tab_Fat[] atrybuty = new Tab_Fat[64];		//wpis do katlogu glownego
-	public int spacefree = 2048;						//wlne miejsce`
+	public int spacefree = rozmiarDysku;						//wlne miejsce`
 	public Disc()
 	{
 		
@@ -25,7 +22,7 @@ public class Disc {
 			atrybuty[i] = new Tab_Fat(); 
 		}
 		atrybuty[0].status = false;					
-		for (int i=0;i<2048;i++)
+		for (int i=0;i<rozmiarDysku;i++)
 		{
 			dysk[i] = 0;							//zerwoanie dysku;
 		}
@@ -175,7 +172,7 @@ public class Disc {
 	int wolneMiejsceDysk()
 	{
 		int count = 0;
-		for (int i=0; i< 2048; i++)
+		for (int i=0; i< rozmiarDysku; i++)
 		{
 			if ((int)dysk[i]==0)
 			{
@@ -209,12 +206,9 @@ public class Disc {
 		
 			for (int i =0; i<buffor;i++)
 				{
-				int j=0;
-				int k = j+64;
-				for (j=64 * tab[i]; j < k; j++)
+				for (int j=0; j < 64; j++)
 				{
-					System.out.println(" nraaa"+j);
-					dysk[j] = 0;
+					dysk[(tab[i]*64) + j] = 0;
 				}
 				fat[tab[i]] = 0;
 		}
@@ -258,7 +252,7 @@ public class Disc {
 			}
 		}
 		System.out.println();
-		int a = 2048-allsize;
+		int a = rozmiarDysku-allsize;
 		System.out.printf("%1$13s" , "\t"+"\t"+"\t"+ l + " plik(i)" + " \t" + allsize + " bajty");
 		System.out.println();
 		System.out.printf("%1$13s" ,  "\t"+"\t"+"\t"+"\t"+ a + " wolne bajty");
@@ -321,7 +315,7 @@ public class Disc {
 	
 	void www()
 	{
-		for ( int i =0 ; i< 2048; i++)
+		for ( int i =0 ; i< rozmiarDysku; i++)
 		{
 			System.out.println("nr"+i+" "+dysk[i]+" ");
 		}

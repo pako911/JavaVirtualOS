@@ -39,26 +39,19 @@ public class Procesor {
 		proces = processManager.getProces(PID).pcb;
 		//proces.state = Stany.GOTOWY;
 		lista_procesow_gotowych.add(proces);
-
+		Scheduler();
 	}
 
 	public void Scheduler() {
 		if (Running != null && Running.state == Stany.ZAKONCZONY) {
 			time = Running.timer;
-			for (int i = 0; i < lista_procesow_gotowych2.size(); i++) {
-				PCB ptemp = lista_procesow_gotowych2.get(i);
-				System.out.println(ptemp.PID +" "+ Running.PID);
-				if (ptemp.PID == Running.PID) {
-					lista_procesow_gotowych2.remove(i);
-				}
-			}
 			processManager.kill(Running.PID);
 			Running = processManager.getMain().pcb;
 		}
 
-		//if(Running!=null && Running.state!=Stany.AKTYWNY)
-		//{
-		if (true) {
+		if(Running!=null && Running.state!=Stany.AKTYWNY)
+		{
+		//if (true) {
 			if (lista_procesow_gotowych.size() > 0)
 			// if(true)
 			{
@@ -106,7 +99,7 @@ public class Procesor {
 						index_nastepnego = i;
 					}
 				}
-				//lista_procesow_gotowych2.remove(index_nastepnego);
+				lista_procesow_gotowych2.remove(index_nastepnego);
 				Running = nastepny;
 				Running.state = Stany.AKTYWNY;
 
@@ -118,7 +111,6 @@ public class Procesor {
 
 	public void wykonaj() {
 		Scheduler();
-		System.out.println("PID: " + Running.PID);
 		if(Running != null && Running.PID != 0) {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
@@ -129,7 +121,7 @@ public class Procesor {
 			interpreter.set_PC(process.pcb.counter);
 			interpreter.set_flag_F(process.pcb.flag_F);
 			
-			interpreter.exe(rozkaz,process.getPID());
+			interpreter.exe(rozkaz, Running.PID);
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
