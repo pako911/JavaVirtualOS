@@ -2,20 +2,20 @@ package memoryManagement;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import processManager.PCB;
+import processManager.Process;
 import processManager.ProcessManager;
 import semaphore.InvalidSemaphoreValueException;
 import semaphore.Semaphore;
 
 public class Memory {
-	private int sizeOfMemory=1024;//setting size of memory's table of characters
+	private int sizeOfMemory=256;//setting size of memory's table of characters
 	public char sign[]=new char[sizeOfMemory];
 	private ListFSB FSBPTR;
-	private ArrayList <PCB> processList;//list of occupied areas
+	private ArrayList <Process> processList;//list of occupied areas
 	private Semaphore MEMORY; //memory semaphore
 	//private Semaphore FSBSEM; //semaphore of free space blocks
 	
-	public Memory(ArrayList <PCB> listaOczekujacych){
+	public Memory(ArrayList <Process> listaOczekujacych){
 		for(int i=0; i<sizeOfMemory; i++)
 			sign[i]= '_';
 		FSBPTR = new ListFSB(sizeOfMemory);
@@ -25,15 +25,15 @@ public class Memory {
 		} catch (InvalidSemaphoreValueException e) {
 			System.out.println("Semaphore error");
 		}
-		processList=new ArrayList <PCB>();
+		processList=new ArrayList <Process>();
 	}
 	public void wypiszPCB()
 	{
 		System.out.println("Show PCB");
-		for (PCB now: processList)
-			System.out.println("PCB start in: "+now.base+""
-					+ " | end in: "+(now.limit+now.base-1)+""
-					+ " | with size of "+ now.limit );
+		for (Process now: processList)
+			System.out.println("PCB start in: "+now.pcb.base+""
+					+ " | end in: "+(now.pcb.limit+now.pcb.base-1)+""
+					+ " | with size of "+ now.pcb.limit );
 	}
 	private void eraseMemory(int address, int size){
 		for(int i=address; i<address+size; i++)
@@ -43,26 +43,27 @@ public class Memory {
 		for(int i=0; i<size; i++)
 			sign[i+address]='$';
 	}
-	public void memoryReleasing(PCB proces){//as argument give process that you want to remove
-		FSBPTR.addFSB(proces.base, proces.limit);
-		eraseMemory(proces.base, proces.limit);
+	public void memoryReleasing(Process proces){//as argument give process that you want to remove
+		FSBPTR.addFSB(proces.pcb.base, proces.pcb.limit);
+		eraseMemory(proces.pcb.base, proces.pcb.limit);
 		processList.remove(proces);
 		for(int i=0; i<MEMORY.countList(); i++)
 			try {
 				MEMORY.V();
+				
 			} catch (InvalidSemaphoreValueException e) {
 				e.printStackTrace();
 			}
 	}
-	public boolean memoryAllocation(int size, PCB proces){
+	public boolean memoryAllocation(int size, Process proces){
 		FSB tmp=FSBPTR.searchForSpace(size);
 		if(tmp.address>=0&&tmp.address<sizeOfMemory){
-			proces.base=tmp.address;
-			proces.limit=size;
+			proces.pcb.base=tmp.address;
+			proces.pcb.limit=size;
 			FSBPTR.addFSB(tmp.address+size, tmp.size-size);
 			FSBPTR.removeFSB(tmp.size);
 			processList.add(proces);
-			fillMemory(proces.base,proces.limit);
+			fillMemory(proces.pcb.base,proces.pcb.limit);
 			return true;
 		}
 		else if(size<FSBPTR.fullSpace()){
@@ -70,12 +71,12 @@ public class Memory {
 						+ " space for proces");
 			defrag();//use of defragmentation method
 			tmp=FSBPTR.searchForSpace(size);
-			proces.base=tmp.address;
-			proces.limit=size;
+			proces.pcb.base=tmp.address;
+			proces.pcb.limit=size;
 			tmp.address+=size;
 			tmp.size-=size;
 			processList.add(proces);
-			fillMemory(proces.base,proces.limit);
+			fillMemory(proces.pcb.base,proces.pcb.limit);
 			return true;
 		}else{
 			System.out.println("Nie znaleziono pamięci. Wchodzę pod semafor");
@@ -86,14 +87,14 @@ public class Memory {
 	private void defrag(){//memory defragmentation
 		int suma=0;
 		processListSort();
-		PCB bufor =new PCB(); 
-		bufor.base=0;
-		for(PCB t : processList){
-			for(int i=0; i<t.limit;i++){
-				sign[suma+i]=sign[t.base+i];
+		Process bufor =new Process(); 
+		bufor.pcb.base=0;
+		for(Process t : processList){
+			for(int i=0; i<t.pcb.limit;i++){
+				sign[suma+i]=sign[t.pcb.base+i];
 			}
-			t.base=suma;
-			suma=suma+t.limit;
+			t.pcb.base=suma;
+			suma=suma+t.pcb.limit;
 		}
 		FSBPTR.head=new FSB(suma,sizeOfMemory-suma );
 		eraseMemory(suma,sizeOfMemory-suma);
@@ -102,7 +103,7 @@ public class Memory {
 	private void processListSort(){
 		for(int i=0; i<processList.size(); i++){
 			for(int j=0; j<processList.size()-1-i; j++){
-				if(processList.get(j).base>processList.get(j+1).base)
+				if(processList.get(j).pcb.base>processList.get(j+1).pcb.base)
 					Collections.swap(processList, j, j+1);
 			}
 		}
@@ -118,8 +119,8 @@ public class Memory {
 	}
 	public static void main(String[] args){
 		Memory ho=new Memory(new ArrayList());
-		PCB r=new PCB();
-		PCB i= new PCB();
+		Process r=new Process();
+		Process i= new Process();
 		ho.memoryAllocation(30, r);
 		ho.memoryAllocation(70, i);
 		ho.wypiszPCB();

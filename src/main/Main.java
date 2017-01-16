@@ -12,6 +12,7 @@ import memoryManagement.Memory;
 import procesor.Procesor;
 import processManager.PCB;
 import processManager.ProcessManager;
+import processManager.Process;
 
 public class Main {
 
@@ -83,7 +84,7 @@ public class Main {
 
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
-		ArrayList<PCB> listaOczekujacych=new ArrayList<PCB>();
+		ArrayList<Process> listaOczekujacych=new ArrayList<Process>();
 		load("ŁADOWANIE MODUŁU PAMIĘCI OPERACYJNEJ");
 		Memory memory = new Memory(listaOczekujacych);		
 		load("ŁADOWANIE MODUŁU DYSKU");

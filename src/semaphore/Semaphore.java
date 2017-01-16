@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import processManager.PCB;
 import processManager.PCB.Stany;
-
+import processManager.Process;
 /**
  *
  * @author LUCYNA
@@ -21,13 +21,13 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
 */
 {
    
-    public ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
-    public ArrayList<PCB> listaGotowych = new ArrayList<PCB>();
+    public ArrayList<Process> listaOczekujacych = new ArrayList<Process>();
+    public ArrayList<Process> listaGotowych = new ArrayList<Process>();
     
     private int wartosc;
 	private PCB proces;
     
-    public Semaphore(int wartosc, ArrayList<PCB> listaOczekujacych) throws InvalidSemaphoreValueException
+    public Semaphore(int wartosc, ArrayList<Process> listaOczekujacych) throws InvalidSemaphoreValueException
     {
     	this.listaOczekujacych=listaOczekujacych;
         this.wartosc=wartosc;
@@ -40,10 +40,10 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
     {
     	return listaOczekujacych.size();
     }
-    public void P(PCB proces)
+    public void P(Process proces)
     {
     	 
-        System.out.println("Proces "+proces.name+" wykonuje operacje P");
+        System.out.println("Proces "+proces.pcb.name+" wykonuje operacje P");
         if(wartosc==1)
         {
             System.out.println("Proces działa dalej");
@@ -52,7 +52,7 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
         else
         {
             System.out.println("Proces dołącza do kolejki oczekujących");
-            proces.state=Stany.OCZEKUJACY;
+            proces.pcb.state=Stany.OCZEKUJACY;
             listaOczekujacych.add(proces);
             System.out.println("Następuje przełączenie procesów");
         }
@@ -65,10 +65,11 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
         if(wartosc==0)
         { 
             if(listaOczekujacych.size()>0){
-                PCB p = listaOczekujacych.get(0);
-                p.state=Stany.GOTOWY;
+                Process p = listaOczekujacych.get(0);
+                p.pcb.state=Stany.GOTOWY;
+                p.allocMem(p, p.nazwaPliku);
                 listaOczekujacych.remove(0);
-                System.out.println("proces "+p.PID +" został usunięty z listy oczekujących");
+                System.out.println("proces "+p.pcb.PID +" został usunięty z listy oczekujących");
             }
             else
             {
@@ -81,10 +82,10 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
             throw new InvalidSemaphoreValueException();
         System.out.println("koniec operacji V");
     }
-	public ArrayList<PCB> getListaGotowych() {
+	public ArrayList<Process> getListaGotowych() {
 		return listaGotowych;
 	}
-	public void setListaGotowych(ArrayList<PCB> listaGotowych) {
+	public void setListaGotowych(ArrayList<Process> listaGotowych) {
 		this.listaGotowych = listaGotowych;
 	}
 	public PCB getProces() {

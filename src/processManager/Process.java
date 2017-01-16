@@ -22,13 +22,17 @@ public class Process {
 
 	private static int CPID = 0;
 	public PCB pcb;
-	
-	private Memory memory;
+	public String nazwaPliku;
+	private static Memory memory;
 	
 	private HashMap<Integer, Process> children = new HashMap<Integer, Process>();
 	
+	public Process(){
+		pcb=new PCB();
+	}
 	public Process(String name, int PPID, Memory memory) {
 		pcb = new PCB();
+		nazwaPliku="";
 		this.memory = memory;
 		if(CPID==0)
 			pcb.name="main";
@@ -39,38 +43,40 @@ public class Process {
 		pcb.state = Stany.NOWY;
 		System.out.println("STWORZONO NOWY PROCES O PID "+pcb.PID);
 	}
-	
-	public Process createChild(String sfile) {
-		try {
-			FileInputStream fileInputStream = new FileInputStream(sfile);
-			Process process = new Process(pcb.name, pcb.PID, memory);
-			File file = new File(sfile);
-			String kod = "";
-			for(int i = 0; i <file.length(); i++) {
-				char znak = (char)fileInputStream.read();
-				kod = kod + znak;
+	public void allocMem(Process process, String sfile){
+		try{
+			System.out.println(sfile);
+		FileInputStream fileInputStream = new FileInputStream(sfile);
+		File file = new File(sfile);
+		String kod = "";
+		for(int i = 0; i <file.length(); i++) {
+			char znak = (char)fileInputStream.read();
+			kod = kod + znak;
+		}
+		kod = kod.replaceAll("\r", "").replaceAll("\n", ";");
+		boolean memoryGood = memory.memoryAllocation((int) kod.length(), process);
+		if(memoryGood) { 			
+			System.out.println("ZAALOKOWANO PAMIĘĆ OD "+process.pcb.base+" O ROZMIARZE "+ process.pcb.limit+ " PID "+process.pcb.PID);
+			for(int i = 0; i<process.pcb.limit; i++) {
+				memory.sign[i+process.pcb.base] = kod.charAt(i);
 			}
-			kod = kod.replaceAll("\r", "").replaceAll("\n", ";");
-			boolean memoryGood = memory.memoryAllocation((int) kod.length(), process.pcb);
-			if(memoryGood) { 			
-				System.out.println("ZAALOKOWANO PAMIĘĆ OD "+process.pcb.base+" O ROZMIARZE "+ process.pcb.limit+ " PID "+process.pcb.PID);
-				for(int i = 0; i<process.pcb.limit; i++) {
-					memory.sign[i+process.pcb.base] = kod.charAt(i);
-				}
-				process.pcb.state = Stany.GOTOWY;
-			} else {
-				System.out.println("OCZEKUJACY");
-				process.pcb.state = Stany.OCZEKUJACY;
-			}
-			getChildren().put(process.pcb.PID, process);
-			fileInputStream.close();
-			return process;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			process.pcb.state = Stany.GOTOWY;
+		} else {
+			System.out.println("OCZEKUJACY");
+			process.pcb.state = Stany.OCZEKUJACY;
+		}
+		fileInputStream.close();
+		}catch(IOException e){
 			e.printStackTrace();
 		}
-		return null;
+	}
+	public Process createChild(String sfile) {
+		Process process = new Process(pcb.name, pcb.PID, memory);
+		process.nazwaPliku=sfile;
+		allocMem(process, sfile);
+		getChildren().put(process.pcb.PID, process);
+
+		return process;
 	}
 	
 	public void print() {
@@ -82,7 +88,7 @@ public class Process {
 	
 	public void exit() {
 		pcb.state = Stany.ZAKONCZONY;
-		memory.memoryReleasing(pcb);
+		memory.memoryReleasing(this);
 	}
 		
 	public int getPID() {
@@ -129,7 +135,7 @@ public class Process {
 	
 	public String[] getNextRozkaz() {
 		String kod = "";
-		for(int i = 0; i<pcb.limit; i++) {
+		for(int i=0; i<pcb.limit; i++) {
 			kod = kod + memory.sign[i+pcb.base];
 		}
 		int a = kod.split(";").length;

@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 
+import java.util.Vector;
 import interpreter.Interpreter;
 import processManager.PCB;
 import processManager.PCB.Stany;
@@ -12,6 +13,8 @@ public class Procesor {
 
 	private ArrayList<PCB> lista_procesow_gotowych = new ArrayList<PCB>();
 	private ArrayList<PCB> lista_procesow_gotowych2 = new ArrayList<PCB>();
+	
+	public Vector indexRozkazu=new Vector();
 
 	public PCB Running;
 	public boolean czy_wywlaszczajacy;// wybor metody przydzialu procesora
@@ -113,7 +116,7 @@ public class Procesor {
 		if(Running != null && Running.PID != 0) {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
-			
+			//Process.tmp;
 			interpreter.set_regA(process.pcb.A);
 			interpreter.set_regB(process.pcb.B);
 			interpreter.set_regC(process.pcb.C);
