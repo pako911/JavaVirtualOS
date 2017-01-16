@@ -44,7 +44,7 @@ public class IPC {
 			for(Skrzynka x : SkrzynkaPocztowa){  		//sprawdza skrzynki...//sprawdza czy jest skrzynka, jesli tak to...
 				if(x.pobierzNumerSkrzynki()==numerSkrzynki){
 					if(x.pobierzWlascicielaSkrzynki()==obecnyProces){
-						System.out.println("Proces nie jest wlascicielem skrzynki "+numerSkrzynki+".");
+						System.out.println("Proces jest wlascicielem skrzynki "+numerSkrzynki+".");
 						System.out.println("Wlasciciel skrzynki nie ma mozliwosci czytania z niej wiadomosci!");
 						return false;
 					}
