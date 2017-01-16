@@ -206,12 +206,14 @@ public class Disc {
 		
 		if (nazwaIstnieje(nazwa ,ext) == false)
 		{
+		
 			for (int i =0; i<buffor;i++)
 				{
 				int j=0;
 				int k = j+64;
 				for (j=64 * tab[i]; j < k; j++)
 				{
+					System.out.println(" nraaa"+j);
 					dysk[j] = 0;
 				}
 				fat[tab[i]] = 0;

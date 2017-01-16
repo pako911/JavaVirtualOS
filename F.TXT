@@ -1,7 +1,6 @@
-XR
-XS 1 tekst1
-XR
-XS 3 tekst2
-XS 4 tekst3
-XR
-XD
+XS 2 saa
+XR 1
+XR 2
+XS 4 cdc
+XR 2
+XR 2

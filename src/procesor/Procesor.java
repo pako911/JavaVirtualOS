@@ -1,4 +1,4 @@
-package procesor;
+﻿package procesor;
 
 import java.util.ArrayList;
 
@@ -129,8 +129,7 @@ public class Procesor {
 			interpreter.set_PC(process.pcb.counter);
 			interpreter.set_flag_F(process.pcb.flag_F);
 			
-			interpreter.exe(rozkaz);
-			
+			interpreter.exe(rozkaz,process.getPID());
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
