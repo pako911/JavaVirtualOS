@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import processManager.PCB;
 import processManager.PCB.Stany;
-import processManager.ProcessManager;
 
 /**
  *
@@ -18,8 +17,11 @@ import processManager.ProcessManager;
 public class Semaphore 
 {
     private ArrayList<PCB> listaOczekujacych;
+    private ArrayList<PCB> listaGotowych;
+  
     
     private int wartosc;
+	private PCB proces;
     
     public Semaphore(int wartosc, ArrayList<PCB> listaOczekujacych) throws InvalidSemaphoreValueException
     {
@@ -36,6 +38,7 @@ public class Semaphore
     }
     public void P(PCB proces)
     {
+    	 
         System.out.println("Proces "+proces.name+" wykonuje operacje P");
         if(wartosc==1)
         {
@@ -44,7 +47,7 @@ public class Semaphore
         }
         else
         {
-            System.out.println("Proces dołącza do kolejki oczekuących");
+            System.out.println("Proces dołącza do kolejki oczekujących");
             proces.state=Stany.OCZEKUJACY;
             listaOczekujacych.add(proces);
             System.out.println("Następuje przełączenie procesów");
@@ -74,5 +77,17 @@ public class Semaphore
             throw new InvalidSemaphoreValueException();
         System.out.println("koniec operacji V");
     }
+	public ArrayList<PCB> getListaGotowych() {
+		return listaGotowych;
+	}
+	public void setListaGotowych(ArrayList<PCB> listaGotowych) {
+		this.listaGotowych = listaGotowych;
+	}
+	public PCB getProces() {
+		return proces;
+	}
+	public void setProces(PCB proces) {
+		this.proces = proces;
+	}
     
 }
