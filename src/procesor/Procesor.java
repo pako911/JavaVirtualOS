@@ -119,7 +119,7 @@ public class Procesor {
 		if(Running != null && Running.PID != 0) {
 			Process process = processManager.getProces(Running.PID);
 			String rozkaz[] = process.getNextRozkaz();
-			interpreter.exe(rozkaz);
+			interpreter.exe(rozkaz,process.getPID());
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
