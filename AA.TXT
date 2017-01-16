@@ -1,0 +1,7 @@
+MOV A 4
+MOV B 2
+EQL A B
+JMP 6
+JPF 7 
+MOV C 15
+MOV C 10

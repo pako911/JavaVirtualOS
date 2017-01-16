@@ -37,7 +37,7 @@ public class Process {
 		pcb.PPID = PPID;
 		pcb.PID = CPID++;
 		pcb.state = Stany.NOWY;
-		System.out.println("STWORZONO NOWY PROCES O ID "+pcb.PID);
+		System.out.println("STWORZONO NOWY PROCES O PID "+pcb.PID);
 	}
 	
 	public Process createChild(String sfile) {
@@ -53,7 +53,7 @@ public class Process {
 			kod = kod.replaceAll("\r", "").replaceAll("\n", ";");
 			boolean memoryGood = memory.memoryAllocation((int) kod.length(), process.pcb);
 			if(memoryGood) { 			
-				System.out.println("BASE "+process.pcb.base+" LIMIT "+ process.pcb.limit+ " ID "+process.pcb.PID);
+				System.out.println("ZAALOKOWANO PAMIĘĆ OD "+process.pcb.base+" O ROZMIARZE "+ process.pcb.limit+ " PID "+process.pcb.PID);
 				for(int i = 0; i<process.pcb.limit; i++) {
 					memory.sign[i+process.pcb.base] = kod.charAt(i);
 				}
@@ -134,9 +134,7 @@ public class Process {
 		int a = kod.split(";").length;
 		if(a-1 == pcb.counter) { pcb.state = Stany.ZAKONCZONY; }
 		kod = kod.split(";")[pcb.counter];
-		pcb.counter++;
 		String rozkaz[] = new String[3];
-		
 		rozkaz = kod.split(" ");
 		return rozkaz;
 	}

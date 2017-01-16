@@ -53,7 +53,7 @@ public class Interpreter {
 		this.done = false;
 		this.working = false;
 		this.fail = false;
-
+		PC++;
 		// Rozkazy arytmetyczne
 		if (rozkaz[0].equals("ADD")) {
 			if (rozkaz[1].equals("A")) {
@@ -182,12 +182,11 @@ public class Interpreter {
 				this.working = false;
 				return true;
 			} else {
-				System.out.print("\n\nZle argumenty funkcji.\n\n");
+				System.out.println("Zle argumenty funkcji.");
 				this.working = false;
 				return false;
 			}
 		} else if (rozkaz[0].equals("MOV")) {
-			System.out.println("MOV");
 			if (rozkaz[1].equals("A")) {
 				if (rozkaz[2].equals("B")) {
 					reg_A = reg_B;
@@ -215,8 +214,6 @@ public class Interpreter {
 
 			this.working = false;
 			return true;
-		} else {
-			System.out.print("\n");
 		}
 
 		/*if (rozkaz[0].equals("PAP")) { //wyswietlanie procesow
@@ -261,10 +258,10 @@ public class Interpreter {
 		if (rozkaz[0].equals("EQL")) {
 			if (rozkaz[1].equals("A") && rozkaz[2].equals("B") && reg_A == reg_B || rozkaz[1].equals("A") && rozkaz[2].equals("C") && reg_A == reg_C || rozkaz[1].equals("C") && rozkaz[2].equals("B") && reg_C == reg_B) {
 				flag_F = true;
-                                System.out.print("Rejestry maja rowne wartosci");
+                                System.out.println("Rejestry maja rowne wartosci");
 			} else{
 				flag_F = false;
-                                System.out.print("Rejestry nie maja rownych wartosci");
+                                System.out.println("Rejestry nie maja rownych wartosci");
                         }
 			this.working = false;
 			return true;
@@ -273,19 +270,17 @@ public class Interpreter {
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("JPT")) {
-			if (this.flag_F = true) {
+			if (this.flag_F == true) {
 				PC = Integer.parseInt(rozkaz[1]);
 			}
 			this.working = false;
 			return true;
 		} else if (rozkaz[0].equals("JPF")) {
-			if (this.flag_F = false) {
+			if (this.flag_F == false) {
 				PC = Integer.parseInt(rozkaz[1]);
 			}
 			this.working = false;
 			return true;
-		} else {
-			System.out.print("\n");
 		}
                 
             switch (rozkaz[0]) 
@@ -295,7 +290,6 @@ public class Interpreter {
                     this.working = false;
                     return true;
                 case "FWR":
-                    System.out.println(rozkaz[1]+" "+rozkaz[2]+" "+rozkaz[3]);
                     disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],rozkaz[3]);
                     this.working = false;
                     return true;
@@ -335,7 +329,7 @@ public class Interpreter {
                     return true;
                 case "XS":
                 	//TODO
-                    IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
+                    //IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
                 case "XD":
@@ -345,15 +339,14 @@ public class Interpreter {
                 default:
                     return false;
             }
-            return done;
         }
 
 	public void showRegisters() {
-		System.out.print("Rejestry:");
-		System.out.print("\nA: " + get_regA());
-		System.out.print("\nB: " + get_regB());
-		System.out.print("\nC: " + get_regC());
-		System.out.print("\nPC: " + get_PC());
+		System.out.println("Rejestry:");
+		System.out.println("A: " + get_regA());
+		System.out.println("B: " + get_regB());
+		System.out.println("C: " + get_regC());
+		System.out.println("PC: " + get_PC());
 	}
 
 	public Boolean get_flag_F() {
@@ -362,5 +355,9 @@ public class Interpreter {
 
 	public void set_flag_F(Boolean i) {
 		flag_F = i;
+	}
+
+	public void set_PC(int PC) {
+		this.PC=PC;
 	}
 }

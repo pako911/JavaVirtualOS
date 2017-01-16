@@ -49,6 +49,7 @@ public class Procesor {
 			interpreter.set_regA(0);
 			interpreter.set_regB(0);
 			interpreter.set_regC(0);
+			interpreter.set_PC(0);
 			interpreter.set_flag_F(false);
 			Running = processManager.getMain().pcb;
 		}
@@ -122,8 +123,9 @@ public class Procesor {
 			Running.A = interpreter.get_regA();
 			Running.B = interpreter.get_regB();
 			Running.C = interpreter.get_regC();
+			Running.counter = interpreter.get_PC();
 			Running.flag_F = interpreter.get_flag_F();
-			System.out.println("PID" + Running.PID);
+			System.out.println("PID: " + Running.PID);
 			interpreter.showRegisters();
 		}
 
