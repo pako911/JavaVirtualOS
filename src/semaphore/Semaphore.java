@@ -21,8 +21,8 @@ i nie chciałabym żebyście przeze mnie zawalili projekt, staram się jak mogę
 */
 {
    
-    private ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
-    private ArrayList<PCB> listaGotowych = new ArrayList<PCB>();
+    public ArrayList<PCB> listaOczekujacych = new ArrayList<PCB>();
+    public ArrayList<PCB> listaGotowych = new ArrayList<PCB>();
     
     private int wartosc;
 	private PCB proces;
