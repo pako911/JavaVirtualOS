@@ -76,6 +76,20 @@ public class IPC {
 			return false;
 	}
 	
+	public static void usunSkrzynkeNr(int numerSkrzynki){
+		for(Skrzynka x : SkrzynkaPocztowa){ 												//sprawdza numer procesu ze skrzynka
+			if(x.pobierzNumerSkrzynki() == numerSkrzynki){
+				System.out.println("Skrzynka "+x.pobierzNumerSkrzynki()+" zostala usunieta");
+				x.usunWiadomosci(); //usuwa wiadomosci jesli tam wystepuja, aby pozbyc sie bledu zwalniania pamieci po obiekcie
+				SkrzynkaPocztowa.remove(x); 		//i usuwa ja
+				//USUNAC WIADOMOSCI Z TEJ SKRZYNKI
+				return;
+			}
+		}
+		System.out.println("Nie ma skrzynki o numerze "+numerSkrzynki+".");
+		System.out.println("Usuwanie nie powiodlo sie");
+	}
+	
 	public static void informacje(int wlasciciel){ 		//informuje o tym czy jest skrzynka (z zawartoscia) czy nie istnieje
 		try{
 		if(czyIstnieje(wlasciciel)){
