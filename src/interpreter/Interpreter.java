@@ -4,6 +4,7 @@ import dysk.Disc;
 import memoryManagement.Memory;
 import processManager.ProcessManager;
 import komunikacjaMiedzyprocesowa.IPC;
+import komunikacjaMiedzyprocesowa.Wiadomosc;
 import procesor.Procesor;  
 public class Interpreter {
 	private int reg_A = 0, reg_B = 0, reg_C = 0, PC = 0;
@@ -48,7 +49,7 @@ public class Interpreter {
 		return PC;
 	}
 
-	public Boolean exe(String rozkaz[]) 
+	public Boolean exe(String rozkaz[],int PID) 
         {
 		this.done = false;
 		this.working = false;
@@ -324,16 +325,17 @@ public class Interpreter {
                     disk.drukujDysk(rozkaz[1], rozkaz[2]);
                     return true;
                 case "XR":
-                    IPC.odbierz(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
+                    if(!IPC.odbierz(Integer.parseInt(rozkaz[1]),PID))//manager.getMain().pcb.PID
+                    	return false; //WTEDY POWINNO SIE ZAWIEEESIC I ZMIENIC PROOOOOCES
                     this.working = false;
                     return true;
                 case "XS":
-                	//TODO
-                    //IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
+					Wiadomosc wiadomosc = new Wiadomosc(PID, rozkaz[2]); //manager.getMain().pcb.PID
+                    IPC.wyslij(wiadomosc,Integer.parseInt(rozkaz[1]));
                     this.working = false;
                     return true;
-                case "XD":
-                    IPC.usunSkrzynke(Integer.parseInt(rozkaz[1]));
+                case "XDB":
+                    while(IPC.usunSkrzynke(Integer.parseInt(rozkaz[1])));
                     this.working = false;
                     return true;
                 default:
