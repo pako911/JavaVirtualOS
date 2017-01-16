@@ -16,7 +16,7 @@ public class Interpreter {
 	private ProcessManager manager;
         private Semaphore semafor;
 	
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager, Semaphore semafor;) 
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager, Semaphore semafor) 
         {
 		this.memory = memory;
        		this.disk = disk;
