@@ -335,7 +335,7 @@ public class Interpreter {
                     return true;
                 case "XS":
                 	//TODO
-                    IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
+                   // IPC.wyslij(Integer.parseInt(rozkaz[1]),Integer.parseInt(rozkaz[2]));
                     this.working = false;
                     return true;
                 case "XD":
