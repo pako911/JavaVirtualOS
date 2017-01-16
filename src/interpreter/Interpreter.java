@@ -335,7 +335,7 @@ public class Interpreter {
                     this.working = false;
                     return true;
                 case "XDB":
-                    IPC.usunSkrzynkeNr(Integer.parseInt(rozkaz[1]));
+                    if(IPC.usunSkrzynkeNr(Integer.parseInt(rozkaz[1]),PID))
                     this.working = false;
                     return true;
                 default:
