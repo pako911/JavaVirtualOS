@@ -20,7 +20,7 @@ public class Procesor {
 	public PCB proces;
 	public int temp;
 	public double alpha;
-	public int theta;
+	//public int theta;
 	public int time;
 	private ProcessManager processManager;
 	private Interpreter interpreter;
@@ -30,7 +30,7 @@ public class Procesor {
 		this.processManager = processManager;
 		alpha = 0.5;
 		Running = processManager.getMain().pcb;
-		theta = 10;
+		//theta = 10;
 		time = 0;
 	}
 
@@ -39,7 +39,6 @@ public class Procesor {
 		proces = processManager.getProces(PID).pcb;
 		//proces.state = Stany.GOTOWY;
 		lista_procesow_gotowych.add(proces);
-		Scheduler();
 	}
 
 	public void Scheduler() {
@@ -93,7 +92,7 @@ public class Procesor {
 				//System.out.println();
 				for (int i = 0; i < lista_procesow_gotowych2.size(); i++) {
 					PCB ptemp = lista_procesow_gotowych2.get(i);
-					//System.out.println(ptemp.thau);
+					System.out.println(ptemp.thau);
 					if (ptemp.thau < nastepny.thau) {
 						nastepny = ptemp;
 						index_nastepnego = i;
