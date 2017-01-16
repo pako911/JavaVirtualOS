@@ -1,11 +1,15 @@
 package komunikacjaMiedzyprocesowa;
 
 import java.util.*;
+import semaphore.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 public class IPC {
 	private static final List<Skrzynka> SkrzynkaPocztowa = new LinkedList<>(); 					//lista skrzynek
 	
+	public static Semaphore messageSemaphoreCommon;
+	
+		
 	//wysyla wiadomosc, jesli pierwszy raz do danego procesu to tworzy skrzynke dla odbiorcy, jesli
 	//nie ma tego procesu to zwraca wiadomosc i kontynuuje wykonywanie procesu
 	public static void wyslij(Wiadomosc wiadomosc,int nrSkrzynki){  //metoda do wyslania wiadomosci

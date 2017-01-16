@@ -14,15 +14,13 @@ public class Interpreter {
         private final Disc disk;
         private Memory memory;
 	private ProcessManager manager;
-        private Semaphore semafor;
 	
-	public Interpreter( Memory memory, Disc disk, ProcessManager manager, Semaphore semafor;) 
+	public Interpreter( Memory memory, Disc disk, ProcessManager manager ) 
         {
 		this.memory = memory;
        		this.disk = disk;
 		this.memory = memory;
        		this.manager = manager;
-		this.semafor = semafor;
 	}
 
 	public void set_regA(int a) {
@@ -354,14 +352,14 @@ public class Interpreter {
                     if(IPC.usunSkrzynkeNr(Integer.parseInt(rozkaz[1]),PID))
                     this.working = false;
                     return true;
-		case "XP":
+		/*case "XP":
                     semafor.P();
                     this.working = false;
                     return true;
                 case "XV":
                     semafor.V();
 		    this.working = false;
-                    return true;
+                    return true;*/
                 default:
                     return false;
             }

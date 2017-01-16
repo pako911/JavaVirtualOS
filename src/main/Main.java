@@ -12,6 +12,8 @@ import memoryManagement.Memory;
 import procesor.Procesor;
 import processManager.PCB;
 import processManager.ProcessManager;
+import semaphore.InvalidSemaphoreValueException;
+import semaphore.Semaphore;
 import processManager.Process;
 
 public class Main {
@@ -85,6 +87,13 @@ public class Main {
 		BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
 		
 		ArrayList<Process> listaOczekujacych=new ArrayList<Process>();
+		ArrayList<Process> listaOczekujacychKom=new ArrayList<Process>();
+		/*try {
+			IPC.messageSemaphoreCommon=new Semaphore(0, listaOczekujacychKom);
+		} catch (InvalidSemaphoreValueException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
 		load("ŁADOWANIE MODUŁU PAMIĘCI OPERACYJNEJ");
 		Memory memory = new Memory(listaOczekujacych);		
 		load("ŁADOWANIE MODUŁU DYSKU");
@@ -154,7 +163,10 @@ public class Main {
 					procesor.dodaj_proces(file);
 				} else if(line.split(" ")[0].equals("KILL")) {
 					processManager.kill(Integer.parseInt(line.split(" ")[1]));
-					System.out.println("KILL");	
+					System.out.println("KILL");
+				} else if(line.split(" ")[0].equals("SHOWMEMSEM")) {
+					for(Process t: listaOczekujacych)
+						System.out.println("Process "+t.getPID()+" waits under memory semaphore");
 				} else if(line.split(" ")[0].equals("DELBOX")) {
 					while(IPC.usunSkrzynke(Integer.parseInt(line.split(" ")[1])));	
 				} else if(line.split(" ")[0].equals("")) {
