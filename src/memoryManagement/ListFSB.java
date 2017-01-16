@@ -57,7 +57,7 @@ public class ListFSB {
 			tail.next=new FSB(address, size);
 			tail=tail.next;
 			}
-			else addFSB(bufor.address,bufor.size);
+			//else addFSB(bufor.address,bufor.size);
 		}
 	}
 	//removing free space block with size given in argument
