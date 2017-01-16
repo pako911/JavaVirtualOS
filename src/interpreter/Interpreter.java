@@ -329,8 +329,17 @@ public class Interpreter {
                     disk.drukujDysk(rozkaz[1], rozkaz[2]);
                     return true;
                 case "WRA":
-                	String string = reg_A+"";
-                	disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],string);
+                	String string1 = reg_A+"";
+                	disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],string1);
+                	return true;
+                case "WRB":
+                	String string2 = reg_B+"";
+                	disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],string2);
+                	return true;
+                case "WRC":
+                	String string3 = reg_C+"";
+                	disk.wpisywanieDoPliku(rozkaz[1],rozkaz[2],string3);
+                	return true;
                 case "XR":
                     if(!IPC.odbierz(Integer.parseInt(rozkaz[1]),PID))//manager.getMain().pcb.PID
                     	return false; //WTEDY POWINNO SIE ZAWIEEESIC I ZMIENIC PROOOOOCES
