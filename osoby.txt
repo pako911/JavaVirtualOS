@@ -1,9 +1,1 @@
-OK Kuba Rybakowski - zarz¹dzanie procesami
-OK Marek Wojciechowski - dysk
-OK Przemys³aw £apicz (Kot Gigant) - komunikacja miedzyprocesowa metoda skrzynek pocztowych
-Marek Rybicki - przydzia³ procesora sjf/srt
-Pawe³ Korczak - interpreter
-OK Mateusz Norel (Imegirin Imegirin) - zarz¹dzanie pamiêci¹ operacyjn¹ metod¹ obszarów ci¹g³ych przesuwalnych
-OK Lucyna Hernet (luuucia1) - synchronizacja procesów metod¹ semaforów binarnych
-Mateusz Terlecki - zarz¹dzanie pamiêci¹ procesora
-Piotr Popio³ek (pepe 450) - tester
+
